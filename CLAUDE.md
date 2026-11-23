@@ -13,14 +13,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Monorepo Structure
 This is a **Gradle monorepo** with two main projects:
-- `frontend/` - Angular 21 application (pnpm-managed)
-- `service/` - Spring Boot 3.4 backend (Java 21)
+- `frontend/` - Angular 22 application (pnpm-managed)
+- `service/` - Spring Boot 4.2 backend (Java 25)
 
 Supporting services:
 - `mysql/` - Database configuration
 - `proxy/` - nginx reverse proxy
 
-### Frontend Architecture (Angular 21)
+### Frontend Architecture (Angular 22)
 The frontend follows **standalone component architecture** with feature modules:
 
 **Core Feature Modules**:
@@ -39,14 +39,14 @@ The frontend follows **standalone component architecture** with feature modules:
 
 **State Management**: NgRx (@ngrx/store, @ngrx/effects) is used in the admin module for managing complex state.
 
-**UI Framework**: Angular Material 21 with Material Design components.
+**UI Framework**: Angular Material 22 with Material Design components.
 
 **Styling**: Uses SCSS (theming.scss for Material theming, component-scoped styles).
 
 **Component Naming**: Components use `bet-` prefix and kebab-case (e.g., `bet-dashboard`, `bet-statistics`).
 
-### Backend Architecture (Spring Boot 3.4)
-Java 21 backend using Spring Boot with:
+### Backend Architecture (Spring Boot 4.2)
+Java 25 backend using Spring Boot with:
 - **Controllers**: Separate controller classes for each domain (GameController, UserController, AdminController, etc.)
 - **Security**: Spring Security with JWT token authentication (JJWT library)
 - **Database**: Spring Data JPA with MySQL
@@ -59,7 +59,7 @@ Java 21 backend using Spring Boot with:
 
 ### Prerequisites
 - Node.js and pnpm (for frontend)
-- Java 21 (for backend)
+- Java 25 (for backend)
 - Gradle (wrapper included as ./gradlew)
 - Docker & Docker Compose (for local services)
 - MySQL (if running without Docker)
@@ -108,10 +108,10 @@ pnpm lint:fix       # Auto-fix lint issues
 ./gradlew :frontend:lint
 ```
 
-**Testing** (uses Karma + Jasmine):
+**Testing** (uses Vitest + jsdom via the Angular `unit-test` builder):
 ```bash
 pnpm test                # Watch mode
-pnpm test-ci             # Single run (headless Chrome)
+pnpm test-ci             # Single run (no browser required)
 # or from monorepo root:
 ./gradlew :frontend:test
 ```
@@ -146,9 +146,9 @@ Runs on http://localhost:8080 by default.
 ## Testing
 
 ### Frontend Testing
-- **Test Framework**: Karma + Jasmine
+- **Test Framework**: Vitest (Angular `@angular/build:unit-test` builder, jsdom environment)
 - **Run Tests**: `pnpm test` (watch) or `pnpm test-ci` (single run)
-- **Coverage**: Karma coverage plugin configured
+- **Coverage**: not configured (add `@vitest/coverage-v8` to use `ng test --coverage`)
 - **Component Tests**: Use `.spec.ts` files adjacent to components
 - **Angular TestBed**: Use for component and service testing with DI
 
@@ -173,7 +173,7 @@ Runs on http://localhost:8080 by default.
 **Configuration**: `frontend/eslint.config.js`
 
 ### Type Checking
-- TypeScript 5.9.3 for strict type checking
+- TypeScript 6.0.3 for strict type checking
 - `tsconfig.json` configured for strict mode
 - Run with IDE/editor integration or `ng build` will catch errors
 
@@ -201,20 +201,20 @@ Both are pushed to private registry: `docker.no1hardy.ch/beticon/...`
 ## Key Dependencies
 
 ### Frontend
-- **@angular/core@21.2.7** - Core framework
-- **@ngrx/{store,effects}@21.1.0** - State management
-- **@angular/material@21.2.5** - UI components
-- **date-fns@4.1.0** - Date manipulation
-- **rxjs@7.8.1** - Reactive programming
+- **@angular/core@22.3.0** - Core framework
+- **@ngrx/{store,effects}@22.0.1** - State management
+- **@angular/material@22.3.0** - UI components
+- **date-fns@4.4.0** - Date manipulation
+- **rxjs@7.8.2** - Reactive programming
 
 ### Backend
-- **spring-boot@3.4.1** - Web framework
+- **spring-boot@4.2.0** - Web framework
 - **spring-data-jpa** - Data access
-- **spring-security@3.4** - Authentication/authorization
-- **jjwt@0.11.5** - JWT token handling
-- **mapstruct@1.5.3** - DTO mapping
+- **spring-security** (Boot-managed) - Authentication/authorization
+- **jjwt@0.13.0** - JWT token handling
+- **mapstruct@1.6.3** - DTO mapping
 - **lombok** - Boilerplate reduction
-- **jakarta.mail@2.0.1** - Email functionality
+- **angus-mail** (Boot-managed Jakarta Mail implementation) - Email functionality
 
 ## Important Patterns & Conventions
 
@@ -267,7 +267,7 @@ Both are pushed to private registry: `docker.no1hardy.ch/beticon/...`
 - **Bundle Size Budgets** (enforced in CI):
   - Initial bundle: 500kB warning, 1MB error
   - Component styles: 2kB warning, 10kB error
-- **Change Detection**: OnPush strategy recommended for components
+- **Change Detection**: OnPush is the Angular 22 default; existing components still opt out via `ChangeDetectionStrategy.Eager` (added by the v22 migration, flagged as a lint warning). New components should keep the OnPush default
 - **Lazy Loading**: Feature modules are lazy-loaded
 
 ### Backend
