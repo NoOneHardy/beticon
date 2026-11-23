@@ -1,9 +1,8 @@
-import {AfterContentInit, Component, ElementRef, inject, ChangeDetectionStrategy} from '@angular/core'
+import {AfterContentInit, Component, ElementRef, inject} from '@angular/core'
 
 import {SpinnerComponent} from '../spinner/spinner.component'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-form-field',
   imports: [
     SpinnerComponent

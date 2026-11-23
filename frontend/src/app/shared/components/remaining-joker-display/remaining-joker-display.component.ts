@@ -1,7 +1,6 @@
-import {Component, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, input} from '@angular/core'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-remaining-joker-display',
   imports: [],
   templateUrl: './remaining-joker-display.component.html',

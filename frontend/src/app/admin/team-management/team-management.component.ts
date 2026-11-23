@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, signal, ChangeDetectionStrategy} from '@angular/core'
+import {Component, DestroyRef, inject, signal} from '@angular/core'
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import {AvatarUploadComponent} from '../../shared/components/avatar-upload/avatar-upload.component'
 import {ButtonComponent} from '../../shared/components/button/button.component'
@@ -13,7 +13,6 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInput} from '@angular/material/input'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-team-management',
   imports: [
     ReactiveFormsModule,

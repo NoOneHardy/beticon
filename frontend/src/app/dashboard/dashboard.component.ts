@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, ChangeDetectionStrategy} from '@angular/core'
+import {Component, computed, inject, OnInit} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {selectUser} from '../user-management/store/user.feature'
 import {PositionComponent} from '../shared/components/position/position.component'
@@ -11,7 +11,6 @@ import {RecentResultsComponent} from './components/recent-results/recent-results
 import {SpinnerComponent} from '../shared/components/spinner/spinner.component'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-dashboard',
   imports: [
     PositionComponent,

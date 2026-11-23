@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, computed, inject, input} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {selectNotifications} from '../../../../../user-management/store/user.feature'
 import {MatMenu, MatMenuTrigger} from '@angular/material/menu'
@@ -8,7 +8,6 @@ import {markNotificationAsRead} from '../../../../../user-management/store/user.
 import {NotificationType} from '../../../../../user-management/model/notification-type'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-notifications',
   imports: [
     MatMenu,

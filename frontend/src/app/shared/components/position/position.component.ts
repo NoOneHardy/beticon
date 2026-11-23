@@ -1,9 +1,8 @@
-import {Component, computed, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, computed, input} from '@angular/core'
 import {Ranking} from '../../../model/leaderboard/ranking'
 import { NgOptimizedImage } from '@angular/common'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-position',
   imports: [
     NgOptimizedImage

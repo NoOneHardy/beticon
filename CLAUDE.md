@@ -267,7 +267,7 @@ Both are pushed to private registry: `docker.no1hardy.ch/beticon/...`
 - **Bundle Size Budgets** (enforced in CI):
   - Initial bundle: 500kB warning, 1MB error
   - Component styles: 2kB warning, 10kB error
-- **Change Detection**: OnPush is the Angular 22 default; existing components still opt out via `ChangeDetectionStrategy.Eager` (added by the v22 migration, flagged as a lint warning). New components should keep the OnPush default
+- **Change Detection**: All components use the default OnPush strategy (the Angular 22 default, no `changeDetection` override). Hold component state in signals (`signal()`, `input()`, `computed()`, `store.selectSignal`, `toSignal`) instead of plain fields, so views update without manual change detection
 - **Lazy Loading**: Feature modules are lazy-loaded
 
 ### Backend

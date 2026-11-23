@@ -86,31 +86,31 @@ describe('HeaderComponent', () => {
   })
 
   it('should toggle menu state when toggleMenu is called', () => {
-    component.isExpanded = false
+    component.isExpanded.set(false)
     component.toggleMenu()
-    expect(component.isExpanded).toBe(true)
+    expect(component.isExpanded()).toBe(true)
     component.toggleMenu()
-    expect(component.isExpanded).toBe(false)
+    expect(component.isExpanded()).toBe(false)
   })
 
   it('should close menu on blur if click is outside the component', () => {
     const event = new MouseEvent('click')
     vi.spyOn(event, 'target', 'get').mockReturnValue(document.createElement('div'))
 
-    component.isExpanded = true
+    component.isExpanded.set(true)
     component.closeMenuOnBlur(event)
 
-    expect(component.isExpanded).toBe(false)
+    expect(component.isExpanded()).toBe(false)
   })
 
   it('should not close menu on blur if click is inside the component', () => {
     const event = new MouseEvent('click')
     vi.spyOn(event, 'target', 'get').mockReturnValue(fixture.nativeElement)
 
-    component.isExpanded = true
+    component.isExpanded.set(true)
     component.closeMenuOnBlur(event)
 
-    expect(component.isExpanded).toBe(true)
+    expect(component.isExpanded()).toBe(true)
   })
 
   it('should show the menu button on mobile for guests', () => {
@@ -122,7 +122,7 @@ describe('HeaderComponent', () => {
 
   it('should render guest navigation and auth links in the mobile menu', () => {
     viewportService.viewportWidth.set(480)
-    component.isExpanded = true
+    component.isExpanded.set(true)
     fixture.detectChanges()
 
     const mobileMenu = fixture.nativeElement.querySelector('#mobile-menu') as HTMLElement | null
@@ -146,7 +146,7 @@ describe('HeaderComponent', () => {
     store.overrideSelector(selectIsAdmin, true)
     store.refreshState()
     viewportService.viewportWidth.set(480)
-    component.isExpanded = true
+    component.isExpanded.set(true)
     fixture.detectChanges()
 
     const mobileMenu = fixture.nativeElement.querySelector('#mobile-menu') as HTMLElement | null

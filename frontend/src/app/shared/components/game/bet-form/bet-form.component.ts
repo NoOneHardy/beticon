@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, output, ChangeDetectionStrategy} from '@angular/core'
+import {ChangeDetectorRef, Component, computed, effect, inject, input, output} from '@angular/core'
 import {BetGame} from '../../../../model/game/bet-game'
 import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms'
 import {BetForm} from '../../../../model/game/bet-form'
@@ -17,7 +17,6 @@ import {PointsPipe} from '../../../pipes/points.pipe'
 import {TeamPreviousGamesComponent} from '../team-previous-games/team-previous-games.component'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-bet-form',
   imports: [
     ReactiveFormsModule,
@@ -43,6 +42,7 @@ import {TeamPreviousGamesComponent} from '../team-previous-games/team-previous-g
 })
 export class BetFormComponent implements ControlValueAccessor {
   private store = inject(Store)
+  private cdr = inject(ChangeDetectorRef)
 
   game = input.required<BetGame>()
   highlight = input<boolean, boolean | ''>(false, {
@@ -132,6 +132,7 @@ export class BetFormComponent implements ControlValueAccessor {
       ...bet,
       game: this.game().id
     }
+    this.cdr.markForCheck()
   }
 
   registerOnChange(fn: OnChangeFn<BetForm>): void {
@@ -145,6 +146,7 @@ export class BetFormComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean) {
     if (isDisabled) this.formGroup.disable()
     else this.formGroup.enable()
+    this.cdr.markForCheck()
   }
 
   fillJoker(value: number): boolean {

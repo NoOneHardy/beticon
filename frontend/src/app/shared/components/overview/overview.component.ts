@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, OnInit, Signal, ChangeDetectionStrategy} from '@angular/core'
+import {Component, computed, effect, inject, input, OnInit, Signal} from '@angular/core'
 import { DecimalPipe, NgOptimizedImage } from '@angular/common'
 import {ButtonComponent} from '../button/button.component'
 import {Store} from '@ngrx/store'
@@ -15,7 +15,6 @@ import {ActivatedRoute, Router} from '@angular/router'
 import {CardGroup} from '../../../model/group/card-group'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-overview',
   imports: [
     NgOptimizedImage,

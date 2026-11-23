@@ -1,4 +1,4 @@
-import {Component, computed, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy} from '@angular/core'
+import {Component, computed, DestroyRef, inject, OnInit, signal} from '@angular/core'
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import {ButtonComponent} from '../../shared/components/button/button.component'
 
@@ -12,7 +12,6 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInput} from '@angular/material/input'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-group-management',
   imports: [
     ReactiveFormsModule,

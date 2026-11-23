@@ -1,4 +1,4 @@
-import {Component, effect, inject, Signal, ChangeDetectionStrategy} from '@angular/core'
+import {Component, effect, inject, Signal} from '@angular/core'
 import {UserManagementPanelComponent} from '../user-management-panel/user-management-panel.component'
 import {FormBuilder, FormControl, FormGroupDirective, NgForm, ReactiveFormsModule, Validators} from '@angular/forms'
 import {ButtonComponent} from '../../shared/components/button/button.component'
@@ -17,7 +17,6 @@ import {MatIcon} from '@angular/material/icon'
 import {PasswordIconDirective} from '../../shared/directives/password-icon.directive'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-signup',
   imports: [
     UserManagementPanelComponent,

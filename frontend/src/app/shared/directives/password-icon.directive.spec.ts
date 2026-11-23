@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core'
+import {Component} from '@angular/core'
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {By} from '@angular/platform-browser'
 import {MatFormFieldModule} from '@angular/material/form-field'
@@ -8,7 +8,6 @@ import {MatInput, MatSuffix} from '@angular/material/input'
 import {PasswordIconDirective} from './password-icon.directive'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatFormFieldModule,
     MatInput,

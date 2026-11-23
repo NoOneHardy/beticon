@@ -1,10 +1,9 @@
-import {Component, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, input, signal} from '@angular/core'
 import {NgOptimizedImage} from '@angular/common'
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {EMPTY_METHOD, OnChangeFn, OnTouchFn} from '../../helper/control-value-accessor'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-avatar-upload',
   imports: [
     NgOptimizedImage
@@ -26,7 +25,7 @@ export class AvatarUploadComponent implements ControlValueAccessor {
 
   private onTouch: OnTouchFn = EMPTY_METHOD
   private onChange: OnChangeFn<File | null> = EMPTY_METHOD
-  protected _url: string | null = null
+  protected _url = signal<string | null>(null)
 
   onInputChange(event: Event): void {
     if (!this.isInputElement(event.target)) return
@@ -37,18 +36,18 @@ export class AvatarUploadComponent implements ControlValueAccessor {
   }
 
   get url(): string {
-    return this._url ?? this.defaultUrl()
+    return this._url() ?? this.defaultUrl()
   }
 
   set file(value: File | null) {
     if (!value) {
-      this._url = null
+      this._url.set(null)
       return
     }
     const reader = new FileReader()
     reader.readAsDataURL(value)
     reader.onload = () => {
-      this._url = reader.result as string ?? this.defaultUrl()
+      this._url.set(reader.result as string ?? this.defaultUrl())
     }
   }
 

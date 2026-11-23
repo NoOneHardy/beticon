@@ -1,8 +1,7 @@
-import {Component, HostBinding, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, HostBinding, input} from '@angular/core'
 import {Score} from '../../../../model/game/score'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-result',
   standalone: true,
   templateUrl: './result.component.html',

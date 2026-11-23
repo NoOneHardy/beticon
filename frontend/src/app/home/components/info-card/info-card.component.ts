@@ -1,7 +1,6 @@
-import {Component, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, input} from '@angular/core'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-info-card',
   imports: [],
   templateUrl: './info-card.component.html',

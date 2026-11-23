@@ -1,4 +1,4 @@
-import {Component, ElementRef, inject, input, signal, ChangeDetectionStrategy} from '@angular/core'
+import {Component, ElementRef, inject, input, signal} from '@angular/core'
 import {User} from '../../../../../model/user/user'
 import {RouterLink} from '@angular/router'
 
@@ -8,7 +8,6 @@ import {logout} from '../../../../../user-management/store/user.actions'
 import {NotificationsComponent} from '../notifications/notifications.component'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-user-menu',
   host: {
     '(document:click)': 'closeDropdownOnBlur($event)',

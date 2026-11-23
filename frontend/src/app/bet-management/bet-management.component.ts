@@ -1,12 +1,11 @@
 import {Store} from '@ngrx/store'
-import {Component, inject, OnInit, ChangeDetectionStrategy} from '@angular/core'
+import {Component, inject, OnInit} from '@angular/core'
 import {OverviewComponent} from '../shared/components/overview/overview.component'
 import {GroupViewComponent} from '../shared/components/group-view/group-view.component'
 import {ActivatedRoute} from '@angular/router'
 import {loadGroup} from '../shared/store/tournament.actions'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-bet-overview',
   imports: [
     OverviewComponent,

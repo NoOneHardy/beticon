@@ -1,11 +1,10 @@
-import {Component, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, input} from '@angular/core'
 import {BetGame} from '../../../model/game/bet-game'
 import {GamePreviewComponent} from '../../../shared/components/game/game-preview/game-preview.component'
 
 import {RouterLink} from '@angular/router'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-upcoming-games',
   imports: [
     GamePreviewComponent,

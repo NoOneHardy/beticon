@@ -1,4 +1,4 @@
-import {Component, inject, ChangeDetectionStrategy} from '@angular/core'
+import {Component, inject} from '@angular/core'
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import {Store} from '@ngrx/store'
 import {requestPasswordResetLink} from '../../user-management/store/user.actions'
@@ -16,7 +16,6 @@ enum STATE {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-request-password-reset',
   imports: [
     UserManagementPanelComponent,

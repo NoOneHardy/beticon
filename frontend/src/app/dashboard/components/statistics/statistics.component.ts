@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, signal, Signal, ChangeDetectionStrategy} from '@angular/core'
+import {Component, computed, inject, input, signal, Signal} from '@angular/core'
 import {Statistics} from '../../../model/dashboard/statistics'
 import {GlobalStatistics} from '../../../model/dashboard/global-statistics'
 
@@ -8,7 +8,6 @@ import {selectIsTournamentLoading} from '../../../shared/store/tournament.featur
 import {ShortNumberPipe} from '../../../shared/pipes/short-number.pipe'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-statistics',
   imports: [
     SpinnerComponent,

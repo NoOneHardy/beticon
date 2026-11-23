@@ -1,11 +1,10 @@
-import {Component, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, input, signal} from '@angular/core'
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {EMPTY_METHOD, OnChangeFn, OnTouchFn} from '../../helper/control-value-accessor'
 import {FormFieldComponent} from '../form-field/form-field.component'
 
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-score-form-field',
   imports: [
     FormFieldComponent,
@@ -28,8 +27,8 @@ export class ScoreFormFieldComponent implements ControlValueAccessor {
     alias: 'large'
   })
 
-  value: number | null = null
-  isDisabled = false
+  value = signal<number | null>(null)
+  isDisabled = signal(false)
 
   registerOnChange(fn: OnChangeFn<number | null>): void {
     this.onChange = fn
@@ -40,20 +39,22 @@ export class ScoreFormFieldComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled
+    this.isDisabled.set(isDisabled)
   }
 
   writeValue(value: number | null): void {
-    this.value = value
-    this.onChange(this.value)
+    this.value.set(value)
+    this.onChange(value)
   }
 
   increment(): void {
-    if (!this.value || this.value < 999) this.writeValue((this.value ?? 0) + 1)
+    const value = this.value()
+    if (!value || value < 999) this.writeValue((value ?? 0) + 1)
   }
 
   decrement(): void {
-    if (this.value && this.value > 0) this.writeValue(this.value - 1)
+    const value = this.value()
+    if (value && value > 0) this.writeValue(value - 1)
   }
 
   onInput(value: string | number): void {

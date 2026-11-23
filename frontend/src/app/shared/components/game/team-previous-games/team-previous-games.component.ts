@@ -1,9 +1,8 @@
-import {Component, input, ChangeDetectionStrategy} from '@angular/core'
+import {Component, input} from '@angular/core'
 import {NgOptimizedImage} from '@angular/common'
 import {Team} from '../../../../model/team/team'
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-team-previous-games',
   imports: [
     NgOptimizedImage
