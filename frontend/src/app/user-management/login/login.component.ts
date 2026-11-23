@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core'
+import {Component, inject, OnInit, ChangeDetectionStrategy} from '@angular/core'
 import {UserManagementPanelComponent} from '../user-management-panel/user-management-panel.component'
 import {ButtonComponent} from '../../shared/material-api'
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms'
@@ -13,6 +13,7 @@ import {PasswordIconDirective} from '../../shared/directives/password-icon.direc
 import {MatFormFieldModule} from '@angular/material/form-field'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-login',
   imports: [
     UserManagementPanelComponent,

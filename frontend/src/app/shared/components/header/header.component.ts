@@ -1,4 +1,4 @@
-import {Component, computed, ElementRef, inject, OnInit} from '@angular/core'
+import {Component, computed, ElementRef, inject, OnInit, ChangeDetectionStrategy} from '@angular/core'
 import {NavItemComponent} from './components/nav-item/nav-item.component'
 import {UserMenuComponent} from './components/user-menu/user-menu.component'
 import {EventType, Router, RouterLink} from '@angular/router'
@@ -12,6 +12,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations'
 import {NotificationsComponent} from './components/notifications/notifications.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-header',
   host: {
     '(document:click)': 'closeMenuOnBlur($event)',

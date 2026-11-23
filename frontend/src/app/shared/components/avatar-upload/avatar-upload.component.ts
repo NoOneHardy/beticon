@@ -1,9 +1,10 @@
-import {Component, input} from '@angular/core'
+import {Component, input, ChangeDetectionStrategy} from '@angular/core'
 import {NgOptimizedImage} from '@angular/common'
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {EMPTY_METHOD, OnChangeFn, OnTouchFn} from '../../helper/control-value-accessor'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-avatar-upload',
   imports: [
     NgOptimizedImage

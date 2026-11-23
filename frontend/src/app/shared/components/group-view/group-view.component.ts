@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, Signal} from '@angular/core'
+import {Component, effect, inject, input, Signal, ChangeDetectionStrategy} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {
   selectActiveGroup,
@@ -21,6 +21,7 @@ import {ScoreForm} from '../../../model/game/score-form'
 import {RemainingJokerDisplayComponent} from '../remaining-joker-display/remaining-joker-display.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-group-view',
   imports: [
     DecimalPipe,

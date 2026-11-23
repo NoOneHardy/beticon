@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, output} from '@angular/core'
+import {Component, computed, effect, inject, input, output, ChangeDetectionStrategy} from '@angular/core'
 import {BetGame} from '../../../../model/game/bet-game'
 import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms'
 import {BetForm} from '../../../../model/game/bet-form'
@@ -17,6 +17,7 @@ import {PointsPipe} from '../../../pipes/points.pipe'
 import {TeamPreviousGamesComponent} from '../team-previous-games/team-previous-games.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-bet-form',
   imports: [
     ReactiveFormsModule,

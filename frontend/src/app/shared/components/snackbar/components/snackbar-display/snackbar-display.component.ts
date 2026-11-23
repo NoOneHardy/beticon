@@ -1,10 +1,11 @@
-import {Component, inject, Signal} from '@angular/core'
+import {Component, inject, Signal, ChangeDetectionStrategy} from '@angular/core'
 
 import {SnackbarMessage} from '../../model/snackbar-message'
 import {SnackbarComponent} from '../../snackbar.component'
 import {SnackbarService} from '../../../../services/snackbar/snackbar.service'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-snackbar-display',
   imports: [
     SnackbarComponent

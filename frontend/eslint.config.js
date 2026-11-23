@@ -40,7 +40,8 @@ module.exports = tseslint.config(
         'error',
         'never'
       ],
-      '@angular-eslint/no-input-rename': 'off'
+      '@angular-eslint/no-input-rename': 'off',
+      '@angular-eslint/prefer-on-push-component-change-detection': 'warn'
     },
   },
   {

@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core'
+import {Component, inject, OnInit, ChangeDetectionStrategy} from '@angular/core'
 import {UserManagementPanelComponent} from '../../user-management/user-management-panel/user-management-panel.component'
 import {FormControl, FormGroup, FormGroupDirective, NgForm, ReactiveFormsModule, Validators} from '@angular/forms'
 import {hasError} from '../../shared/helper/form-field-error'
@@ -15,6 +15,7 @@ import {MatIcon} from '@angular/material/icon'
 import {PasswordIconDirective} from '../../shared/directives/password-icon.directive'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-password-reset',
   imports: [
     UserManagementPanelComponent,

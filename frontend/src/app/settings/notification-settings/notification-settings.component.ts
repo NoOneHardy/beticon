@@ -1,4 +1,4 @@
-import {Component, effect, inject, OnInit, Signal} from '@angular/core'
+import {Component, effect, inject, OnInit, Signal, ChangeDetectionStrategy} from '@angular/core'
 import {MatSlideToggle} from '@angular/material/slide-toggle'
 import {Store} from '@ngrx/store'
 import {fetchNotificationPreferences, updateNotificationPreferences} from '../../user-management/store/user.actions'
@@ -11,6 +11,7 @@ import {NotificationChannelPipe} from '../../shared/pipes/notification-channel.p
 import {ButtonComponent} from '../../shared/components/button/button.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-notification-settings',
   imports: [
     MatSlideToggle,

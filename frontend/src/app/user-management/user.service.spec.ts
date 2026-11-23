@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing'
 import {provideMockStore} from '@ngrx/store/testing'
-import {provideHttpClient} from '@angular/common/http'
+import {provideHttpClient, withXhr} from '@angular/common/http'
 import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing'
 import {ServiceError} from '../model/error'
 import {UserService} from './user.service'
@@ -13,7 +13,7 @@ describe('UserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideMockStore()]
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting(), provideMockStore()]
     })
     service = TestBed.inject(UserService)
     httpMock = TestBed.inject(HttpTestingController)

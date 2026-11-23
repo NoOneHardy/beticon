@@ -1,10 +1,11 @@
-import {Component, computed, inject} from '@angular/core'
+import {Component, computed, inject, ChangeDetectionStrategy} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {selectUser} from '../user-management/store/user.feature'
 import {DashboardComponent} from '../dashboard/dashboard.component'
 import {HomeComponent} from '../home/home.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-root',
   imports: [
     DashboardComponent,

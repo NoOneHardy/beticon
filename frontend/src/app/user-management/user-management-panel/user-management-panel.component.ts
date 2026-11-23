@@ -1,6 +1,7 @@
-import {Component, input} from '@angular/core'
+import {Component, input, ChangeDetectionStrategy} from '@angular/core'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-user-management-panel',
   imports: [],
   templateUrl: './user-management-panel.component.html',

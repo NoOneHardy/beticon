@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, Signal} from '@angular/core'
+import {Component, computed, inject, OnInit, Signal, ChangeDetectionStrategy} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {selectIsAdminLoading, selectUsers} from '../store/admin.feature'
 import {NgOptimizedImage} from '@angular/common'
@@ -15,6 +15,7 @@ import {toSignal} from '@angular/core/rxjs-interop'
 import {MatFormField, MatInput, MatLabel, MatPrefix} from '@angular/material/input'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-user-management',
   imports: [
     NgOptimizedImage,

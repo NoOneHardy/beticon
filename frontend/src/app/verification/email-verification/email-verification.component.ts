@@ -1,10 +1,11 @@
-import {Component, inject, OnInit} from '@angular/core'
+import {Component, inject, OnInit, ChangeDetectionStrategy} from '@angular/core'
 import {SpinnerComponent} from '../../shared/components/spinner/spinner.component'
 import {Store} from '@ngrx/store'
 import {verifyEmail} from '../../user-management/store/user.actions'
 import {ActivatedRoute} from '@angular/router'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-email-verification',
   imports: [
     SpinnerComponent

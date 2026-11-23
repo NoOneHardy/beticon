@@ -1,10 +1,11 @@
-import {Component, input} from '@angular/core'
+import {Component, input, ChangeDetectionStrategy} from '@angular/core'
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms'
 import {EMPTY_METHOD, OnChangeFn, OnTouchFn} from '../../helper/control-value-accessor'
 import {FormFieldComponent} from '../form-field/form-field.component'
 
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-score-form-field',
   imports: [
     FormFieldComponent,

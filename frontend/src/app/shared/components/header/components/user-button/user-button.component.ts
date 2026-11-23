@@ -1,8 +1,9 @@
-import {Component, input, output} from '@angular/core'
+import {Component, input, output, ChangeDetectionStrategy} from '@angular/core'
 import {RouterLink} from '@angular/router'
 import {MatRipple} from '@angular/material/core'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-user-button',
   imports: [
     RouterLink,

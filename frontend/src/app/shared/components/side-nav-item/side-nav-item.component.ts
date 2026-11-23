@@ -1,7 +1,8 @@
-import {Component, input, output} from '@angular/core'
+import {Component, input, output, ChangeDetectionStrategy} from '@angular/core'
 import {RouterLink, RouterLinkActive} from '@angular/router'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-side-nav-item',
   imports: [
     RouterLink,

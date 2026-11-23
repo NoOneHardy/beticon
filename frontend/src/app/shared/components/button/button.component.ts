@@ -1,7 +1,8 @@
-import {Component, input, output} from '@angular/core'
+import {Component, input, output, ChangeDetectionStrategy} from '@angular/core'
 
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-button',
   imports: [],
   host: {

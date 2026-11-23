@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit} from '@angular/core'
+import {Component, computed, inject, OnInit, ChangeDetectionStrategy} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {InfoCardComponent} from './components/info-card/info-card.component'
 import {PayoutBoardComponent} from './components/payout-board/payout-board.component'
@@ -8,6 +8,7 @@ import {selectHomeData, selectIsHomeLoading} from './store/home.feature'
 import {SpinnerComponent} from '../shared/components/spinner/spinner.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-home',
   imports: [
     HeroSectionComponent,

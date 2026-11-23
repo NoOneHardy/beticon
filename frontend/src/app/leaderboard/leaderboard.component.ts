@@ -1,4 +1,4 @@
-import {Component, computed, inject, OnInit, Signal} from '@angular/core'
+import {Component, computed, inject, OnInit, Signal, ChangeDetectionStrategy} from '@angular/core'
 import {Store} from '@ngrx/store'
 import {getLeaderboard} from '../shared/store/tournament.actions'
 import {selectIsTournamentLoading, selectLeaderboard} from '../shared/store/tournament.feature'
@@ -8,6 +8,7 @@ import {PositionComponent} from '../shared/components/position/position.componen
 import {SpinnerComponent} from '../shared/components/spinner/spinner.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-leaderboard',
   imports: [
     PositionComponent,

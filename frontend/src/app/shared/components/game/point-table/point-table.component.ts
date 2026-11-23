@@ -1,7 +1,8 @@
-import {Component, HostBinding, input} from '@angular/core'
+import {Component, HostBinding, input, ChangeDetectionStrategy} from '@angular/core'
 import {DetailedPoints} from '../../../../model/game/detailed-points'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-point-table',
   standalone: true,
   templateUrl: './point-table.component.html',

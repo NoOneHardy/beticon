@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing'
 import {SignupComponent} from './signup.component'
-import {provideHttpClient} from '@angular/common/http'
+import {provideHttpClient, withXhr} from '@angular/common/http'
 import {provideMockStore} from '@ngrx/store/testing'
 import {EffectRef, Injectable} from '@angular/core'
 import {of} from 'rxjs'
@@ -34,7 +34,7 @@ describe('SignupComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SignupComponent],
-      providers: [provideHttpClient(), provideMockStore(), {
+      providers: [provideHttpClient(withXhr()), provideMockStore(), {
         provide: UserValidatorService,
         useExisting: MockUserValidatorService
       }]

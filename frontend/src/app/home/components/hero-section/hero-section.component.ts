@@ -1,9 +1,10 @@
-import {Component} from '@angular/core'
+import {Component, ChangeDetectionStrategy} from '@angular/core'
 import {RouterLink} from '@angular/router'
 import {MatRipple} from '@angular/material/core'
 import {StadiumComponent} from '../stadium/stadium.component'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-hero-section',
   imports: [
     RouterLink,

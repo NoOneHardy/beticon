@@ -1,4 +1,4 @@
-import {Component, computed, DestroyRef, ElementRef, inject, OnInit, Signal, signal, viewChild} from '@angular/core'
+import {Component, computed, DestroyRef, ElementRef, inject, OnInit, Signal, signal, viewChild, ChangeDetectionStrategy} from '@angular/core'
 import {
   AbstractControl,
   FormControl,
@@ -29,6 +29,7 @@ import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from '@angular/m
 import {ErrorStateMatcher} from '@angular/material/core'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-game-management',
   imports: [
     ReactiveFormsModule,

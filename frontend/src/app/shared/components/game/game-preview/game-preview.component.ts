@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, Signal} from '@angular/core'
+import {Component, computed, inject, input, Signal, ChangeDetectionStrategy} from '@angular/core'
 import {BetGame} from '../../../../model/game/bet-game'
 import { DatePipe, NgOptimizedImage } from '@angular/common'
 import {ButtonComponent} from '../../button/button.component'
@@ -7,6 +7,7 @@ import {PointService} from '../../../services/point/point.service'
 import {Bet} from '../../../../model/game/bet'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-game-preview',
   imports: [
     DatePipe,

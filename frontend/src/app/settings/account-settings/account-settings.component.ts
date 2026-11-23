@@ -1,4 +1,4 @@
-import {Component, inject, Signal} from '@angular/core'
+import {Component, inject, Signal, ChangeDetectionStrategy} from '@angular/core'
 import {AvatarUploadComponent} from '../../shared/components/avatar-upload/avatar-upload.component'
 import {Store} from '@ngrx/store'
 import {selectIsUserLoading, selectUser} from '../../user-management/store/user.feature'
@@ -26,6 +26,7 @@ import {PasswordIconDirective} from '../../shared/directives/password-icon.direc
 import {MatIcon} from '@angular/material/icon'
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'bet-account-settings',
   imports: [
     AvatarUploadComponent,
