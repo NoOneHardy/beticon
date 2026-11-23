@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {SignupComponent} from './signup.component'
-import {provideHttpClient, withXhr} from '@angular/common/http'
+import {provideHttpClient} from '@angular/common/http'
 import {provideMockStore} from '@ngrx/store/testing'
 import {EffectRef, Injectable} from '@angular/core'
 import {of} from 'rxjs'
@@ -36,7 +36,7 @@ describe('SignupComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [SignupComponent],
-      providers: [provideHttpClient(withXhr()), provideMockStore(), {
+      providers: [provideHttpClient(), provideMockStore(), {
         provide: UserValidatorService,
         useExisting: MockUserValidatorService
       }]
