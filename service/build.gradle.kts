@@ -42,7 +42,7 @@ dependencies {
   testImplementation(libs.spring.boot.data.jpa.test)
   testRuntimeOnly(libs.h2)
 
-  implementation(libs.jakarta.mail)
+  implementation(libs.angus.mail)
 }
 
 tasks.withType<Test> {

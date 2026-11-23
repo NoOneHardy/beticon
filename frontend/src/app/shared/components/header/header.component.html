@@ -38,21 +38,21 @@
         }
         <button type="button"
           class="menu-button"
-          [class.-active]="isExpanded"
-          [attr.aria-expanded]="isExpanded"
+          [class.-active]="isExpanded()"
+          [attr.aria-expanded]="isExpanded()"
           aria-controls="mobile-menu"
-          [attr.aria-label]="isExpanded ? 'Navigation schliessen' : 'Navigation anzeigen'"
+          [attr.aria-label]="isExpanded() ? 'Navigation schliessen' : 'Navigation anzeigen'"
           (click)="toggleMenu()">
-          @if (isExpanded) {
+          @if (isExpanded()) {
             <span class="material-symbols-rounded">close</span>
           }
-          @if (!isExpanded) {
+          @if (!isExpanded()) {
             <span class="material-symbols-rounded open">dehaze</span>
           }
         </button>
       </div>
     </div>
-    @if (isExpanded) {
+    @if (isExpanded()) {
       <button
         type="button"
         class="menu-backdrop"
@@ -61,9 +61,9 @@
     }
     <nav id="mobile-menu"
       class="nav-bottom"
-      [class.-expanded]="isExpanded"
-      [@expandable]="isExpanded ? 'expanded' : 'collapsed'"
-      [attr.aria-hidden]="!isExpanded">
+      [class.-expanded]="isExpanded()"
+      [@expandable]="isExpanded() ? 'expanded' : 'collapsed'"
+      [attr.aria-hidden]="!isExpanded()">
       <div class="menu-section">
         <p class="section-title">Navigation</p>
         @if (user()) {

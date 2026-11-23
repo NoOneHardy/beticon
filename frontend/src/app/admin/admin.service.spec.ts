@@ -7,7 +7,7 @@ import {provideHttpClient} from '@angular/common/http'
 import {mockUser1} from '../model/mock/user.mock'
 import {ServiceError} from '../model/error'
 import {provideMockStore} from '@ngrx/store/testing'
-import {flushApiErrorResponse, flushApiResponse} from '../shared/helper/karma.helper'
+import {flushApiErrorResponse, flushApiResponse} from '../shared/helper/test.helper'
 import {LightTeam} from '../model/team/light-team'
 import {GroupOption} from './model/group-option'
 
@@ -157,7 +157,7 @@ describe('AdminService', () => {
 
     const req = httpMock.expectOne('/api/team/flag')
     expect(req.request.method).toBe('POST')
-    expect(req.request.body instanceof FormData).toBeTrue()
+    expect(req.request.body instanceof FormData).toBe(true)
     flushApiResponse(req, '/cdn/flags/flag.png')
   })
 })

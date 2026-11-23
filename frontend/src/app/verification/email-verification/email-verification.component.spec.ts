@@ -35,8 +35,8 @@ describe('EmailVerificationComponent', () => {
   })
 
   it('should read code from query params', () => {
-    const spy = spyOn(component['store'], 'dispatch')
+    const spy = vi.spyOn(component['store'], 'dispatch')
     component.ngOnInit()
-    expect(spy).toHaveBeenCalledOnceWith(verifyEmail({code: 'test-code'}))
+    expect(spy).toHaveBeenCalledExactlyOnceWith(verifyEmail({code: 'test-code'}))
   })
 })

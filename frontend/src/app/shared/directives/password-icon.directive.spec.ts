@@ -55,7 +55,7 @@ describe('PasswordIconDirective', () => {
 
     expect(directive).toBeTruthy()
     expect(directive['input']()).toBe(getInput())
-    expect(directive.isVisible()).toBeFalse()
+    expect(directive.isVisible()).toBe(false)
     expect(getInput().type).toBe('password')
     expect(getIcon().textContent?.trim()).toBe('visibility')
   })
@@ -66,14 +66,14 @@ describe('PasswordIconDirective', () => {
     icon.dispatchEvent(new Event('pointerup'))
     fixture.detectChanges()
 
-    expect(getDirective().isVisible()).toBeTrue()
+    expect(getDirective().isVisible()).toBe(true)
     expect(getInput().type).toBe('text')
     expect(icon.textContent?.trim()).toBe('visibility_off')
 
     icon.dispatchEvent(new Event('pointerup'))
     fixture.detectChanges()
 
-    expect(getDirective().isVisible()).toBeFalse()
+    expect(getDirective().isVisible()).toBe(false)
     expect(getInput().type).toBe('password')
     expect(icon.textContent?.trim()).toBe('visibility')
   })

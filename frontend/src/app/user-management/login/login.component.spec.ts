@@ -47,13 +47,13 @@ describe('LoginComponent', () => {
   })
 
   it('should mark form as touched on login', () => {
-    spyOn(component.formGroup, 'markAllAsTouched')
+    vi.spyOn(component.formGroup, 'markAllAsTouched').mockReturnValue(undefined)
     component.login()
     expect(component.formGroup.markAllAsTouched).toHaveBeenCalled()
   })
 
   it('should call login on click', () => {
-    spyOn(component, 'login')
+    vi.spyOn(component, 'login').mockReturnValue(undefined)
     fixture.nativeElement.querySelector('bet-button button').click()
     fixture.detectChanges()
     expect(component.login).toHaveBeenCalled()

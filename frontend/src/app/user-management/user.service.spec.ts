@@ -5,7 +5,7 @@ import {HttpTestingController, provideHttpClientTesting} from '@angular/common/h
 import {ServiceError} from '../model/error'
 import {UserService} from './user.service'
 import {AvailabilityCheck} from './model/availability-check'
-import {flushApiErrorResponse, flushApiResponse} from '../shared/helper/karma.helper'
+import {flushApiErrorResponse, flushApiResponse} from '../shared/helper/test.helper'
 
 describe('UserService', () => {
   let service: UserService
@@ -90,7 +90,7 @@ describe('UserService', () => {
   it('should mark notification as read', () => {
     const notificationId = 'notification-1'
     service.markNotificationAsRead(notificationId).subscribe(response => {
-      expect(response).toBeTrue()
+      expect(response).toBe(true)
     })
 
     const req = httpMock.expectOne(`/api/notification/${notificationId}`)
@@ -115,7 +115,7 @@ describe('UserService', () => {
   it('should request password reset link', () => {
     const email = 'silas@test.ch'
     service.requestPasswordResetLink(email).subscribe(res => {
-      expect(res).toBeTrue()
+      expect(res).toBe(true)
     })
 
     const req = httpMock.expectOne(`/api/user/password-reset/request-link?email=${email}`)
@@ -145,7 +145,7 @@ describe('UserService', () => {
     const newPassword = 'silas@test.ch'
     const code = 'reset-code-123'
     service.resetPassword(newPassword, code).subscribe(res => {
-      expect(res).toBeTrue()
+      expect(res).toBe(true)
     })
 
     const req = httpMock.expectOne(`/api/user/password-reset`)

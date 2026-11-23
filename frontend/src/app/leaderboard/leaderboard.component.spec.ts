@@ -37,7 +37,7 @@ describe('LeaderboardComponent', () => {
   })
 
   it('should load leaderboard from store', () => {
-    const spy = spyOn(store, 'dispatch')
+    const spy = vi.spyOn(store, 'dispatch')
     component.ngOnInit()
     expect(spy).toHaveBeenCalledWith(getLeaderboard())
     expect(component.leaderboard()).toEqual([])

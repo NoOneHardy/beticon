@@ -5,13 +5,11 @@ node-version = "24.18.0"
 pnpm-version = "11.9.0"
 node-gradle = "7.1.0"
 
-spring-boot = "4.0.7"
+spring-boot = "4.2.0"
 spring-dependency-management = "1.1.7"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
-jjwt = "0.12.6"
-mail = "2.0.2"
-slf4j = "2.0.13"
+jjwt = "0.13.0"
 
 [plugins]
 spring-boot = {id = 'org.springframework.boot', version.ref = "spring-boot"}
@@ -34,7 +32,7 @@ h2 = {module = "com.h2database:h2"}
 
 lombok = {module = "org.projectlombok:lombok" }
 
-slf4j-api = {module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-api = {module = "org.slf4j:slf4j-api" }
 
 io-jsonwebtoken-jjwt-api = {module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
 io-jsonwebtoken-jjwt-impl = {module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
@@ -44,5 +42,5 @@ mapstruct = {module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
 mapstruct-processor = {module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
 lombok-mapstruct-binding = {module = "org.projectlombok:lombok-mapstruct-binding", version.ref = "lombok-mapstruct-binding" }
 
-jakarta-mail = {module = "com.sun.mail:jakarta.mail", version.ref = "mail" }
+angus-mail = {module = "org.eclipse.angus:angus-mail" }
 

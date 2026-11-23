@@ -149,7 +149,7 @@ describe('GroupViewComponent', () => {
   })
 
   it('should save bets', () => {
-    const spy = spyOn(component['store'], 'dispatch')
+    const spy = vi.spyOn(component['store'], 'dispatch')
 
     component.save()
 
@@ -192,8 +192,8 @@ describe('GroupViewComponent', () => {
     mockStore.refreshState()
     fixture.detectChanges()
 
-    expect(component.isLoading()).toBeTrue()
-    expect(component.isSaving()).toBeTrue()
+    expect(component.isLoading()).toBe(true)
+    expect(component.isSaving()).toBe(true)
 
     mockStore.overrideSelector(selectIsTournamentLoading, false)
     mockStore.overrideSelector(selectIsTournamentSaving, false)
@@ -271,7 +271,7 @@ describe('GroupViewComponent', () => {
   })
 
   it('should save bets in bet mode', () => {
-    const spy = spyOn(component['store'], 'dispatch')
+    const spy = vi.spyOn(component['store'], 'dispatch')
     component.save()
 
     expect(spy).toHaveBeenCalledWith(saveBets({
@@ -295,7 +295,7 @@ describe('GroupViewComponent', () => {
 
   it('should save results in admin mode', () => {
     fixture.componentRef.setInput('mode', 'admin')
-    const spy = spyOn(component['store'], 'dispatch')
+    const spy = vi.spyOn(component['store'], 'dispatch')
 
     component.form.controls.bets.patchValue([
       {

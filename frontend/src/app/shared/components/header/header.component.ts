@@ -1,4 +1,4 @@
-import {Component, computed, ElementRef, inject, OnInit} from '@angular/core'
+import {Component, computed, ElementRef, inject, OnInit, signal} from '@angular/core'
 import {NavItemComponent} from './components/nav-item/nav-item.component'
 import {UserMenuComponent} from './components/user-menu/user-menu.component'
 import {EventType, Router, RouterLink} from '@angular/router'
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
   isAdmin = this.store.selectSignal(selectIsAdmin)
 
   isVpL = computed(() => !this.viewportService.isVPMorSmaller())
-  isExpanded = false
+  isExpanded = signal(false)
 
   ngOnInit(): void {
     this.router.events.subscribe(($event) => {
@@ -72,16 +72,16 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleMenu(): void {
-    this.isExpanded = !this.isExpanded
+    this.isExpanded.update(isExpanded => !isExpanded)
   }
 
   closeMenuOnBlur(e: MouseEvent): void {
     if (!this.el.nativeElement.contains(e.target)) {
-      this.isExpanded = false
+      this.isExpanded.set(false)
     }
   }
 
   closeMenu(): void {
-    this.isExpanded = false
+    this.isExpanded.set(false)
   }
 }
