@@ -23,4 +23,12 @@ describe('StatisticsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
+  it('should treat undefined inputs as empty stats', () => {
+    fixture.componentRef.setInput('personalStats', undefined)
+    fixture.componentRef.setInput('globalStats', undefined)
+    fixture.detectChanges()
+
+    expect(component.stats()).toEqual([])
+  })
 })
