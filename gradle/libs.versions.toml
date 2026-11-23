@@ -10,7 +10,6 @@ spring-dependency-management = "1.1.7"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
 jjwt = "0.13.0"
-slf4j = "2.0.13"
 
 [plugins]
 spring-boot = {id = 'org.springframework.boot', version.ref = "spring-boot"}
@@ -33,7 +32,7 @@ h2 = {module = "com.h2database:h2"}
 
 lombok = {module = "org.projectlombok:lombok" }
 
-slf4j-api = {module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-api = {module = "org.slf4j:slf4j-api" }
 
 io-jsonwebtoken-jjwt-api = {module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
 io-jsonwebtoken-jjwt-impl = {module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
