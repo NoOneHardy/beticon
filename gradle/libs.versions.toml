@@ -9,7 +9,7 @@ spring-boot = "4.2.0"
 spring-dependency-management = "1.1.7"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
-jjwt = "0.12.6"
+jjwt = "0.13.0"
 mail = "2.0.2"
 slf4j = "2.0.13"
 
