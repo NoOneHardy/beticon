@@ -1,7 +1,7 @@
 import {Component, computed, inject} from '@angular/core'
 import {AppearanceService, AppearanceTheme} from '../../shared/services/appearance/appearance.service'
 
-type ThemeOption = {
+interface ThemeOption {
   theme: AppearanceTheme
   title: string
   subtitle: string
