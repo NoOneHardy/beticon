@@ -69,7 +69,7 @@ describe('HeaderComponent', () => {
     store.overrideSelector(selectIsAdmin, false)
     store.refreshState()
     fixture.detectChanges()
-    expect(component.isAdmin()).toBeFalse()
+    expect(component.isAdmin()).toBe(false)
 
     store.overrideSelector(selectIsAdmin, true)
     store.refreshState()
@@ -78,7 +78,7 @@ describe('HeaderComponent', () => {
   })
 
   it('should dispatch logout action when logout is called', () => {
-    const storeSpy = spyOn(component['store'], 'dispatch').and.callThrough()
+    const storeSpy = vi.spyOn(component['store'], 'dispatch')
 
     component.logout()
 
@@ -88,29 +88,29 @@ describe('HeaderComponent', () => {
   it('should toggle menu state when toggleMenu is called', () => {
     component.isExpanded = false
     component.toggleMenu()
-    expect(component.isExpanded).toBeTrue()
+    expect(component.isExpanded).toBe(true)
     component.toggleMenu()
-    expect(component.isExpanded).toBeFalse()
+    expect(component.isExpanded).toBe(false)
   })
 
   it('should close menu on blur if click is outside the component', () => {
     const event = new MouseEvent('click')
-    spyOnProperty(event, 'target').and.returnValue(document.createElement('div'))
+    vi.spyOn(event, 'target', 'get').mockReturnValue(document.createElement('div'))
 
     component.isExpanded = true
     component.closeMenuOnBlur(event)
 
-    expect(component.isExpanded).toBeFalse()
+    expect(component.isExpanded).toBe(false)
   })
 
   it('should not close menu on blur if click is inside the component', () => {
     const event = new MouseEvent('click')
-    spyOnProperty(event, 'target').and.returnValue(fixture.nativeElement)
+    vi.spyOn(event, 'target', 'get').mockReturnValue(fixture.nativeElement)
 
     component.isExpanded = true
     component.closeMenuOnBlur(event)
 
-    expect(component.isExpanded).toBeTrue()
+    expect(component.isExpanded).toBe(true)
   })
 
   it('should show the menu button on mobile for guests', () => {

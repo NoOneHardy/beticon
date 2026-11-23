@@ -24,7 +24,7 @@ describe('HomeComponent', () => {
     })
     fixture = TestBed.createComponent(HomeComponent)
     component = fixture.componentInstance
-    spyOn(store, 'dispatch')
+    vi.spyOn(store, 'dispatch')
     fixture.detectChanges()
   })
 
@@ -33,7 +33,7 @@ describe('HomeComponent', () => {
   })
 
   it('should load home data on init', () => {
-    expect(store.dispatch).toHaveBeenCalledOnceWith(loadHomeData())
+    expect(store.dispatch).toHaveBeenCalledExactlyOnceWith(loadHomeData())
   })
 
   it('should expose formatted stats from the store', () => {

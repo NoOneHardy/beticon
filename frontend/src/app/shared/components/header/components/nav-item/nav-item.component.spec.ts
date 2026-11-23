@@ -41,7 +41,7 @@ describe('NavItemComponent', () => {
     if (!item) return
     item.classList.add('active')
 
-    expect(getComputedStyle(item, ':after').width.slice(0, -2)).toBeGreaterThan(0)
+    expect(Number(getComputedStyle(item, ':after').width.slice(0, -2))).toBeGreaterThan(0)
   })
 
   it('should fill icon on active link', () => {
