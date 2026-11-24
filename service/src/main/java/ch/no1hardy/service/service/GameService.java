@@ -31,7 +31,6 @@ public class GameService {
     private final GameRepository repository;
     private final ScoreRepository scoreRepository;
     private final BetRepository betRepository;
-    private final UserService userService;
     private final PointsService pointsService;
     private final EntityManager entityManager;
     private final AuthService authService;
@@ -61,17 +60,14 @@ public class GameService {
             throw new KnockoutTieException("Game " + id + " is in a knockout group and cannot end in a tie", "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden");
         }
 
-        userService.listRaw().forEach(user -> user.setLastReviewedPoints(user.getPoints()));
         removeExistingResult(game);
-
-        if (!dto.isNull()) {
-            dto.setGame(id);
-            Score result = scoreRepository.save(mapper.toEntity(dto));
-            game.setResult(result);
-        }
-
-        pointsService.rescoreBetsAndTotals(game.getBets());
         if (dto.isNull()) return mapper.toDto(repository.save(game));
+
+        pointsService.snapshotLastReviewedPoints();
+        dto.setGame(id);
+        Score result = scoreRepository.save(mapper.toEntity(dto));
+        game.setResult(result);
+        pointsService.rescoreBetsAndTotals(game.getBets());
 
         notificationService.notifyUsersNewResult(game);
         notificationService.notifyUsersRankingChange();
@@ -80,12 +76,14 @@ public class GameService {
 
     private void removeExistingResult(@NotNull Game game) {
         Score existingResult = game.getResult();
-        if (existingResult != null) {
-            game.setResult(null);
-            scoreRepository.delete(existingResult);
-            // the old Result must be gone before the corrected one is inserted (one Result per Game)
-            entityManager.flush();
-        }
+        if (existingResult == null) return;
+
+        pointsService.snapshotLastReviewedPoints();
+        game.setResult(null);
+        scoreRepository.delete(existingResult);
+        // the old Result must be gone before the corrected one is inserted (one Result per Game)
+        entityManager.flush();
+        pointsService.rescoreBetsAndTotals(game.getBets());
     }
 
     /**

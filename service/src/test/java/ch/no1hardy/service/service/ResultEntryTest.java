@@ -113,10 +113,23 @@ public class ResultEntryTest {
     }
 
     private void enterResult(Integer home, Integer guest) {
+        enterResult(game, home, guest);
+    }
+
+    private void enterResult(Game target, Integer home, Integer guest) {
         ResultReq req = new ResultReq();
         req.setScoreTeamHome(home);
         req.setScoreTeamGuest(guest);
-        service.uploadResult(game.getId(), req);
+        service.uploadResult(target.getId(), req);
+    }
+
+    private Game createOtherGame() {
+        Game other = new Game();
+        other.setGroup(game.getGroup());
+        other.setTimestamp(LocalDateTime.now().minusDays(2));
+        other.setTeamHome(game.getTeamHome());
+        other.setTeamGuest(game.getTeamGuest());
+        return gameRepository.save(other);
     }
 
     private Integer storedPoints(Bet bet) {
@@ -125,6 +138,25 @@ public class ResultEntryTest {
 
     private Integer total(User user) {
         return userRepository.findById(user.getId()).orElseThrow().getPoints();
+    }
+
+    private Integer lastReviewed(User user) {
+        return userRepository.findById(user.getId()).orElseThrow().getLastReviewedPoints();
+    }
+
+    /**
+     * Gives the exact bettor 10 Points on another Game, so their total is 10 before anything happens on {@code game}.
+     */
+    private void scoreExactUserOnOtherGame() {
+        Game other = createOtherGame();
+        Bet otherBet = new Bet();
+        otherBet.setUser(exactUser);
+        otherBet.setGame(other);
+        otherBet.setScoreTeamHome(3);
+        otherBet.setScoreTeamGuest(0);
+        otherBet.setJoker(1);
+        betRepository.save(otherBet);
+        enterResult(other, 3, 0);
     }
 
     @Test
@@ -143,12 +175,7 @@ public class ResultEntryTest {
     @Test
     @DisplayName("uploadResult() - should sum a user's total over all of their Bets")
     void shouldSumTotalOverAllBetsOfAUser() {
-        Game other = new Game();
-        other.setGroup(game.getGroup());
-        other.setTimestamp(LocalDateTime.now().minusDays(2));
-        other.setTeamHome(game.getTeamHome());
-        other.setTeamGuest(game.getTeamGuest());
-        other = gameRepository.save(other);
+        Game other = createOtherGame();
 
         Bet otherBet = new Bet();
         otherBet.setUser(exactUser);
@@ -213,5 +240,55 @@ public class ResultEntryTest {
         assertEquals(0, storedPoints(missBet));
         assertEquals(30, total(exactUser));
         assertEquals(10, total(winnerUser));
+    }
+
+    @Test
+    @DisplayName("uploadResult() - should leave the last reviewed Points alone for a blank row on a Game without Result")
+    void shouldKeepLastReviewedPointsOnBlankRowWithoutResult() {
+        scoreExactUserOnOtherGame(); // total 10, last reviewed 0
+
+        enterResult(null, null);
+
+        assertEquals(0, lastReviewed(exactUser));
+        assertEquals(10, total(exactUser));
+    }
+
+    @Test
+    @DisplayName("uploadResult() - should remember the totals before a new Result as the last reviewed Points")
+    void shouldSetLastReviewedPointsToTotalsBeforeEntry() {
+        scoreExactUserOnOtherGame();
+
+        enterResult(2, 1);
+
+        assertEquals(10, lastReviewed(exactUser));
+        assertEquals(20, total(exactUser));
+        assertEquals(0, lastReviewed(winnerUser));
+    }
+
+    @Test
+    @DisplayName("uploadResult() - should remember the totals before the removal as the last reviewed Points")
+    void shouldSetLastReviewedPointsToTotalsBeforeRemoval() {
+        scoreExactUserOnOtherGame();
+        enterResult(2, 1);
+
+        enterResult(null, null);
+
+        assertEquals(20, lastReviewed(exactUser));
+        assertEquals(10, total(exactUser));
+        assertEquals(10, lastReviewed(winnerUser));
+    }
+
+    @Test
+    @DisplayName("uploadResult() - should remember the totals without the old Result as the last reviewed Points on a correction")
+    void shouldSetLastReviewedPointsToTotalsWithoutOldResultOnCorrection() {
+        scoreExactUserOnOtherGame();
+        enterResult(2, 1); // exact bettor 20, winner bettor 10
+
+        enterResult(1, 0); // exact bettor 15, winner bettor 20
+
+        assertEquals(10, lastReviewed(exactUser));
+        assertEquals(15, total(exactUser));
+        assertEquals(0, lastReviewed(winnerUser));
+        assertEquals(20, total(winnerUser));
     }
 }

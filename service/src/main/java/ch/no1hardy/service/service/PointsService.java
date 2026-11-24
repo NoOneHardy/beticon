@@ -52,16 +52,26 @@ public class PointsService {
      * Re-scores the given Bets and rebuilds the totals of the users who placed them.
      *
      * @param bets the Bets to re-score
-     * @return the users whose totals were rebuilt
      */
     @Transactional
-    public List<User> rescoreBetsAndTotals(@NotNull Collection<Bet> bets) {
+    public void rescoreBetsAndTotals(@NotNull Collection<Bet> bets) {
         rescoreBets(bets);
         List<User> users = bets.stream()
                 .map(Bet::getUser)
                 .collect(Collectors.toMap(User::getId, Function.identity(), (a, b) -> a))
                 .values().stream().toList();
         recomputeTotals(users);
-        return users;
+    }
+
+    /**
+     * Remembers every active user's current total as their last reviewed Points,
+     * the base the leaderboard's ranking change is measured against.
+     * Called right before a Result's Points are removed or added.
+     */
+    @Transactional
+    public void snapshotLastReviewedPoints() {
+        List<User> users = userRepository.findAll().stream().filter(User::isActive).toList();
+        users.forEach(user -> user.setLastReviewedPoints(user.getPoints()));
+        userRepository.saveAll(users);
     }
 }
