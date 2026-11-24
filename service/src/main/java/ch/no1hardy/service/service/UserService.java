@@ -12,10 +12,6 @@ import ch.no1hardy.service.front.user.UserRes;
 import ch.no1hardy.service.front.verification.ResetPasswordReq;
 import ch.no1hardy.service.front.verification.VerifyEmailReq;
 import ch.no1hardy.service.mapper.UserMapper;
-import ch.no1hardy.service.model.game.Bet;
-import ch.no1hardy.service.model.game.Game;
-import ch.no1hardy.service.model.game.PointsBreakdown;
-import ch.no1hardy.service.model.game.Score;
 import ch.no1hardy.service.model.group.GroupRepository;
 import ch.no1hardy.service.model.notification.Notification;
 import ch.no1hardy.service.model.user.User;
@@ -304,54 +300,6 @@ public class UserService {
      */
     public UserRes getCurrentUser() {
         return authService.getLoggedInUser().map(mapper::toDto).orElse(new UserRes());
-    }
-
-    /**
-     * Add points to users based on their bets in a game.
-     *
-     * @param game the game for which to add points.
-     */
-    public void addUserPoints(@NotNull Game game) {
-        if (game.getResult() == null) return;
-        Score result = game.getResult();
-
-        listRaw().forEach(user -> user.setLastReviewedPoints(user.getPoints()));
-
-        for (Bet bet : game.getBets()) {
-            if (bet.getUpdatedAt().isAfter(result.getCreatedAt())) return;
-            int points = calculateUserPoints(bet);
-
-            bet.getUser().setPoints(bet.getUser().getPoints() + points);
-        }
-    }
-
-    /**
-     * Remove points from users based on their bets in a game.
-     *
-     * @param game the game for which to remove points.
-     */
-    public void removeUserPoints(@NotNull Game game) {
-        if (game.getResult() == null) return;
-        Score result = game.getResult();
-
-        listRaw().forEach(user -> user.setLastReviewedPoints(user.getPoints()));
-
-        for (Bet bet : game.getBets()) {
-            if (bet.getUpdatedAt().isAfter(result.getCreatedAt())) return;
-            int points = calculateUserPoints(bet);
-
-            bet.getUser().setPoints(bet.getUser().getPoints() - points);
-        }
-    }
-
-    /**
-     * Calculate the points a user earns based on their bet and the actual game result.
-     *
-     * @param bet the user's bet.
-     * @return the calculated points, or 0 if the game has no result yet.
-     */
-    public int calculateUserPoints(@NotNull Bet bet) {
-        return bet.pointsBreakdown().map(PointsBreakdown::total).orElse(0);
     }
 
     /**

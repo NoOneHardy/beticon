@@ -15,9 +15,11 @@ import ch.no1hardy.service.mapper.GameMapper;
 import ch.no1hardy.service.mapper.UserHelper;
 import ch.no1hardy.service.model.game.*;
 import ch.no1hardy.service.model.user.User;
+import jakarta.persistence.EntityManager;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -30,6 +32,8 @@ public class GameService {
     private final ScoreRepository scoreRepository;
     private final BetRepository betRepository;
     private final UserService userService;
+    private final PointsService pointsService;
+    private final EntityManager entityManager;
     private final AuthService authService;
     private final GameMapper mapper;
     private final UserHelper userHelper;
@@ -45,6 +49,7 @@ public class GameService {
         return mapper.toDto(game);
     }
 
+    @Transactional
     public BetGameRes uploadResult(String id, ResultReq dto) {
         Game game = repository.findById(id).orElse(null);
         if (game == null) throw new NotFoundException("Game " + id + " not found", "Spiel '" + id + "' nicht gefunden");
@@ -52,18 +57,22 @@ public class GameService {
         if (!dto.isValid()) return mapper.toDto(game);
         dto.clamp();
 
-        removeExistingResult(game);
-        if (dto.isNull()) return mapper.toDto(game);
-
-        if (game.getGroup().getIsKnockout() && dto.isTie()) {
+        if (!dto.isNull() && game.getGroup().getIsKnockout() && dto.isTie()) {
             throw new KnockoutTieException("Game " + id + " is in a knockout group and cannot end in a tie", "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden");
         }
 
-        dto.setGame(id);
-        Score result = scoreRepository.save(mapper.toEntity(dto));
-        game.setResult(result);
+        userService.listRaw().forEach(user -> user.setLastReviewedPoints(user.getPoints()));
+        removeExistingResult(game);
 
-        userService.addUserPoints(game);
+        if (!dto.isNull()) {
+            dto.setGame(id);
+            Score result = scoreRepository.save(mapper.toEntity(dto));
+            game.setResult(result);
+        }
+
+        pointsService.rescoreBetsAndTotals(game.getBets());
+        if (dto.isNull()) return mapper.toDto(repository.save(game));
+
         notificationService.notifyUsersNewResult(game);
         notificationService.notifyUsersRankingChange();
         return mapper.toDto(repository.save(game));
@@ -72,10 +81,10 @@ public class GameService {
     private void removeExistingResult(@NotNull Game game) {
         Score existingResult = game.getResult();
         if (existingResult != null) {
-            userService.removeUserPoints(game);
-
             game.setResult(null);
             scoreRepository.delete(existingResult);
+            // the old Result must be gone before the corrected one is inserted (one Result per Game)
+            entityManager.flush();
         }
     }
 

@@ -40,6 +40,11 @@ public class Bet extends BaseEntity {
     })
     private Scoreline scoreline;
 
+    /**
+     * The stored Points of this Bet. Null while the Game has no Result.
+     */
+    private Integer points;
+
     public Integer getScoreTeamHome() {
         return scoreline == null ? null : scoreline.getHome();
     }
