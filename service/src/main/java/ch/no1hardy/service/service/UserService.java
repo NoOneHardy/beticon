@@ -14,8 +14,8 @@ import ch.no1hardy.service.front.verification.VerifyEmailReq;
 import ch.no1hardy.service.mapper.UserMapper;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.Game;
+import ch.no1hardy.service.model.game.PointsBreakdown;
 import ch.no1hardy.service.model.game.Score;
-import ch.no1hardy.service.model.game.Scoring;
 import ch.no1hardy.service.model.group.GroupRepository;
 import ch.no1hardy.service.model.notification.Notification;
 import ch.no1hardy.service.model.user.User;
@@ -319,7 +319,7 @@ public class UserService {
 
         for (Bet bet : game.getBets()) {
             if (bet.getUpdatedAt().isAfter(result.getCreatedAt())) return;
-            int points = calculateUserPoints(bet, result);
+            int points = calculateUserPoints(bet);
 
             bet.getUser().setPoints(bet.getUser().getPoints() + points);
         }
@@ -338,7 +338,7 @@ public class UserService {
 
         for (Bet bet : game.getBets()) {
             if (bet.getUpdatedAt().isAfter(result.getCreatedAt())) return;
-            int points = calculateUserPoints(bet, result);
+            int points = calculateUserPoints(bet);
 
             bet.getUser().setPoints(bet.getUser().getPoints() - points);
         }
@@ -347,12 +347,11 @@ public class UserService {
     /**
      * Calculate the points a user earns based on their bet and the actual game result.
      *
-     * @param bet    the user's bet.
-     * @param result the actual game result.
-     * @return the calculated points.
+     * @param bet the user's bet.
+     * @return the calculated points, or 0 if the game has no result yet.
      */
-    public int calculateUserPoints(@NotNull Bet bet, @NotNull Score result) {
-        return Scoring.score(bet.getScoreline(), result.getScoreline(), bet.getJoker()).total();
+    public int calculateUserPoints(@NotNull Bet bet) {
+        return bet.pointsBreakdown().map(PointsBreakdown::total).orElse(0);
     }
 
     /**

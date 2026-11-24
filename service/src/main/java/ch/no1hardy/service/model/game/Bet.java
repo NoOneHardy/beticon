@@ -14,6 +14,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -64,6 +65,16 @@ public class Bet extends BaseEntity {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    /**
+     * Score this Bet against its Game's Result.
+     *
+     * @return the Points breakdown, or empty if the Game has no Result yet.
+     */
+    public Optional<PointsBreakdown> pointsBreakdown() {
+        return Optional.ofNullable(game.getResult())
+                .map(result -> Scoring.score(scoreline, result.getScoreline(), joker));
     }
 
     public boolean isCorrect() {

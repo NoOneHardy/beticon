@@ -8,7 +8,7 @@ import ch.no1hardy.service.front.dashboard.UserSummary;
 import ch.no1hardy.service.front.home.HomeRes;
 import ch.no1hardy.service.front.leaderboard.RankingRes;
 import ch.no1hardy.service.model.game.Bet;
-import ch.no1hardy.service.model.game.Scoring;
+import ch.no1hardy.service.model.game.PointsBreakdown;
 import ch.no1hardy.service.model.user.User;
 import ch.no1hardy.service.model.user.UserApplicationStatus;
 import jakarta.validation.constraints.NotNull;
@@ -142,7 +142,7 @@ public class DashboardService {
         return user.getBets().stream()
                 .filter(Bet::isActive)
                 .filter(bet -> bet.getGame() != null && bet.getGame().getResult() != null)
-                .filter(bet -> Scoring.score(bet.getScoreline(), bet.getGame().getResult().getScoreline(), bet.getJoker()).isWastedJoker())
+                .filter(bet -> bet.pointsBreakdown().map(PointsBreakdown::isWastedJoker).orElse(false))
                 .mapToInt(bet -> bet.getJoker() - 1)
                 .sum();
     }

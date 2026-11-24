@@ -2,13 +2,16 @@ package ch.no1hardy.service.model;
 
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.Game;
+import ch.no1hardy.service.model.game.PointsBreakdown;
 import ch.no1hardy.service.model.game.Score;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -57,5 +60,24 @@ public class BetTest {
     void shouldReturnFalseIfBetIsNull() {
         game.setResult(null);
         assertFalse(bet.isCorrect());
+    }
+
+    @Test
+    @DisplayName("pointsBreakdown() - should score the bet against its game's result")
+    void shouldScoreBetAgainstGameResult() {
+        bet.setJoker(2);
+        score.setScoreTeamHome(1);
+        score.setScoreTeamGuest(3);
+
+        assertEquals(Optional.of(new PointsBreakdown(5, 0, 2, 0, 2)), bet.pointsBreakdown());
+    }
+
+    @Test
+    @DisplayName("pointsBreakdown() - should be empty if the game has no result yet")
+    void shouldHaveNoPointsBreakdownWithoutResult() {
+        bet.setJoker(1);
+        game.setResult(null);
+
+        assertEquals(Optional.empty(), bet.pointsBreakdown());
     }
 }
