@@ -20,9 +20,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,7 +35,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -57,6 +65,8 @@ public class ResultEntryTest {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private TransactionTemplate transaction;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @MockitoSpyBean
     private PointsService pointsService;
@@ -344,5 +354,43 @@ public class ResultEntryTest {
         assertEquals(10, total(winnerUser));
         assertEquals(0, total(missUser));
         assertEquals(reviewedBefore, lastReviewed(exactUser));
+    }
+
+    @Test
+    @DisplayName("uploadResult() - should keep the Result, Points and totals when sending the notifications fails")
+    void shouldKeepResultEntryWhenNotificationsFail() {
+        doThrow(new IllegalStateException("notification failed")).when(notificationService).notifyUsersNewResult(any());
+        doThrow(new IllegalStateException("notification failed")).when(notificationService).notifyUsersRankingChange();
+
+        assertDoesNotThrow(() -> enterResult(2, 1));
+
+        Score result = transaction.execute(status -> gameRepository.findById(game.getId()).orElseThrow().getResult());
+        assertEquals(2, result.getScoreTeamHome());
+        assertEquals(1, result.getScoreTeamGuest());
+        assertEquals(10, storedPoints(exactBet));
+        assertEquals(10, storedPoints(winnerBet));
+        assertEquals(10, total(exactUser));
+        assertEquals(10, total(winnerUser));
+        verify(notificationService).notifyUsersRankingChange();
+    }
+
+    @Test
+    @DisplayName("uploadResult() - should send the notifications only once the Result entry is committed")
+    void shouldNotifyAfterTheResultEntryIsCommitted() {
+        TransactionTemplate separate = new TransactionTemplate(transactionManager);
+        separate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        List<Integer> totalsSeenByNotifications = new ArrayList<>();
+        doAnswer(invocation -> {
+            totalsSeenByNotifications.add(separate.execute(status -> total(exactUser)));
+            return null;
+        }).when(notificationService).notifyUsersNewResult(any());
+        doAnswer(invocation -> {
+            totalsSeenByNotifications.add(separate.execute(status -> total(exactUser)));
+            return null;
+        }).when(notificationService).notifyUsersRankingChange();
+
+        enterResult(2, 1);
+
+        assertEquals(List.of(10, 10), totalsSeenByNotifications);
     }
 }
