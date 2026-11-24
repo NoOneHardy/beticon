@@ -36,16 +36,15 @@
     @if (isDisabled && !admin()) {
       <bet-result [result]="game.result" class="result" [large]="knockout()"/>
 
-      @let points = game | points;
-      @let totalPoints = points | totalPoints;
+      @let points = game.bet?.points;
 
-      @if (totalPoints > 0 && points) {
+      @if (points && points.total > 0) {
         <bet-expandable name="Punkteverteilung" class="points" [large]="knockout()">
           <ng-container bet-content>
-            <bet-point-table [total]="totalPoints" [points]="points" [large]="knockout()"/>
+            <bet-point-table [points]="points" [large]="knockout()"/>
           </ng-container>
           <ng-container bet-preview>
-            <bet-point-table [total]="totalPoints" [large]="knockout()"/>
+            <bet-point-table [points]="points" summary [large]="knockout()"/>
           </ng-container>
         </bet-expandable>
       }

@@ -59,7 +59,8 @@ describe('BetFormComponent', () => {
         scoreTeamHome: 3,
         scoreTeamGuest: 2,
         joker: 3,
-        gameId: 'bet-1'
+        gameId: 'bet-1',
+        points: null
       }
     }
     mockStore.refreshState()

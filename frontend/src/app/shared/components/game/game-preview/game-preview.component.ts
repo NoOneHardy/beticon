@@ -3,7 +3,6 @@ import {BetGame} from '../../../../model/game/bet-game'
 import { DatePipe, NgOptimizedImage } from '@angular/common'
 import {ButtonComponent} from '../../button/button.component'
 import {Router} from '@angular/router'
-import {PointService} from '../../../services/point/point.service'
 import {Bet} from '../../../../model/game/bet'
 
 @Component({
@@ -18,14 +17,11 @@ import {Bet} from '../../../../model/game/bet'
 })
 export class GamePreviewComponent {
   private router = inject(Router)
-  private pointService = inject(PointService)
 
   game = input.required<BetGame>()
 
   openBet: Signal<boolean> = computed(() => !this.game().bet && !this.game().result)
-  points: Signal<number> = computed(() => {
-    return this.pointService.calculatePoints(this.game())
-  })
+  points: Signal<number> = computed(() => this.game().bet?.points?.total ?? 0)
 
   focusGame(): void {
     const id = this.game().id

@@ -1,4 +1,4 @@
-@let detailedPoints = points();
+@let detailedPoints = summary() ? null : points();
 
 @if (detailedPoints?.correctWinner) {
   <span>Richtiger&nbsp;Sieger</span>
@@ -21,10 +21,10 @@
   <span>x{{ joker }}</span>
 }
 
-@if (total() > 0 && hasDetails) {
+@if (points().total > 0 && hasDetails) {
   <div class="separator"></div>
 }
 
 <span class="total">Total</span>
-<span class="total gradient-text">+&nbsp;{{ total() }}</span>
+<span class="total gradient-text">+&nbsp;{{ points().total }}</span>
 

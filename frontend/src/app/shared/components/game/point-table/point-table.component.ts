@@ -8,8 +8,10 @@ import {DetailedPoints} from '../../../../model/game/detailed-points'
   styleUrl: './point-table.component.css'
 })
 export class PointTableComponent {
-  points = input<DetailedPoints | null>(null)
-  total = input.required<number>()
+  points = input.required<DetailedPoints>()
+  summary = input<boolean, boolean | ''>(false, {
+    transform: (v) => v === '' || v
+  })
   large = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v
   })
@@ -21,6 +23,7 @@ export class PointTableComponent {
 
   get hasDetails(): boolean {
     const points = this.points()
-    return !!points && Object.keys(points).length > 0
+    return !this.summary() && !!(points.correctWinner || points.correctGoalsHome || points.correctGoalsGuest
+      || points.correctGoalsTotal || points.joker)
   }
 }

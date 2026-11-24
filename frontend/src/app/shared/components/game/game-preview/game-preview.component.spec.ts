@@ -42,7 +42,8 @@ describe('GamePreviewComponent', () => {
         scoreTeamHome: 3,
         scoreTeamGuest: 2,
         joker: 3,
-        gameId: 'bet-1'
+        gameId: 'bet-1',
+        points: null
       }
     }
 
@@ -54,5 +55,31 @@ describe('GamePreviewComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should render the total of the bet points payload', () => {
+    fixture.componentRef.setInput('game', {
+      ...mockGame,
+      result: {id: 'r', gameId: 'game-1', scoreTeamHome: 3, scoreTeamGuest: 2},
+      bet: {
+        ...mockGame.bet!,
+        points: {correctWinner: 5, correctGoalsHome: 2, correctGoalsGuest: 2, correctGoalsTotal: 1, joker: 3, total: 30}
+      }
+    })
+    fixture.detectChanges()
+
+    const points = (fixture.nativeElement as HTMLElement).querySelector('.bet-points')
+    expect(points?.textContent?.trim()).toBe('+30')
+  })
+
+  it('should render +0 when the bet has no points payload', () => {
+    fixture.componentRef.setInput('game', {
+      ...mockGame,
+      result: {id: 'r', gameId: 'game-1', scoreTeamHome: 3, scoreTeamGuest: 2}
+    })
+    fixture.detectChanges()
+
+    const points = (fixture.nativeElement as HTMLElement).querySelector('.bet-points')
+    expect(points?.textContent?.trim()).toBe('+0')
   })
 })

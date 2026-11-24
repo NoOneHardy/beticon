@@ -72,7 +72,8 @@ const mockGroup: Group = {
         scoreTeamHome: 2,
         scoreTeamGuest: 1,
         joker: 1,
-        gameId: 'game1'
+        gameId: 'game1',
+        points: null
       },
       groupId: 'group1',
       groupName: 'Gruppe A'
@@ -223,7 +224,8 @@ describe('GroupViewComponent', () => {
       gameId: game.id,
       joker: 3,
       scoreTeamHome: 2,
-      scoreTeamGuest: 1
+      scoreTeamGuest: 1,
+      points: null
     }
 
     const form = component['getDefaultValues'](game)
