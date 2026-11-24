@@ -32,13 +32,13 @@ export class StatisticsComponent {
       return [
         {key: 'Richtige Tipps', value: globalStats.exactBets},
         {key: 'Erhaltene Punkte', value: globalStats.totalPoints},
-        {key: 'Verlorene Joker', value: globalStats.jokersWasted},
+        {key: 'Verlorene Joker', value: globalStats.wastedJokers},
       ]
     }
     return [
       {key: 'Richtige Tipps', value: personalStats.exactBets},
       {key: 'Getippte Goals', value: personalStats.totalGoalsBet},
-      {key: 'Verlorene Joker', value: personalStats.jokersWasted},
+      {key: 'Verlorene Joker', value: personalStats.wastedJokers},
     ]
   })
 

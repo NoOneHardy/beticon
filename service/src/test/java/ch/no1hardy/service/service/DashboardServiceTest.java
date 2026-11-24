@@ -45,7 +45,7 @@ public class DashboardServiceTest {
 
         assertEquals(0, globalStats.getTotalPoints());
         assertEquals(0, globalStats.getExactBets());
-        assertEquals(0, globalStats.getJokersWasted());
+        assertEquals(0, globalStats.getWastedJokers());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class DashboardServiceTest {
 
         assertEquals(7, stats.getTotalGoalsBet());
         assertEquals(1, stats.getExactBets());
-        assertEquals(1, stats.getJokersWasted());
+        assertEquals(1, stats.getWastedJokers());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class DashboardServiceTest {
 
         assertEquals(0, stats.getTotalGoalsBet());
         assertEquals(0, stats.getExactBets());
-        assertEquals(0, stats.getJokersWasted());
+        assertEquals(0, stats.getWastedJokers());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class DashboardServiceTest {
 
         assertEquals(0, stats.getTotalGoalsBet());
         assertEquals(0, stats.getExactBets());
-        assertEquals(0, stats.getJokersWasted());
+        assertEquals(0, stats.getWastedJokers());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class DashboardServiceTest {
 
         assertEquals(7, stats.getTotalGoalsBet());
         assertEquals(0, stats.getExactBets());
-        assertEquals(0, stats.getJokersWasted());
+        assertEquals(0, stats.getWastedJokers());
     }
 
     @Test
@@ -257,19 +257,19 @@ public class DashboardServiceTest {
     }
 
     @Test
-    @DisplayName("getJokersWasted(User) - should return zero if user has no bets")
-    void shouldReturnZeroIfUserHasNoBetsInJokersWasted() {
+    @DisplayName("getWastedJokers(User) - should return zero if user has no bets")
+    void shouldReturnZeroIfUserHasNoBetsInWastedJokers() {
         User user = new User();
         user.setBets(List.of());
 
-        int jokersWasted = service.getJokersWasted(user);
+        int wastedJokers = service.getWastedJokers(user);
 
-        assertEquals(0, jokersWasted);
+        assertEquals(0, wastedJokers);
     }
 
     @Test
-    @DisplayName("getJokersWasted(User) - should return zero if all bets are inactive")
-    void shouldReturnZeroIfAllBetsAreInactiveInJokersWasted() {
+    @DisplayName("getWastedJokers(User) - should return zero if all bets are inactive")
+    void shouldReturnZeroIfAllBetsAreInactiveInWastedJokers() {
         User user = new User();
 
         Bet bet1 = GameHelper.createBet("bet-1", user, GameHelper.createGame("game-1"), 2, 3, 2);
@@ -277,25 +277,25 @@ public class DashboardServiceTest {
         Bet bet2 = GameHelper.createBet("bet-2", user, GameHelper.createGame("game-2"), 1, 1, 3);
         bet2.setDeletedAt(LocalDateTime.now());
 
-        int jokersWasted = service.getJokersWasted(user);
+        int wastedJokers = service.getWastedJokers(user);
 
-        assertEquals(0, jokersWasted);
+        assertEquals(0, wastedJokers);
     }
 
     @Test
-    @DisplayName("getJokersWasted(User) - should return zero if no jokers are used")
+    @DisplayName("getWastedJokers(User) - should return zero if no jokers are used")
     void shouldReturnZeroIfNoJokersUsed() {
         User user = new User();
         GameHelper.createBet("bet-1", user, GameHelper.createGame("game-1"), 2, 3);
         GameHelper.createBet("bet-2", user, GameHelper.createGame("game-2"), 1, 1);
 
-        int jokersWasted = service.getJokersWasted(user);
+        int wastedJokers = service.getWastedJokers(user);
 
-        assertEquals(0, jokersWasted);
+        assertEquals(0, wastedJokers);
     }
 
     @Test
-    @DisplayName("getJokersWasted(User) - should return correct count for bets with wasted jokers")
+    @DisplayName("getWastedJokers(User) - should return correct count for bets with wasted jokers")
     void shouldReturnCorrectCountForBetsWithWastedJokers() {
         User user = new User();
 
@@ -308,13 +308,13 @@ public class DashboardServiceTest {
         GameHelper.createScore("score-1", game1, 4, 0);
         GameHelper.createScore("score-2", game2, 0, 3);
 
-        int jokersWasted = service.getJokersWasted(user);
+        int wastedJokers = service.getWastedJokers(user);
 
-        assertEquals(2, jokersWasted);
+        assertEquals(2, wastedJokers);
     }
 
     @Test
-    @DisplayName("getJokersWasted(User) - should count a wasted triple joker as 1 wasted joker")
+    @DisplayName("getWastedJokers(User) - should count a wasted triple joker as 1 wasted joker")
     void shouldCountTripleJokerAs1WastedJoker() {
         User user = new User();
 
@@ -322,13 +322,13 @@ public class DashboardServiceTest {
         GameHelper.createBet("bet-1", user, game1, 2, 3, 3);
         GameHelper.createScore("score-1", game1, 4, 0);
 
-        int jokersWasted = service.getJokersWasted(user);
+        int wastedJokers = service.getWastedJokers(user);
 
-        assertEquals(1, jokersWasted);
+        assertEquals(1, wastedJokers);
     }
 
     @Test
-    @DisplayName("getJokersWasted(User) - should count a wasted double joker as 1 wasted joker")
+    @DisplayName("getWastedJokers(User) - should count a wasted double joker as 1 wasted joker")
     void shouldCountDoubleJokerAs1WastedJokers() {
         User user = new User();
 
@@ -336,13 +336,13 @@ public class DashboardServiceTest {
         GameHelper.createBet("bet-1", user, game1, 2, 3, 2);
         GameHelper.createScore("score-1", game1, 4, 0);
 
-        int jokersWasted = service.getJokersWasted(user);
+        int wastedJokers = service.getWastedJokers(user);
 
-        assertEquals(1, jokersWasted);
+        assertEquals(1, wastedJokers);
     }
 
     @Test
-    @DisplayName("getJokersWasted(User) - should not count jokers on bets that earned points")
+    @DisplayName("getWastedJokers(User) - should not count jokers on bets that earned points")
     void shouldNotCountJokersOnBetsThatEarnedPoints() {
         User user = new User();
 
@@ -358,7 +358,7 @@ public class DashboardServiceTest {
         GameHelper.createScore("score-2", game2, 0, 1);
         GameHelper.createScore("score-3", game3, 3, 0);
 
-        assertEquals(0, service.getJokersWasted(user));
+        assertEquals(0, service.getWastedJokers(user));
     }
 
     @Test
@@ -383,7 +383,7 @@ public class DashboardServiceTest {
 
         assertEquals(15, stats.getTotalPoints());
         assertEquals(1, stats.getExactBets());
-        assertEquals(2, stats.getJokersWasted());
+        assertEquals(2, stats.getWastedJokers());
     }
 
     @Test

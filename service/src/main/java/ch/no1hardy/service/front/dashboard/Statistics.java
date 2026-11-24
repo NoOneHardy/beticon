@@ -8,5 +8,5 @@ import lombok.Data;
 public class Statistics {
     private Integer totalGoalsBet;
     private Integer exactBets;
-    private Integer jokersWasted;
+    private Integer wastedJokers;
 }

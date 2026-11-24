@@ -55,7 +55,7 @@ public class DashboardService {
         return GlobalStatistics.builder()
                 .totalPoints(users.stream().mapToInt(User::getPoints).sum())
                 .exactBets(users.stream().mapToInt(this::getExactBets).sum())
-                .jokersWasted(users.stream().mapToInt(this::getJokersWasted).sum())
+                .wastedJokers(users.stream().mapToInt(this::getWastedJokers).sum())
                 .build();
     }
 
@@ -103,7 +103,7 @@ public class DashboardService {
         return Statistics.builder()
                 .totalGoalsBet(getTotalGoalsBet(user))
                 .exactBets(getExactBets(user))
-                .jokersWasted(getJokersWasted(user))
+                .wastedJokers(getWastedJokers(user))
                 .build();
     }
 
@@ -132,12 +132,12 @@ public class DashboardService {
     }
 
     /**
-     * Calculates the number of jokers wasted by the user.
+     * Calculates the number of wasted jokers of the user.
      * A joker is wasted if it was used on a bet that earned no points; it counts once per bet, whatever its multiplier.
      * @param user the user for whom to calculate wasted jokers
-     * @return number of jokers wasted by the user
+     * @return number of wasted jokers of the user
      */
-    public int getJokersWasted(@NotNull User user) {
+    public int getWastedJokers(@NotNull User user) {
         return (int) user.getBets().stream()
                 .filter(Bet::isActive)
                 .filter(bet -> bet.pointsBreakdown().map(PointsBreakdown::isWastedJoker).orElse(false))
