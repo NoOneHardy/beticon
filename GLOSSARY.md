@@ -14,6 +14,10 @@ _Avoid_: Tip, prediction
 The actual score of a Game at the end of play, including extra time. For a knockout Game that ends level, the winner of the penalty shoot-out is credited with one extra goal, so a knockout Result is never a tie.
 _Avoid_: Score (in code, `Score` is the entity holding a Result), outcome
 
+**Scoreline**:
+The home and guest goals of one Game, as predicted by a Bet or recorded as a Result. Scoring compares the Bet's Scoreline with the Result's.
+_Avoid_: Score (that means the Result entity in code), goals pair
+
 **Joker**:
 A multiplier (×2 or ×3) a user attaches to a Bet to multiply its Points. Each user has a limited number per tournament.
 _Avoid_: Booster, multiplier
