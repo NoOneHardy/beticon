@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ public class Score extends BaseEntity {
     private Game game;
 
     @NotNull
+    @Valid
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "home", column = @Column(name = "score_team_home")),

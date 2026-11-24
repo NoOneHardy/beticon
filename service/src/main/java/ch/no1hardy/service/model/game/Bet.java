@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
@@ -31,6 +32,7 @@ public class Bet extends BaseEntity {
     @ToString.Exclude
     private Game game;
 
+    @Valid
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "home", column = @Column(name = "score_team_home")),
