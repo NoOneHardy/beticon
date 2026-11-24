@@ -120,15 +120,14 @@ public class DashboardService {
     }
 
     /**
-     * Calculates the number of games correctly predicted by the user.
+     * Calculates the number of exact bets of the user, i.e. bets whose goal counts both match the result.
      * @param user the user for whom to calculate correct games
      * @return number of games correctly predicted by the user
      */
     public int getCorrectGames(@NotNull User user) {
         return (int) user.getBets().stream()
                 .filter(Bet::isActive)
-                .filter(bet -> bet.getGame() != null && bet.getGame().getResult() != null)
-                .filter(Bet::isCorrect)
+                .filter(bet -> bet.pointsBreakdown().map(PointsBreakdown::isExact).orElse(false))
                 .count();
     }
 
