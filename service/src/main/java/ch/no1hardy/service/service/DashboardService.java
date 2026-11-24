@@ -134,17 +134,15 @@ public class DashboardService {
 
     /**
      * Calculates the number of jokers wasted by the user.
-     * A joker is considered wasted if it was used on a bet that did not yield any points.
+     * A joker is wasted if it was used on a bet that earned no points; it counts once per bet, whatever its multiplier.
      * @param user the user for whom to calculate wasted jokers
      * @return number of jokers wasted by the user
      */
     public int getJokersWasted(@NotNull User user) {
-        return user.getBets().stream()
+        return (int) user.getBets().stream()
                 .filter(Bet::isActive)
-                .filter(bet -> bet.getGame() != null && bet.getGame().getResult() != null)
                 .filter(bet -> bet.pointsBreakdown().map(PointsBreakdown::isWastedJoker).orElse(false))
-                .mapToInt(bet -> bet.getJoker() - 1)
-                .sum();
+                .count();
     }
 
     /**
