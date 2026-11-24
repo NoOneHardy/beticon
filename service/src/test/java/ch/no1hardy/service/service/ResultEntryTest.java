@@ -16,7 +16,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -24,6 +26,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
@@ -44,6 +47,11 @@ public class ResultEntryTest {
     private TeamRepository teamRepository;
     @Autowired
     private GroupRepository groupRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private TransactionTemplate transaction;
 
     @MockitoBean
     private NotificationService notificationService;
@@ -225,21 +233,34 @@ public class ResultEntryTest {
     }
 
     @Test
-    @DisplayName("uploadResult() - should still score every Bet when a Bet was updated after the Result was created")
+    @DisplayName("uploadResult() - should clear every Bet's Points when the Game's first Bet was updated after the Result was created")
     void shouldScoreEveryBetWhenABetWasUpdatedAfterTheResult() {
         enterResult(2, 1);
 
-        Bet touched = betRepository.findById(exactBet.getId()).orElseThrow();
-        touched.setJoker(3);
-        betRepository.save(touched);
+        // The old loop stopped at the first Bet updated after the Result's creation time,
+        // so a late Bet sitting first in the Game's Bets left every Bet's Points in the totals on removal.
+        Bet lateBet = firstBetOfGame();
+        LocalDateTime resultCreatedAt = transaction.execute(status ->
+                gameRepository.findById(game.getId()).orElseThrow().getResult().getCreatedAt());
+        jdbcTemplate.update("update bet set updated_at = ? where id = ?", resultCreatedAt.plusMinutes(1), lateBet.getId());
+        assertTrue(betRepository.findById(lateBet.getId()).orElseThrow().getUpdatedAt().isAfter(resultCreatedAt));
+        assertEquals(lateBet.getId(), firstBetOfGame().getId());
 
-        enterResult(2, 1);
+        enterResult(null, null);
 
-        assertEquals(30, storedPoints(exactBet));
-        assertEquals(10, storedPoints(winnerBet));
-        assertEquals(0, storedPoints(missBet));
-        assertEquals(30, total(exactUser));
-        assertEquals(10, total(winnerUser));
+        assertNull(storedPoints(exactBet));
+        assertNull(storedPoints(winnerBet));
+        assertNull(storedPoints(missBet));
+        assertEquals(0, total(exactUser));
+        assertEquals(0, total(winnerUser));
+        assertEquals(0, total(missUser));
+    }
+
+    /**
+     * The first of the Game's Bets in the order result entry iterates them (the same lookup it uses).
+     */
+    private Bet firstBetOfGame() {
+        return transaction.execute(status -> gameRepository.findById(game.getId()).orElseThrow().getBets().getFirst());
     }
 
     @Test
