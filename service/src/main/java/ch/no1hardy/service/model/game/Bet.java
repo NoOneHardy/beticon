@@ -83,13 +83,4 @@ public class Bet extends BaseEntity {
         return Optional.ofNullable(game.getResult())
                 .map(result -> Scoring.score(scoreline, result.getScoreline(), joker));
     }
-
-    public boolean isCorrect() {
-        Score result = game.getResult();
-        if (result == null) return false;
-
-        return Objects.equals(result.getScoreTeamHome(), getScoreTeamHome())
-                && Objects.equals(result.getScoreTeamGuest(), getScoreTeamGuest());
-
-    }
 }

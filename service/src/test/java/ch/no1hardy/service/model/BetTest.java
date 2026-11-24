@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BetTest {
     Bet bet;
@@ -39,27 +37,6 @@ public class BetTest {
 
         score.setScoreTeamHome(2);
         score.setScoreTeamGuest(3);
-    }
-
-    @Test
-    @DisplayName("isCorrect() - should return true if bet matches game result")
-    void shouldReturnTrueIfBetMatchesGameResult() {
-        assertTrue(bet.isCorrect());
-    }
-
-    @Test
-    @DisplayName("isCorrect() - should return false if bet does not match game result")
-    void shouldReturnFalseIfBetDoesNotMatchGameResult() {
-        score.setScoreTeamHome(1);
-        score.setScoreTeamGuest(4);
-        assertFalse(bet.isCorrect());
-    }
-
-    @Test
-    @DisplayName("isCorrect() - should return false if result is null")
-    void shouldReturnFalseIfBetIsNull() {
-        game.setResult(null);
-        assertFalse(bet.isCorrect());
     }
 
     @Test
