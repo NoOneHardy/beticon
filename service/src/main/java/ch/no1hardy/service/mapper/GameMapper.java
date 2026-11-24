@@ -4,6 +4,7 @@ import ch.no1hardy.service.front.game.*;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.Game;
 import ch.no1hardy.service.model.game.GameRepository;
+import ch.no1hardy.service.model.game.PointsBreakdown;
 import ch.no1hardy.service.model.game.Score;
 import ch.no1hardy.service.model.group.GroupRepository;
 import ch.no1hardy.service.model.team.TeamRepository;
@@ -19,6 +20,7 @@ import org.mapstruct.*;
 )
 public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
     @Mapping(target = "gameId", source = "game", qualifiedByName = "getGameId")
+    @Mapping(target = "points", expression = "java(toPointsRes(entity.pointsBreakdown().orElse(null)))")
     BetRes toDto(Bet entity);
 
     @Mapping(target = "bet", source = "bets", qualifiedByName = "getUserBet")
@@ -32,6 +34,22 @@ public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
     Score toEntity(ResultReq dto);
 
     Bet toEntity(BetReq dto);
+
+    default PointsRes toPointsRes(PointsBreakdown breakdown) {
+        if (breakdown == null) return null;
+        return PointsRes.builder()
+                .correctWinner(awarded(breakdown.correctWinner()))
+                .correctGoalsHome(awarded(breakdown.correctGoalsHome()))
+                .correctGoalsGuest(awarded(breakdown.correctGoalsGuest()))
+                .correctGoalsTotal(awarded(breakdown.correctGoalsTotal()))
+                .joker(awarded(breakdown.joker() > 1 ? breakdown.joker() : 0))
+                .total(breakdown.total())
+                .build();
+    }
+
+    private static Integer awarded(int value) {
+        return value > 0 ? value : null;
+    }
 
     @Named("getGameId")
     default String getId(Game game) {
