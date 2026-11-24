@@ -1,6 +1,10 @@
 package ch.no1hardy.service.model.game;
 
 import ch.no1hardy.service.model.BaseEntity;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
@@ -19,24 +23,28 @@ public class Score extends BaseEntity {
     private Game game;
 
     @NotNull
-    private Integer scoreTeamHome;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "home", column = @Column(name = "score_team_home")),
+            @AttributeOverride(name = "guest", column = @Column(name = "score_team_guest"))
+    })
+    private Scoreline scoreline;
 
-    @NotNull
-    private Integer scoreTeamGuest;
-
-    public Boolean isHomeTeamWinner() {
-        return scoreTeamHome > scoreTeamGuest;
+    public Integer getScoreTeamHome() {
+        return scoreline == null ? null : scoreline.getHome();
     }
 
-    public Boolean isGuestTeamWinner() {
-        return scoreTeamGuest > scoreTeamHome;
+    public Integer getScoreTeamGuest() {
+        return scoreline == null ? null : scoreline.getGuest();
     }
 
-    public Boolean isTie() {
-        return scoreTeamHome.equals(scoreTeamGuest);
+    public void setScoreTeamHome(Integer home) {
+        if (scoreline == null) scoreline = new Scoreline();
+        scoreline.setHome(home);
     }
 
-    public Integer getTotalScore() {
-        return scoreTeamHome + scoreTeamGuest;
+    public void setScoreTeamGuest(Integer guest) {
+        if (scoreline == null) scoreline = new Scoreline();
+        scoreline.setGuest(guest);
     }
 }

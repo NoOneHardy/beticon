@@ -1,5 +1,6 @@
 package ch.no1hardy.service.front.game;
 
+import ch.no1hardy.service.model.game.Scoreline;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +18,7 @@ public abstract class ScoreReq {
 
     public boolean isTie() {
         return getScoreTeamHome() != null && getScoreTeamGuest() != null &&
-                getScoreTeamHome().equals(getScoreTeamGuest());
+                new Scoreline(getScoreTeamHome(), getScoreTeamGuest()).isTie();
     }
 
     public boolean isNull() {

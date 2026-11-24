@@ -15,6 +15,7 @@ import ch.no1hardy.service.mapper.UserMapper;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.Game;
 import ch.no1hardy.service.model.game.Score;
+import ch.no1hardy.service.model.game.Scoring;
 import ch.no1hardy.service.model.group.GroupRepository;
 import ch.no1hardy.service.model.notification.Notification;
 import ch.no1hardy.service.model.user.User;
@@ -351,20 +352,7 @@ public class UserService {
      * @return the calculated points.
      */
     public int calculateUserPoints(@NotNull Bet bet, @NotNull Score result) {
-        int points = 0;
-
-        boolean correctWinnerHome = bet.isHomeTeamWinner() && result.isHomeTeamWinner();
-        boolean correctWinnerGuest = bet.isGuestTeamWinner() && result.isGuestTeamWinner();
-        boolean correctTie = bet.isTie() && result.isTie();
-
-        if (correctWinnerHome || correctWinnerGuest || correctTie) points += 5;
-
-        if (bet.getScoreTeamGuest().equals(result.getScoreTeamGuest())) points += 2;
-        if (bet.getScoreTeamHome().equals(result.getScoreTeamHome())) points += 2;
-
-        if (bet.getTotalScore().equals(result.getTotalScore())) points += 1;
-
-        return points * bet.getJoker();
+        return Scoring.score(bet.getScoreline(), result.getScoreline(), bet.getJoker()).total();
     }
 
     /**

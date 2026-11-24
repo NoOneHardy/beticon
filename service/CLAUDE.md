@@ -23,4 +23,5 @@ Requires a `.env` file (copy from `.env.example`); values override `application.
 - Errors are standardized by the global `ApiResponseAdvice`.
 - Authentication: `JwtAuthenticationFilter` validates tokens.
 - Emails (verification/reset) are sent asynchronously.
+- Scoring rules (point values, Joker multiplication, winner/tie/total checks) live in the Scoring module in the game model (`model/game/Scoring`, `Scoreline`, `PointsBreakdown`); never re-implement them elsewhere.
 - Helper classes: `DateHelper`, `StringHelper`, `ListHelper`.
