@@ -5,6 +5,7 @@ import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.BetRepository;
 import ch.no1hardy.service.model.game.Game;
 import ch.no1hardy.service.model.game.GameRepository;
+import ch.no1hardy.service.model.game.Score;
 import ch.no1hardy.service.model.group.Group;
 import ch.no1hardy.service.model.group.GroupRepository;
 import ch.no1hardy.service.model.team.Team;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,9 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.when;
 
 /**
@@ -52,6 +57,9 @@ public class ResultEntryTest {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private TransactionTemplate transaction;
+
+    @MockitoSpyBean
+    private PointsService pointsService;
 
     @MockitoBean
     private NotificationService notificationService;
@@ -311,5 +319,30 @@ public class ResultEntryTest {
         assertEquals(15, total(exactUser));
         assertEquals(0, lastReviewed(winnerUser));
         assertEquals(20, total(winnerUser));
+    }
+
+    @Test
+    @DisplayName("uploadResult() - should leave the previous Result, Points and totals intact when a correction fails halfway")
+    void shouldRollBackEverythingWhenACorrectionFailsHalfway() {
+        scoreExactUserOnOtherGame();
+        enterResult(2, 1);
+        Integer reviewedBefore = lastReviewed(exactUser);
+
+        // first recompute clears the old Result's Points, the second one (after the new Result's Bets were scored) fails
+        doCallRealMethod().doThrow(new IllegalStateException("recompute failed"))
+                .when(pointsService).recomputeTotals(any());
+
+        assertThrows(IllegalStateException.class, () -> enterResult(1, 0));
+
+        Score result = transaction.execute(status -> gameRepository.findById(game.getId()).orElseThrow().getResult());
+        assertEquals(2, result.getScoreTeamHome());
+        assertEquals(1, result.getScoreTeamGuest());
+        assertEquals(10, storedPoints(exactBet));
+        assertEquals(10, storedPoints(winnerBet));
+        assertEquals(0, storedPoints(missBet));
+        assertEquals(20, total(exactUser));
+        assertEquals(10, total(winnerUser));
+        assertEquals(0, total(missUser));
+        assertEquals(reviewedBefore, lastReviewed(exactUser));
     }
 }
