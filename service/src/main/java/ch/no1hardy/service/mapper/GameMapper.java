@@ -20,7 +20,7 @@ import org.mapstruct.*;
 )
 public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
     @Mapping(target = "gameId", source = "game", qualifiedByName = "getGameId")
-    @Mapping(target = "points", expression = "java(toPointsRes(entity.pointsBreakdown().orElse(null)))")
+    @Mapping(target = "points", expression = "java(toPointsBreakdownRes(entity.pointsBreakdown().orElse(null)))")
     BetRes toDto(Bet entity);
 
     @Mapping(target = "bet", source = "bets", qualifiedByName = "getUserBet")
@@ -35,14 +35,14 @@ public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
 
     Bet toEntity(BetReq dto);
 
-    default PointsRes toPointsRes(PointsBreakdown breakdown) {
+    default PointsBreakdownRes toPointsBreakdownRes(PointsBreakdown breakdown) {
         if (breakdown == null) return null;
-        return PointsRes.builder()
+        return PointsBreakdownRes.builder()
                 .correctWinner(awarded(breakdown.correctWinner()))
                 .correctGoalsHome(awarded(breakdown.correctGoalsHome()))
                 .correctGoalsGuest(awarded(breakdown.correctGoalsGuest()))
                 .correctGoalsTotal(awarded(breakdown.correctGoalsTotal()))
-                .joker(awarded(breakdown.joker() > 1 ? breakdown.joker() : 0))
+                .joker(breakdown.joker())
                 .total(breakdown.total())
                 .build();
     }

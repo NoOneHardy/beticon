@@ -11,5 +11,5 @@ public class BetRes {
     private Integer scoreTeamHome;
     private Integer scoreTeamGuest;
     private Integer joker;
-    private PointsRes points;
+    private PointsBreakdownRes points;
 }

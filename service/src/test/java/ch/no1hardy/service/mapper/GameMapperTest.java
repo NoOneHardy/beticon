@@ -59,14 +59,14 @@ public class GameMapperTest {
     }
 
     @Test
-    @DisplayName("toDto(Bet) - should map items that are not awarded and no joker to null")
+    @DisplayName("toDto(Bet) - should map items that are not awarded to null and send the joker as-is")
     void toDto03() {
         BetRes res = gameMapper.toDto(bet(3, 0, 1, result(1, 0)));
         assertThat(res.getPoints().getCorrectWinner()).isEqualTo(5);
         assertThat(res.getPoints().getCorrectGoalsHome()).isNull();
         assertThat(res.getPoints().getCorrectGoalsGuest()).isEqualTo(2);
         assertThat(res.getPoints().getCorrectGoalsTotal()).isNull();
-        assertThat(res.getPoints().getJoker()).isNull();
+        assertThat(res.getPoints().getJoker()).isEqualTo(1);
         assertThat(res.getPoints().getTotal()).isEqualTo(7);
     }
 }
