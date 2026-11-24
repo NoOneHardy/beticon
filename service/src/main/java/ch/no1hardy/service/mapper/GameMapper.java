@@ -35,19 +35,15 @@ public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
 
     Bet toEntity(BetReq dto);
 
-    default PointsBreakdownRes toPointsBreakdownRes(PointsBreakdown breakdown) {
-        if (breakdown == null) return null;
-        return PointsBreakdownRes.builder()
-                .correctWinner(awarded(breakdown.correctWinner()))
-                .correctGoalsHome(awarded(breakdown.correctGoalsHome()))
-                .correctGoalsGuest(awarded(breakdown.correctGoalsGuest()))
-                .correctGoalsTotal(awarded(breakdown.correctGoalsTotal()))
-                .joker(breakdown.joker())
-                .total(breakdown.total())
-                .build();
-    }
+    @Mapping(target = "correctWinner", source = "correctWinner", qualifiedByName = "nullIfZero")
+    @Mapping(target = "correctGoalsHome", source = "correctGoalsHome", qualifiedByName = "nullIfZero")
+    @Mapping(target = "correctGoalsGuest", source = "correctGoalsGuest", qualifiedByName = "nullIfZero")
+    @Mapping(target = "correctGoalsTotal", source = "correctGoalsTotal", qualifiedByName = "nullIfZero")
+    @Mapping(target = "total", expression = "java(breakdown.total())")
+    PointsBreakdownRes toPointsBreakdownRes(PointsBreakdown breakdown);
 
-    private static Integer awarded(int value) {
+    @Named("nullIfZero")
+    default Integer nullIfZero(int value) {
         return value > 0 ? value : null;
     }
 
