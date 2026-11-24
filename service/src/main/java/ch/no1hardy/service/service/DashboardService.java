@@ -48,13 +48,13 @@ public class DashboardService {
 
     /**
      * Retrieves global statistics for all users.
-     * @return a GlobalStatistics object containing total points, correct games, and wasted jokers
+     * @return a GlobalStatistics object containing total points, exact bets, and wasted jokers
      */
     public GlobalStatistics getGlobalStatistics() {
         List<User> users = userService.listRaw();
         return GlobalStatistics.builder()
                 .totalPoints(users.stream().mapToInt(User::getPoints).sum())
-                .correctGames(users.stream().mapToInt(this::getCorrectGames).sum())
+                .exactBets(users.stream().mapToInt(this::getExactBets).sum())
                 .jokersWasted(users.stream().mapToInt(this::getJokersWasted).sum())
                 .build();
     }
@@ -102,7 +102,7 @@ public class DashboardService {
     public Statistics getStatistics(@NotNull User user) {
         return Statistics.builder()
                 .totalGoalsBet(getTotalGoalsBet(user))
-                .correctGames(getCorrectGames(user))
+                .exactBets(getExactBets(user))
                 .jokersWasted(getJokersWasted(user))
                 .build();
     }
@@ -120,11 +120,11 @@ public class DashboardService {
     }
 
     /**
-     * Calculates the number of exact bets of the user, i.e. bets whose goal counts both match the result.
-     * @param user the user for whom to calculate correct games
-     * @return number of games correctly predicted by the user
+     * Calculates the number of Exact Bets placed by the user.
+     * @param user the user for whom to calculate Exact Bets
+     * @return number of Exact Bets placed by the user
      */
-    public int getCorrectGames(@NotNull User user) {
+    public int getExactBets(@NotNull User user) {
         return (int) user.getBets().stream()
                 .filter(Bet::isActive)
                 .filter(bet -> bet.pointsBreakdown().map(PointsBreakdown::isExact).orElse(false))

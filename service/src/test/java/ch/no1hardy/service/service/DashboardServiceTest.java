@@ -44,7 +44,7 @@ public class DashboardServiceTest {
         GlobalStatistics globalStats = service.getGlobalStatistics();
 
         assertEquals(0, globalStats.getTotalPoints());
-        assertEquals(0, globalStats.getCorrectGames());
+        assertEquals(0, globalStats.getExactBets());
         assertEquals(0, globalStats.getJokersWasted());
     }
 
@@ -80,7 +80,7 @@ public class DashboardServiceTest {
         Statistics stats = service.getStatistics(user);
 
         assertEquals(7, stats.getTotalGoalsBet());
-        assertEquals(1, stats.getCorrectGames());
+        assertEquals(1, stats.getExactBets());
         assertEquals(1, stats.getJokersWasted());
     }
 
@@ -94,7 +94,7 @@ public class DashboardServiceTest {
         Statistics stats = service.getStatistics(user);
 
         assertEquals(0, stats.getTotalGoalsBet());
-        assertEquals(0, stats.getCorrectGames());
+        assertEquals(0, stats.getExactBets());
         assertEquals(0, stats.getJokersWasted());
     }
 
@@ -115,7 +115,7 @@ public class DashboardServiceTest {
         Statistics stats = service.getStatistics(user);
 
         assertEquals(0, stats.getTotalGoalsBet());
-        assertEquals(0, stats.getCorrectGames());
+        assertEquals(0, stats.getExactBets());
         assertEquals(0, stats.getJokersWasted());
     }
 
@@ -134,7 +134,7 @@ public class DashboardServiceTest {
         Statistics stats = service.getStatistics(user);
 
         assertEquals(7, stats.getTotalGoalsBet());
-        assertEquals(0, stats.getCorrectGames());
+        assertEquals(0, stats.getExactBets());
         assertEquals(0, stats.getJokersWasted());
     }
 
@@ -178,7 +178,7 @@ public class DashboardServiceTest {
     }
 
     @Test
-    @DisplayName("getCorrectGames(User) - should return correct count for active bets with exact score matches")
+    @DisplayName("getExactBets(User) - should count active bets with exact score matches")
     void shouldReturnCorrectCountForActiveBetsWithExactScoreMatches() {
         User user = new User();
 
@@ -191,13 +191,13 @@ public class DashboardServiceTest {
         GameHelper.createScore("score-1", game1, 2, 3);
         GameHelper.createScore("score-2", game2, 1, 1);
 
-        int correctGames = service.getCorrectGames(user);
+        int exactBets = service.getExactBets(user);
 
-        assertEquals(2, correctGames);
+        assertEquals(2, exactBets);
     }
 
     @Test
-    @DisplayName("getCorrectGames(User) - should return zero if no bets match exact scores")
+    @DisplayName("getExactBets(User) - should return zero if no bets match exact scores")
     void shouldReturnZeroIfNoBetsMatchExactScores() {
         User user = new User();
 
@@ -210,25 +210,25 @@ public class DashboardServiceTest {
         GameHelper.createScore("score-1", game1, 0, 3);
         GameHelper.createScore("score-2", game2, 2, 2);
 
-        int correctGames = service.getCorrectGames(user);
+        int exactBets = service.getExactBets(user);
 
-        assertEquals(0, correctGames);
+        assertEquals(0, exactBets);
     }
 
     @Test
-    @DisplayName("getCorrectGames(User) - should return zero if user has no active bets")
+    @DisplayName("getExactBets(User) - should return zero if user has no active bets")
     void shouldReturnZeroIfUserHasNoActiveBets() {
         User user = new User();
         user.setBets(List.of());
 
-        int correctGames = service.getCorrectGames(user);
+        int exactBets = service.getExactBets(user);
 
-        assertEquals(0, correctGames);
+        assertEquals(0, exactBets);
     }
 
     @Test
-    @DisplayName("getCorrectGames(User) - should return zero if all bets are inactive")
-    void shouldReturnZeroIfAllBetsAreInactiveInCorrectGames() {
+    @DisplayName("getExactBets(User) - should return zero if all bets are inactive")
+    void shouldReturnZeroIfAllBetsAreInactiveInExactBets() {
         User user = new User();
 
         Game game1 = GameHelper.createGame("game-1");
@@ -239,21 +239,21 @@ public class DashboardServiceTest {
         Bet bet2 = GameHelper.createBet("bet-2", user, game2, 1, 1);
         bet2.setDeletedAt(LocalDateTime.now());
 
-        int correctGames = service.getCorrectGames(user);
+        int exactBets = service.getExactBets(user);
 
-        assertEquals(0, correctGames);
+        assertEquals(0, exactBets);
     }
 
     @Test
-    @DisplayName("getCorrectGames(User) - should handle null game results gracefully")
+    @DisplayName("getExactBets(User) - should handle null game results gracefully")
     void shouldHandleNullGameResultsGracefully() {
         User user = new User();
         GameHelper.createBet("bet-1", user, GameHelper.createGame("game-1"), 2, 3);
         GameHelper.createBet("bet-2", user, GameHelper.createGame("game-2"), 1, 1);
 
-        int correctGames = service.getCorrectGames(user);
+        int exactBets = service.getExactBets(user);
 
-        assertEquals(0, correctGames);
+        assertEquals(0, exactBets);
     }
 
     @Test
@@ -382,7 +382,7 @@ public class DashboardServiceTest {
         GlobalStatistics stats = service.getGlobalStatistics();
 
         assertEquals(15, stats.getTotalPoints());
-        assertEquals(1, stats.getCorrectGames());
+        assertEquals(1, stats.getExactBets());
         assertEquals(2, stats.getJokersWasted());
     }
 

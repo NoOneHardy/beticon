@@ -1,5 +1,5 @@
 export interface GlobalStatistics {
   totalPoints: number
-  correctGames: number
+  exactBets: number
   jokersWasted: number
 }

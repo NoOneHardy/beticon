@@ -1,5 +1,5 @@
 export interface Statistics {
   totalGoalsBet: number
-  correctGames: number
+  exactBets: number
   jokersWasted: number
 }

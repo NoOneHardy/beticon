@@ -30,13 +30,13 @@ export class StatisticsComponent {
 
     if (this.showGlobalStats()) {
       return [
-        {key: 'Richtige Tipps', value: globalStats.correctGames},
+        {key: 'Richtige Tipps', value: globalStats.exactBets},
         {key: 'Erhaltene Punkte', value: globalStats.totalPoints},
         {key: 'Verlorene Joker', value: globalStats.jokersWasted},
       ]
     }
     return [
-      {key: 'Richtige Tipps', value: personalStats.correctGames},
+      {key: 'Richtige Tipps', value: personalStats.exactBets},
       {key: 'Getippte Goals', value: personalStats.totalGoalsBet},
       {key: 'Verlorene Joker', value: personalStats.jokersWasted},
     ]
