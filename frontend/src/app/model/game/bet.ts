@@ -1,4 +1,4 @@
-import {DetailedPoints} from './detailed-points'
+import {PointsBreakdown} from './points-breakdown'
 
 export interface Bet {
   id: string
@@ -6,5 +6,5 @@ export interface Bet {
   scoreTeamHome: number
   scoreTeamGuest: number
   joker: 1 | 2 | 3
-  points: DetailedPoints | null
+  points: PointsBreakdown | null
 }

@@ -1,30 +1,31 @@
-@let detailedPoints = summary() ? null : points();
+@let breakdown = points();
 
-@if (detailedPoints?.correctWinner) {
-  <span>Richtiger&nbsp;Sieger</span>
-  <span>+&nbsp;5</span>
-}
-@if (detailedPoints?.correctGoalsHome) {
-  <span>Tore&nbsp;Heim</span>
-  <span>+&nbsp;2</span>
-}
-@if (detailedPoints?.correctGoalsGuest) {
-  <span>Tore&nbsp;Gast</span>
-  <span>+&nbsp;2</span>
-}
-@if (detailedPoints?.correctGoalsTotal) {
-  <span>Tore&nbsp;Gesamt</span>
-  <span>+&nbsp;1</span>
-}
-@if (detailedPoints?.joker; as joker) {
-  <span>Joker</span>
-  <span>x{{ joker }}</span>
-}
+@if (!summary()) {
+  @if (breakdown.correctWinner) {
+    <span>Richtiger&nbsp;Sieger</span>
+    <span>+&nbsp;{{ breakdown.correctWinner }}</span>
+  }
+  @if (breakdown.correctGoalsHome) {
+    <span>Tore&nbsp;Heim</span>
+    <span>+&nbsp;{{ breakdown.correctGoalsHome }}</span>
+  }
+  @if (breakdown.correctGoalsGuest) {
+    <span>Tore&nbsp;Gast</span>
+    <span>+&nbsp;{{ breakdown.correctGoalsGuest }}</span>
+  }
+  @if (breakdown.correctGoalsTotal) {
+    <span>Tore&nbsp;Gesamt</span>
+    <span>+&nbsp;{{ breakdown.correctGoalsTotal }}</span>
+  }
+  @if (breakdown.joker > 1) {
+    <span>Joker</span>
+    <span>x{{ breakdown.joker }}</span>
+  }
 
-@if (points().total > 0 && hasDetails) {
-  <div class="separator"></div>
+  @if (breakdown.total > 0) {
+    <div class="separator"></div>
+  }
 }
 
 <span class="total">Total</span>
-<span class="total gradient-text">+&nbsp;{{ points().total }}</span>
-
+<span class="total gradient-text">+&nbsp;{{ breakdown.total }}</span>
