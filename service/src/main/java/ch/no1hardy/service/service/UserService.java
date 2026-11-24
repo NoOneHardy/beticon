@@ -14,6 +14,7 @@ import ch.no1hardy.service.front.verification.VerifyEmailReq;
 import ch.no1hardy.service.mapper.UserMapper;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.Game;
+import ch.no1hardy.service.model.game.PointsBreakdown;
 import ch.no1hardy.service.model.game.Score;
 import ch.no1hardy.service.model.group.GroupRepository;
 import ch.no1hardy.service.model.notification.Notification;
@@ -318,7 +319,7 @@ public class UserService {
 
         for (Bet bet : game.getBets()) {
             if (bet.getUpdatedAt().isAfter(result.getCreatedAt())) return;
-            int points = calculateUserPoints(bet, result);
+            int points = calculateUserPoints(bet);
 
             bet.getUser().setPoints(bet.getUser().getPoints() + points);
         }
@@ -337,7 +338,7 @@ public class UserService {
 
         for (Bet bet : game.getBets()) {
             if (bet.getUpdatedAt().isAfter(result.getCreatedAt())) return;
-            int points = calculateUserPoints(bet, result);
+            int points = calculateUserPoints(bet);
 
             bet.getUser().setPoints(bet.getUser().getPoints() - points);
         }
@@ -346,25 +347,11 @@ public class UserService {
     /**
      * Calculate the points a user earns based on their bet and the actual game result.
      *
-     * @param bet    the user's bet.
-     * @param result the actual game result.
-     * @return the calculated points.
+     * @param bet the user's bet.
+     * @return the calculated points, or 0 if the game has no result yet.
      */
-    public int calculateUserPoints(@NotNull Bet bet, @NotNull Score result) {
-        int points = 0;
-
-        boolean correctWinnerHome = bet.isHomeTeamWinner() && result.isHomeTeamWinner();
-        boolean correctWinnerGuest = bet.isGuestTeamWinner() && result.isGuestTeamWinner();
-        boolean correctTie = bet.isTie() && result.isTie();
-
-        if (correctWinnerHome || correctWinnerGuest || correctTie) points += 5;
-
-        if (bet.getScoreTeamGuest().equals(result.getScoreTeamGuest())) points += 2;
-        if (bet.getScoreTeamHome().equals(result.getScoreTeamHome())) points += 2;
-
-        if (bet.getTotalScore().equals(result.getTotalScore())) points += 1;
-
-        return points * bet.getJoker();
+    public int calculateUserPoints(@NotNull Bet bet) {
+        return bet.pointsBreakdown().map(PointsBreakdown::total).orElse(0);
     }
 
     /**
