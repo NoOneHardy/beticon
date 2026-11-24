@@ -3,6 +3,7 @@ import {TeamManagementComponent} from './team-management/team-management.compone
 import {GroupManagementComponent} from './group-management/group-management.component'
 import {GameManagementComponent} from './game-management/game-management.component'
 import {UserManagementComponent} from './user-management/user-management.component'
+import {RescoreManagementComponent} from './rescore-management/rescore-management.component'
 import {Routes} from '@angular/router'
 
 const routes: Routes =[
@@ -38,6 +39,10 @@ const routes: Routes =[
   {
     path: 'users',
     component: UserManagementComponent
+  },
+  {
+    path: 'rescore',
+    component: RescoreManagementComponent
   }
 ]
 

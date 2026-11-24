@@ -1,0 +1,44 @@
+<div class="admin-page">
+  <section class="admin-intro">
+    <h1>Punkte neu berechnen</h1>
+    <p>Berechnet die Punkte jeder Wette und die Gesamtpunkte aller Teilnehmer aus den Wetten und Resultaten neu. Nötig, wenn die Gesamtpunkte nicht stimmen oder sich eine Punkteregel geändert hat.</p>
+  </section>
+
+  <section class="admin-card">
+    @if (isConfirming()) {
+      <p class="warning">Wirklich alle Punkte neu berechnen? Die Gesamtpunkte aller Teilnehmer werden überschrieben.</p>
+      <div class="actions">
+        <bet-button icon="check" (clickEvent)="confirm()">Bestätigen</bet-button>
+        <bet-button secondary (clickEvent)="cancel()">Abbrechen</bet-button>
+      </div>
+    } @else {
+      <bet-button icon="calculate" [disabled]="isRunning()" (clickEvent)="askConfirmation()">Alles neu berechnen</bet-button>
+    }
+
+    @if (changes(); as result) {
+      @if (result.length === 0) {
+        <p class="result">Keine Änderungen: Alle Gesamtpunkte waren bereits korrekt.</p>
+      } @else {
+        <p class="result">{{ result.length }} Gesamtpunkte wurden korrigiert:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Teilnehmer</th>
+              <th>Vorher</th>
+              <th>Nachher</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (change of result; track change.userId) {
+              <tr>
+                <td>{{ change.username }}</td>
+                <td>{{ change.oldPoints }}</td>
+                <td>{{ change.newPoints }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    }
+  </section>
+</div>
