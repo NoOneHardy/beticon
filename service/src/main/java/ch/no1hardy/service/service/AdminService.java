@@ -2,6 +2,7 @@ package ch.no1hardy.service.service;
 
 import ch.no1hardy.service.exception.user.UserNotFoundException;
 import ch.no1hardy.service.front.user.UserRes;
+import ch.no1hardy.service.mapper.PointsChangeMapper;
 import ch.no1hardy.service.mapper.UserMapperImpl;
 import ch.no1hardy.service.model.game.BetRepository;
 import ch.no1hardy.service.model.user.User;
@@ -29,6 +30,7 @@ public class AdminService {
     private UserRepository userRepository;
     private BetRepository betRepository;
     private PointsService pointsService;
+    private PointsChangeMapper pointsChangeMapper;
 
     /**
      * Confirms a user by their ID.
@@ -76,12 +78,7 @@ public class AdminService {
 
         List<PointsChangeRes> changes = users.stream()
                 .filter(user -> !Objects.equals(oldTotals.get(user.getId()), user.getPoints()))
-                .map(user -> PointsChangeRes.builder()
-                        .userId(user.getId())
-                        .username(user.getUsername())
-                        .oldPoints(oldTotals.get(user.getId()))
-                        .newPoints(user.getPoints())
-                        .build())
+                .map(user -> pointsChangeMapper.toPointsChange(user, oldTotals.get(user.getId())))
                 .toList();
         changes.forEach(change -> log.info("Re-scored user {}: {} -> {} Points",
                 change.getUsername(), change.getOldPoints(), change.getNewPoints()));
