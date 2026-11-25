@@ -38,7 +38,7 @@ public class UserHelperTest {
     }
 
     @Test
-    void shouldCalculateAvailable2Jokers() {
+    void shouldCalculateRemainingDoubleJokers() {
         Bet bet = new Bet();
         bet.setJoker(2);
         Bet bet2 = new Bet();
@@ -48,7 +48,7 @@ public class UserHelperTest {
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
 
-        assertThat(userHelper.getAvailableDoubleJokers()).isEqualTo(8);
+        assertThat(userHelper.getRemainingDoubleJokers()).isEqualTo(8);
     }
 
     @Test
@@ -57,13 +57,13 @@ public class UserHelperTest {
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
 
-        assertThat(userHelper.getAvailableDoubleJokers()).isEqualTo(10);
+        assertThat(userHelper.getRemainingDoubleJokers()).isEqualTo(10);
     }
 
     @Test
     void shouldReturnMax2JokersIfNoUserIsFound() {
         when(service.getLoggedInUser()).thenReturn(Optional.empty());
-        assertThat(userHelper.getAvailableDoubleJokers()).isEqualTo(10);
+        assertThat(userHelper.getRemainingDoubleJokers()).isEqualTo(10);
     }
 
     @Test
@@ -81,11 +81,11 @@ public class UserHelperTest {
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
 
-        assertThat(userHelper.getAvailableDoubleJokers()).isEqualTo(9);
+        assertThat(userHelper.getRemainingDoubleJokers()).isEqualTo(9);
     }
 
     @Test
-    void shouldCalculateAvailable3Jokers() {
+    void shouldCalculateRemainingTripleJokers() {
         Bet bet = new Bet();
         bet.setJoker(3);
         Bet bet2 = new Bet();
@@ -95,7 +95,7 @@ public class UserHelperTest {
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
 
-        assertThat(userHelper.getAvailableTripleJokers()).isEqualTo(4);
+        assertThat(userHelper.getRemainingTripleJokers()).isEqualTo(4);
     }
 
     @Test
@@ -104,13 +104,13 @@ public class UserHelperTest {
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
 
-        assertThat(userHelper.getAvailableTripleJokers()).isEqualTo(6);
+        assertThat(userHelper.getRemainingTripleJokers()).isEqualTo(6);
     }
 
     @Test
     void shouldReturnMax3JokersIfNoUserIsFound() {
         when(service.getLoggedInUser()).thenReturn(Optional.empty());
-        assertThat(userHelper.getAvailableTripleJokers()).isEqualTo(6);
+        assertThat(userHelper.getRemainingTripleJokers()).isEqualTo(6);
     }
 
     @Test
@@ -128,6 +128,6 @@ public class UserHelperTest {
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
 
-        assertThat(userHelper.getAvailableTripleJokers()).isEqualTo(5);
+        assertThat(userHelper.getRemainingTripleJokers()).isEqualTo(5);
     }
 }

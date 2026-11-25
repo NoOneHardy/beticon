@@ -22,8 +22,8 @@ public class GroupMapperTest {
 
     @BeforeEach
     void beforeEach() {
-        Mockito.doReturn(10).when(userHelper).getAvailableDoubleJokers();
-        Mockito.doReturn(6).when(userHelper).getAvailableTripleJokers();
+        Mockito.doReturn(10).when(userHelper).getRemainingDoubleJokers();
+        Mockito.doReturn(6).when(userHelper).getRemainingTripleJokers();
         Mockito.doReturn(10).when(userHelper).getDoubleJokerLimit();
         Mockito.doReturn(6).when(userHelper).getTripleJokerLimit();
     }
@@ -33,7 +33,7 @@ public class GroupMapperTest {
     void toDto01() {
         JokerQuota jokers = groupMapper.toDto(new Group()).getJokerQuota();
         assertThat(jokers.getRemainingDoubleJokers()).isEqualTo(10);
-        Mockito.verify(userHelper, Mockito.times(1)).getAvailableDoubleJokers();
+        Mockito.verify(userHelper, Mockito.times(1)).getRemainingDoubleJokers();
     }
 
     @Test
@@ -41,7 +41,7 @@ public class GroupMapperTest {
     void toDto02() {
         JokerQuota jokers = groupMapper.toDto(new Group()).getJokerQuota();
         assertThat(jokers.getRemainingTripleJokers()).isEqualTo(6);
-        Mockito.verify(userHelper, Mockito.times(1)).getAvailableTripleJokers();
+        Mockito.verify(userHelper, Mockito.times(1)).getRemainingTripleJokers();
     }
 
     @Test
