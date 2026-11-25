@@ -8,7 +8,7 @@ Run from the repo root:
 
 ```bash
 ./gradlew :service:build
-./gradlew :service:test      # JUnit 5; @SpringBootTest for integration tests, embedded H2 instead of MySQL
+./gradlew :service:test      # JUnit 5; @SpringBootTest + embedded H2 for integration tests, @WebMvcTest slice (controller/ApiTestBase) for API tests
 ./gradlew :service:bootRun   # http://localhost:8080
 ```
 
