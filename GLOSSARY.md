@@ -22,6 +22,18 @@ _Avoid_: Score (that means the Result entity in code), goals pair
 A multiplier (×2 or ×3) a user attaches to a Bet to multiply its Points. Each user has a limited number per tournament.
 _Avoid_: Booster, multiplier
 
+**Joker limit**:
+The most ×2 Jokers, and separately the most ×3 Jokers, one user may attach to Bets in one tournament.
+_Avoid_: Max jokers, jDoubleMax
+
+**Remaining Jokers**:
+How many ×2 Jokers, and separately how many ×3 Jokers, a user can still attach to Bets in one tournament: their Joker limit minus the Jokers already on their Bets. It goes up again when a Bet loses its Joker.
+_Avoid_: Available jokers, jDouble
+
+**Joker quota**:
+A user's Joker limit and Remaining Jokers, for ×2 and for ×3, in one tournament.
+_Avoid_: Available jokers, joker allowance
+
 ### Scoring
 
 **Scoring**:
