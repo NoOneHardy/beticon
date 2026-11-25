@@ -26,14 +26,14 @@ public class UserHelperTest {
     private final User user = new User();
 
     @Test
-    @DisplayName("getMaxDoubleJokers() - should return the maximum number of double jokers from application properties")
-    void shouldReturnMaxDoubleJokers() {
+    @DisplayName("getDoubleJokerLimit() - should return the ×2 Joker limit from application properties")
+    void shouldReturnDoubleJokerLimit() {
         assertThat(userHelper.getDoubleJokerLimit()).isEqualTo(10);
     }
 
     @Test
-    @DisplayName("getMaxTripleJokers() - should return the maximum number of triple jokers from application properties")
-    void shouldReturnMaxTripleJokers() {
+    @DisplayName("getTripleJokerLimit() - should return the ×3 Joker limit from application properties")
+    void shouldReturnTripleJokerLimit() {
         assertThat(userHelper.getTripleJokerLimit()).isEqualTo(6);
     }
 
@@ -52,7 +52,7 @@ public class UserHelperTest {
     }
 
     @Test
-    void shouldReturnMax2JokersIfNoBetsWereFound() {
+    void shouldReturnDoubleJokerLimitIfNoBetsWereFound() {
         user.setBets(List.of());
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
@@ -61,7 +61,7 @@ public class UserHelperTest {
     }
 
     @Test
-    void shouldReturnMax2JokersIfNoUserIsFound() {
+    void shouldReturnDoubleJokerLimitIfNoUserIsFound() {
         when(service.getLoggedInUser()).thenReturn(Optional.empty());
         assertThat(userHelper.getRemainingDoubleJokers()).isEqualTo(10);
     }
@@ -99,7 +99,7 @@ public class UserHelperTest {
     }
 
     @Test
-    void shouldReturnMax3JokersIfNoBetsWereFound() {
+    void shouldReturnTripleJokerLimitIfNoBetsWereFound() {
         user.setBets(List.of());
 
         when(service.getLoggedInUser()).thenReturn(Optional.of(user));
@@ -108,7 +108,7 @@ public class UserHelperTest {
     }
 
     @Test
-    void shouldReturnMax3JokersIfNoUserIsFound() {
+    void shouldReturnTripleJokerLimitIfNoUserIsFound() {
         when(service.getLoggedInUser()).thenReturn(Optional.empty());
         assertThat(userHelper.getRemainingTripleJokers()).isEqualTo(6);
     }

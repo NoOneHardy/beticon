@@ -31,32 +31,32 @@ public class GroupMapperTest {
     @Test
     @DisplayName("toDto(Group) - should map remaining double jokers")
     void toDto01() {
-        JokerQuota jokers = groupMapper.toDto(new Group()).getJokerQuota();
-        assertThat(jokers.getRemainingDoubleJokers()).isEqualTo(10);
+        JokerQuota quota = groupMapper.toDto(new Group()).getJokerQuota();
+        assertThat(quota.getRemainingDoubleJokers()).isEqualTo(10);
         Mockito.verify(userHelper, Mockito.times(1)).getRemainingDoubleJokers();
     }
 
     @Test
     @DisplayName("toDto(Group) - should map remaining triple jokers")
     void toDto02() {
-        JokerQuota jokers = groupMapper.toDto(new Group()).getJokerQuota();
-        assertThat(jokers.getRemainingTripleJokers()).isEqualTo(6);
+        JokerQuota quota = groupMapper.toDto(new Group()).getJokerQuota();
+        assertThat(quota.getRemainingTripleJokers()).isEqualTo(6);
         Mockito.verify(userHelper, Mockito.times(1)).getRemainingTripleJokers();
     }
 
     @Test
     @DisplayName("toDto(Group) - should map double joker limit")
     void toDto03() {
-        JokerQuota jokers = groupMapper.toDto(new Group()).getJokerQuota();
-        assertThat(jokers.getDoubleJokerLimit()).isEqualTo(10);
+        JokerQuota quota = groupMapper.toDto(new Group()).getJokerQuota();
+        assertThat(quota.getDoubleJokerLimit()).isEqualTo(10);
         Mockito.verify(userHelper, Mockito.times(1)).getDoubleJokerLimit();
     }
 
     @Test
     @DisplayName("toDto(Group) - should map triple joker limit")
     void toDto04() {
-        JokerQuota jokers = groupMapper.toDto(new Group()).getJokerQuota();
-        assertThat(jokers.getTripleJokerLimit()).isEqualTo(6);
+        JokerQuota quota = groupMapper.toDto(new Group()).getJokerQuota();
+        assertThat(quota.getTripleJokerLimit()).isEqualTo(6);
         Mockito.verify(userHelper, Mockito.times(1)).getTripleJokerLimit();
     }
 }
