@@ -20,7 +20,7 @@ import {
   saveResults
 } from './tournament.actions'
 import {Group} from '../../model/group/group'
-import {AvailableJokers} from '../../model/group/available-jokers'
+import {JokerQuota} from '../../model/group/joker-quota'
 import {Ranking} from '../../model/leaderboard/ranking'
 import {DashboardData} from '../../model/dashboard/dashboard-data'
 
@@ -32,7 +32,7 @@ export interface TournamentState {
   percentage: number
   percentageResult: number
   activeGroup: Group | null
-  availableJokers: AvailableJokers | null
+  availableJokers: JokerQuota | null
   leaderboard: Ranking[]
 }
 
@@ -80,7 +80,7 @@ export const tournamentFeature = createFeature({
         ...state,
         isTournamentSaving: false,
         activeGroup: action.group,
-        availableJokers: action.group.availableJokers
+        availableJokers: action.group.jokerQuota
       }
     }),
     on(getOverviewGroups, (state): TournamentState => {
@@ -110,7 +110,7 @@ export const tournamentFeature = createFeature({
         ...state,
         isTournamentLoading: false,
         activeGroup: action.group,
-        availableJokers: action.group.availableJokers
+        availableJokers: action.group.jokerQuota
       }
     }),
     on(grantJDouble, (state): TournamentState => {
@@ -120,7 +120,7 @@ export const tournamentFeature = createFeature({
         ...state,
         availableJokers: {
           ...jokers,
-          jdouble: jokers.jdouble + 1,
+          remainingDoubleJokers: jokers.remainingDoubleJokers + 1,
         }
       }
     }),
@@ -131,7 +131,7 @@ export const tournamentFeature = createFeature({
         ...state,
         availableJokers: {
           ...jokers,
-          jdouble: jokers.jdouble - 1
+          remainingDoubleJokers: jokers.remainingDoubleJokers - 1
         }
       }
     }),
@@ -142,7 +142,7 @@ export const tournamentFeature = createFeature({
         ...state,
         availableJokers: {
           ...jokers,
-          jtriple: jokers.jtriple + 1
+          remainingTripleJokers: jokers.remainingTripleJokers + 1
         }
       }
     }),
@@ -153,7 +153,7 @@ export const tournamentFeature = createFeature({
         ...state,
         availableJokers: {
           ...jokers,
-          jtriple: jokers.jtriple - 1
+          remainingTripleJokers: jokers.remainingTripleJokers - 1
         }
       }
     }),

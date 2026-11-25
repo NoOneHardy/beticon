@@ -23,11 +23,11 @@ const mockGroup: Group = {
   lastSavedAtResult: new Date(),
   percentage: 100,
   percentageResult: 100,
-  availableJokers: {
-    jdouble: 2,
-    jtriple: 3,
-    jdoubleMax: 10,
-    jtripleMax: 6
+  jokerQuota: {
+    remainingDoubleJokers: 2,
+    remainingTripleJokers: 3,
+    doubleJokerLimit: 10,
+    tripleJokerLimit: 6
   }
 }
 
@@ -54,37 +54,37 @@ describe('TournamentFeature', () => {
   it('should add a double joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
     let availableJokers = state.availableJokers
-    expect(availableJokers?.jdouble).toBe(2)
+    expect(availableJokers?.remainingDoubleJokers).toBe(2)
     state = store.reducer(state, grantJDouble())
     availableJokers = state.availableJokers
-    expect(availableJokers?.jdouble).toBe(3)
+    expect(availableJokers?.remainingDoubleJokers).toBe(3)
   })
 
   it('should remove a double joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
     let availableJokers = state.availableJokers
-    expect(availableJokers?.jdouble).toBe(2)
+    expect(availableJokers?.remainingDoubleJokers).toBe(2)
     state = store.reducer(state, revokeJDouble())
     availableJokers = state.availableJokers
-    expect(availableJokers?.jdouble).toBe(1)
+    expect(availableJokers?.remainingDoubleJokers).toBe(1)
   })
 
   it('should add a triple joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
     let availableJokers = state.availableJokers
-    expect(availableJokers?.jtriple).toBe(3)
+    expect(availableJokers?.remainingTripleJokers).toBe(3)
     state = store.reducer(state, grantJTriple())
     availableJokers = state.availableJokers
-    expect(availableJokers?.jtriple).toBe(4)
+    expect(availableJokers?.remainingTripleJokers).toBe(4)
   })
 
   it('should remove a triple joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
     let availableJokers = state.availableJokers
-    expect(availableJokers?.jtriple).toBe(3)
+    expect(availableJokers?.remainingTripleJokers).toBe(3)
     state = store.reducer(state, revokeJTriple())
     availableJokers = state.availableJokers
-    expect(availableJokers?.jtriple).toBe(2)
+    expect(availableJokers?.remainingTripleJokers).toBe(2)
   })
 
   it('should start loading when selecting a group', () => {
@@ -137,6 +137,6 @@ describe('TournamentFeature', () => {
     expect(state.isTournamentSaving).toBe(true)
     state = store.reducer(state, resultsSaved({group: mockGroup}))
     expect(state.activeGroup).toEqual(mockGroup)
-    expect(state.availableJokers).toEqual(mockGroup.availableJokers)
+    expect(state.availableJokers).toEqual(mockGroup.jokerQuota)
   })
 })

@@ -155,9 +155,9 @@ export class BetFormComponent implements ControlValueAccessor {
     case 1:
       return true
     case 2:
-      return (this.availableJokers()?.jdouble ?? 0) > 0
+      return (this.availableJokers()?.remainingDoubleJokers ?? 0) > 0
     case 3:
-      return (this.availableJokers()?.jtriple ?? 0) > 0
+      return (this.availableJokers()?.remainingTripleJokers ?? 0) > 0
     }
     return false
   }
