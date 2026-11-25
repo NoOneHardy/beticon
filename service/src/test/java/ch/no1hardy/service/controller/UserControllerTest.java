@@ -2,27 +2,13 @@ package ch.no1hardy.service.controller;
 
 import ch.no1hardy.service.front.user.UserReq;
 import ch.no1hardy.service.front.user.UserRes;
-import ch.no1hardy.service.service.AuthService;
-import ch.no1hardy.service.service.JwtService;
-import ch.no1hardy.service.service.NotificationService;
-import ch.no1hardy.service.service.UserService;
-import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.boot.webmvc.test.autoconfigure.MockMvcBuilderCustomizer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -30,35 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class UserControllerTest {
-    @TestConfiguration
-    static class SecurityMockMvcCustomizerConfig {
-        @Bean
-        MockMvcBuilderCustomizer securityMockMvcBuilderCustomizer() {
-            return builder -> builder.apply(SecurityMockMvcConfigurers.springSecurity());
-        }
-    }
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockitoBean
-    private UserService userService;
-
-    @MockitoBean
-    private NotificationService notificationService;
-
-    @MockitoBean
-    private JwtService jwtService;
-
-    @MockitoBean
-    private AuthService authService;
-
+public class UserControllerTest extends ApiTestBase {
     @Test
     @WithMockUser
     @DisplayName("PUT /user/me - should update current user when authenticated")
