@@ -38,7 +38,7 @@ export class GroupViewComponent {
   private store = inject(Store)
   private router = inject(Router)
 
-  jokers = this.store.selectSignal(selectJokerQuota)
+  jokerQuota = this.store.selectSignal(selectJokerQuota)
   group: Signal<Group | null> = this.store.selectSignal(selectActiveGroup)
   isLoading = this.store.selectSignal(selectIsTournamentLoading)
   isSaving = this.store.selectSignal(selectIsTournamentSaving)

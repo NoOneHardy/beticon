@@ -150,7 +150,7 @@ export class BetFormComponent implements ControlValueAccessor {
     return value <= selectedJoker
   }
 
-  hasJokersAvailable(joker: number): boolean {
+  hasRemainingJokers(joker: number): boolean {
     switch (joker) {
     case 1:
       return true

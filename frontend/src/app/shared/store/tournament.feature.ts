@@ -114,46 +114,46 @@ export const tournamentFeature = createFeature({
       }
     }),
     on(grantRemainingDoubleJoker, (state): TournamentState => {
-      const jokers = state.jokerQuota
-      if (!jokers) return state
+      const quota = state.jokerQuota
+      if (!quota) return state
       return {
         ...state,
         jokerQuota: {
-          ...jokers,
-          remainingDoubleJokers: jokers.remainingDoubleJokers + 1,
+          ...quota,
+          remainingDoubleJokers: quota.remainingDoubleJokers + 1,
         }
       }
     }),
     on(revokeRemainingDoubleJoker, (state): TournamentState => {
-      const jokers = state.jokerQuota
-      if (!jokers) return state
+      const quota = state.jokerQuota
+      if (!quota) return state
       return {
         ...state,
         jokerQuota: {
-          ...jokers,
-          remainingDoubleJokers: jokers.remainingDoubleJokers - 1
+          ...quota,
+          remainingDoubleJokers: quota.remainingDoubleJokers - 1
         }
       }
     }),
     on(grantRemainingTripleJoker, (state): TournamentState => {
-      const jokers = state.jokerQuota
-      if (!jokers) return state
+      const quota = state.jokerQuota
+      if (!quota) return state
       return {
         ...state,
         jokerQuota: {
-          ...jokers,
-          remainingTripleJokers: jokers.remainingTripleJokers + 1
+          ...quota,
+          remainingTripleJokers: quota.remainingTripleJokers + 1
         }
       }
     }),
     on(revokeRemainingTripleJoker, (state): TournamentState => {
-      const jokers = state.jokerQuota
-      if (!jokers) return state
+      const quota = state.jokerQuota
+      if (!quota) return state
       return {
         ...state,
         jokerQuota: {
-          ...jokers,
-          remainingTripleJokers: jokers.remainingTripleJokers - 1
+          ...quota,
+          remainingTripleJokers: quota.remainingTripleJokers - 1
         }
       }
     }),

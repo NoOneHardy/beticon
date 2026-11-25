@@ -232,14 +232,14 @@ describe('BetFormComponent', () => {
   })
 
   it('should return true if checked joker is 1', () => {
-    expect(component.hasJokersAvailable(1)).toBe(true)
+    expect(component.hasRemainingJokers(1)).toBe(true)
   })
 
-  it('should return true if checked joker is 2 and remaining jokers are greater than 0', () => {
-    expect(component.hasJokersAvailable(2)).toBe(true)
+  it('should return true if checked joker is 2 and Remaining Jokers are greater than 0', () => {
+    expect(component.hasRemainingJokers(2)).toBe(true)
   })
 
-  it('should return false if checked joker is 2 and remaining jokers are 0', () => {
+  it('should return false if checked joker is 2 and Remaining Jokers are 0', () => {
     mockStore.overrideSelector(selectJokerQuota, {
       remainingDoubleJokers: 0,
       remainingTripleJokers: 3,
@@ -247,14 +247,14 @@ describe('BetFormComponent', () => {
       tripleJokerLimit: 6
     })
     mockStore.refreshState()
-    expect(component.hasJokersAvailable(2)).toBe(false)
+    expect(component.hasRemainingJokers(2)).toBe(false)
   })
 
-  it('should return true if checked joker is 3 and remaining jokers are greater than 0', () => {
-    expect(component.hasJokersAvailable(3)).toBe(true)
+  it('should return true if checked joker is 3 and Remaining Jokers are greater than 0', () => {
+    expect(component.hasRemainingJokers(3)).toBe(true)
   })
 
-  it('should return false if checked joker is 3 and remaining jokers are 0', () => {
+  it('should return false if checked joker is 3 and Remaining Jokers are 0', () => {
     mockStore.overrideSelector(selectJokerQuota, {
       remainingDoubleJokers: 5,
       remainingTripleJokers: 0,
@@ -262,11 +262,11 @@ describe('BetFormComponent', () => {
       tripleJokerLimit: 6
     })
     mockStore.refreshState()
-    expect(component.hasJokersAvailable(3)).toBe(false)
+    expect(component.hasRemainingJokers(3)).toBe(false)
   })
 
   it('should return false if checked joker is not 1, 2 or 3', () => {
-    expect(component.hasJokersAvailable(4)).toBe(false)
+    expect(component.hasRemainingJokers(4)).toBe(false)
   })
 
   it('should grant a joker if joker has changed and was limited', () => {
