@@ -43,7 +43,7 @@ class RequestBodyContractTest extends ApiTestBase {
                 found++;
                 String endpoint = entry.getKey() + " -> " + handler.getShortLogMessage();
                 ResolvableType type = ResolvableType.forMethodParameter(param);
-                if (type.isAssignableFrom(List.class) || type.asCollection() != ResolvableType.NONE) {
+                if (type.asCollection() != ResolvableType.NONE) {
                     type = type.asCollection().getGeneric(0);
                 }
                 Type target = type.getType();
