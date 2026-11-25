@@ -3,6 +3,7 @@ package ch.no1hardy.service.exception;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -46,6 +47,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleApiException(ApiException ex) {
         return ResponseEntity.status(ex.getStatus())
                 .body(new ApiError(ex.getMessage(), ex.getDisplayMessage(), ex.getStatus().value(), LocalDateTime.now()));
+    }
+
+    /**
+     * The client sent a body that is not valid JSON or does not fit the request type. A request type Jackson
+     * cannot construct at all is a server bug instead and stays on the generic 500 path.
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiError> handleHttpMessageNotReadableException() {
+        return ResponseEntity.status(400)
+                .body(new ApiError("Malformed request body", "Ungültige Anfrage", 400, LocalDateTime.now()));
     }
 
     @ExceptionHandler(Exception.class)
