@@ -3,6 +3,8 @@ package ch.no1hardy.service.controller;
 import ch.no1hardy.service.front.game.BetReq;
 import ch.no1hardy.service.front.game.ResultReq;
 import ch.no1hardy.service.front.group.GroupReq;
+import ch.no1hardy.service.front.group.GroupRes;
+import ch.no1hardy.service.front.group.JokerQuota;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -14,12 +16,38 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class GroupControllerTest extends ApiTestBase {
+    @Test
+    @WithMockUser
+    @DisplayName("GET /group/{id} - sends the joker quota under the glossary property names")
+    void sendsJokerQuotaPropertyNames() throws Exception {
+        JokerQuota jokerQuota = new JokerQuota();
+        jokerQuota.setRemainingDoubleJokers(2);
+        jokerQuota.setRemainingTripleJokers(1);
+        jokerQuota.setDoubleJokerLimit(10);
+        jokerQuota.setTripleJokerLimit(6);
+        when(groupService.getGroup("group-a")).thenReturn(GroupRes.builder()
+                .id("group-a")
+                .jokerQuota(jokerQuota)
+                .build());
+
+        mockMvc.perform(get("/group/group-a"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.jokerQuota.remainingDoubleJokers").value(2))
+                .andExpect(jsonPath("$.data.jokerQuota.remainingTripleJokers").value(1))
+                .andExpect(jsonPath("$.data.jokerQuota.doubleJokerLimit").value(10))
+                .andExpect(jsonPath("$.data.jokerQuota.tripleJokerLimit").value(6))
+                .andExpect(jsonPath("$.data.availableJokers").doesNotExist());
+    }
+
     @Test
     @WithMockUser(roles = "ADMIN")
     @DisplayName("POST /group - parses the create group request sent by the admin frontend")
