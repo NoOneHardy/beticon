@@ -7,6 +7,7 @@ import {GroupOption} from './model/group-option'
 import {CreateTeam} from './model/create-team'
 import {CreateGroup} from './model/create-group'
 import {CreateGame} from './model/create-game'
+import {PointsChange} from './model/points-change'
 import {BetGame} from '../model/game/bet-game'
 
 @Injectable({
@@ -50,5 +51,9 @@ export class AdminService extends BaseHttpService {
 
   createGame(game: CreateGame): Observable<BetGame> {
     return this.post<BetGame, CreateGame>('/api/game', game)
+  }
+
+  rescoreEverything(): Observable<PointsChange[]> {
+    return this.post<PointsChange[]>('/api/admin/rescore', {})
   }
 }

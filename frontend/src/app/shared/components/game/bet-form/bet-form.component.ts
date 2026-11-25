@@ -12,8 +12,6 @@ import {grantJDouble, grantJTriple, revokeJDouble, revokeJTriple} from '../../..
 import {ResultComponent} from '../result/result.component'
 import {ExpandableComponent} from '../../expandable/expandable.component'
 import {PointTableComponent} from '../point-table/point-table.component'
-import {TotalPointsPipe} from '../../../pipes/total-points.pipe'
-import {PointsPipe} from '../../../pipes/points.pipe'
 import {TeamPreviousGamesComponent} from '../team-previous-games/team-previous-games.component'
 
 @Component({
@@ -26,8 +24,6 @@ import {TeamPreviousGamesComponent} from '../team-previous-games/team-previous-g
     ResultComponent,
     ExpandableComponent,
     PointTableComponent,
-    TotalPointsPipe,
-    PointsPipe,
     TeamPreviousGamesComponent
   ],
   templateUrl: './bet-form.component.html',

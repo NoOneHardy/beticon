@@ -160,4 +160,15 @@ describe('AdminService', () => {
     expect(req.request.body instanceof FormData).toBe(true)
     flushApiResponse(req, '/cdn/flags/flag.png')
   })
+
+  it('should re-score everything and return the changed totals', () => {
+    const changes = [{userId: 'u1', username: 'hardy', oldPoints: 12, newPoints: 9}]
+    service.rescoreEverything().subscribe(result => {
+      expect(result).toEqual(changes)
+    })
+
+    const req = httpMock.expectOne('/api/admin/rescore')
+    expect(req.request.method).toBe('POST')
+    flushApiResponse(req, changes)
+  })
 })

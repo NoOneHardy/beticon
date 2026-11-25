@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class GlobalStatistics {
     private Integer totalPoints;
-    private Integer correctGames;
-    private Integer jokersWasted;
+    private Integer exactBets;
+    private Integer wastedJokers;
 }

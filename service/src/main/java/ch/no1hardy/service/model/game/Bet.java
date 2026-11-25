@@ -40,6 +40,11 @@ public class Bet extends BaseEntity {
     })
     private Scoreline scoreline;
 
+    /**
+     * The stored Points of this Bet. Null while the Game has no Result.
+     */
+    private Integer points;
+
     public Integer getScoreTeamHome() {
         return scoreline == null ? null : scoreline.getHome();
     }
@@ -77,14 +82,5 @@ public class Bet extends BaseEntity {
     public Optional<PointsBreakdown> pointsBreakdown() {
         return Optional.ofNullable(game.getResult())
                 .map(result -> Scoring.score(scoreline, result.getScoreline(), joker));
-    }
-
-    public boolean isCorrect() {
-        Score result = game.getResult();
-        if (result == null) return false;
-
-        return Objects.equals(result.getScoreTeamHome(), getScoreTeamHome())
-                && Objects.equals(result.getScoreTeamGuest(), getScoreTeamGuest());
-
     }
 }

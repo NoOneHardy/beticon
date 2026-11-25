@@ -17,19 +17,20 @@ import ch.no1hardy.service.model.game.*;
 import ch.no1hardy.service.model.user.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class GameService {
     private final GameRepository repository;
-    private final ScoreRepository scoreRepository;
     private final BetRepository betRepository;
-    private final UserService userService;
+    private final ResultEntryService resultEntryService;
     private final AuthService authService;
     private final GameMapper mapper;
     private final UserHelper userHelper;
@@ -45,37 +46,30 @@ public class GameService {
         return mapper.toDto(game);
     }
 
+    /**
+     * Enters, corrects or removes the Result of a Game, then notifies the users about a new Result.
+     * The notifications run after the Result entry has committed, so a failing notification never undoes it.
+     *
+     * @param id  the ID of the Game
+     * @param dto the Result; a blank one removes the existing Result
+     * @return the updated Game
+     */
     public BetGameRes uploadResult(String id, ResultReq dto) {
-        Game game = repository.findById(id).orElse(null);
-        if (game == null) throw new NotFoundException("Game " + id + " not found", "Spiel '" + id + "' nicht gefunden");
-
-        if (!dto.isValid()) return mapper.toDto(game);
-        dto.clamp();
-
-        removeExistingResult(game);
-        if (dto.isNull()) return mapper.toDto(game);
-
-        if (game.getGroup().getIsKnockout() && dto.isTie()) {
-            throw new KnockoutTieException("Game " + id + " is in a knockout group and cannot end in a tie", "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden");
-        }
-
-        dto.setGame(id);
-        Score result = scoreRepository.save(mapper.toEntity(dto));
-        game.setResult(result);
-
-        userService.addUserPoints(game);
-        notificationService.notifyUsersNewResult(game);
-        notificationService.notifyUsersRankingChange();
-        return mapper.toDto(repository.save(game));
+        ResultEntryService.ResultEntry entry = resultEntryService.enter(id, dto);
+        if (entry.resultEntered()) notifyUsersNewResult(entry.game());
+        return entry.response();
     }
 
-    private void removeExistingResult(@NotNull Game game) {
-        Score existingResult = game.getResult();
-        if (existingResult != null) {
-            userService.removeUserPoints(game);
-
-            game.setResult(null);
-            scoreRepository.delete(existingResult);
+    private void notifyUsersNewResult(@NotNull Game game) {
+        try {
+            notificationService.notifyUsersNewResult(game);
+        } catch (RuntimeException e) {
+            log.error("Result of game {} is saved, but notifying the users about it failed", game.getId(), e);
+        }
+        try {
+            notificationService.notifyUsersRankingChange();
+        } catch (RuntimeException e) {
+            log.error("Result of game {} is saved, but notifying the users about their ranking change failed", game.getId(), e);
         }
     }
 
