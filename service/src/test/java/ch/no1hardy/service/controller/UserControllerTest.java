@@ -1,64 +1,31 @@
 package ch.no1hardy.service.controller;
 
+import ch.no1hardy.service.front.user.LoginReq;
 import ch.no1hardy.service.front.user.UserReq;
 import ch.no1hardy.service.front.user.UserRes;
-import ch.no1hardy.service.service.AuthService;
-import ch.no1hardy.service.service.JwtService;
-import ch.no1hardy.service.service.NotificationService;
-import ch.no1hardy.service.service.UserService;
-import tools.jackson.databind.ObjectMapper;
+import ch.no1hardy.service.front.verification.ResetPasswordReq;
+import ch.no1hardy.service.front.verification.VerifyEmailReq;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.boot.webmvc.test.autoconfigure.MockMvcBuilderCustomizer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class UserControllerTest {
-    @TestConfiguration
-    static class SecurityMockMvcCustomizerConfig {
-        @Bean
-        MockMvcBuilderCustomizer securityMockMvcBuilderCustomizer() {
-            return builder -> builder.apply(SecurityMockMvcConfigurers.springSecurity());
-        }
-    }
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockitoBean
-    private UserService userService;
-
-    @MockitoBean
-    private NotificationService notificationService;
-
-    @MockitoBean
-    private JwtService jwtService;
-
-    @MockitoBean
-    private AuthService authService;
-
+public class UserControllerTest extends ApiTestBase {
     @Test
     @WithMockUser
     @DisplayName("PUT /user/me - should update current user when authenticated")
@@ -108,5 +75,121 @@ public class UserControllerTest {
                 .andExpect(status().is4xxClientError());
 
         Mockito.verify(userService, Mockito.never()).update(ArgumentMatchers.any(UserReq.class));
+    }
+
+    @Test
+    @DisplayName("POST /signup - parses the sign-up request")
+    void parsesSignupRequest() throws Exception {
+        mockMvc.perform(post("/signup")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "username": "no1hardy",
+                                  "email": "hardy@example.com",
+                                  "firstname": "Hardy",
+                                  "lastname": "Tester",
+                                  "password": "secret-password"
+                                }
+                                """))
+                .andExpect(status().isOk());
+
+        ArgumentCaptor<UserReq> captor = ArgumentCaptor.forClass(UserReq.class);
+        verify(userService).create(captor.capture());
+        UserReq forwarded = captor.getValue();
+        assertEquals("no1hardy", forwarded.getUsername());
+        assertEquals("hardy@example.com", forwarded.getEmail());
+        assertEquals("Hardy", forwarded.getFirstname());
+        assertEquals("Tester", forwarded.getLastname());
+        assertEquals("secret-password", forwarded.getPassword());
+    }
+
+    @Test
+    @DisplayName("POST /login - parses the login request")
+    void parsesLoginRequest() throws Exception {
+        UserRes user = new UserRes();
+        user.setId("user-1");
+        when(userService.login(any(LoginReq.class))).thenReturn(user);
+        when(jwtService.generateJwtCookie(anyString())).thenReturn(new Cookie("jwt", "token"));
+
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"username": "no1hardy", "password": "secret-password"}
+                                """))
+                .andExpect(status().isOk());
+
+        ArgumentCaptor<LoginReq> captor = ArgumentCaptor.forClass(LoginReq.class);
+        verify(userService).login(captor.capture());
+        assertEquals("no1hardy", captor.getValue().getUsername());
+        assertEquals("secret-password", captor.getValue().getPassword());
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("PUT /user/me - parses the update request sent by the profile page, ignoring its id")
+    void parsesProfileUpdateRequest() throws Exception {
+        mockMvc.perform(put("/user/me")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "id": "user-1",
+                                  "username": "no1hardy",
+                                  "email": "hardy@example.com",
+                                  "passwordChange": {"password": "new-password", "currentPassword": "old-password"}
+                                }
+                                """))
+                .andExpect(status().isOk());
+
+        ArgumentCaptor<UserReq> captor = ArgumentCaptor.forClass(UserReq.class);
+        verify(userService).update(captor.capture());
+        UserReq forwarded = captor.getValue();
+        assertEquals("no1hardy", forwarded.getUsername());
+        assertEquals("hardy@example.com", forwarded.getEmail());
+        assertEquals(new UserReq.PasswordChange("new-password", "old-password"), forwarded.getPasswordChange());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    @DisplayName("PUT /user/{id} - parses the admin update request")
+    void parsesAdminUpdateRequest() throws Exception {
+        mockMvc.perform(put("/user/user-1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"username": "no1hardy", "firstname": "Hardy", "lastname": "Tester"}
+                                """))
+                .andExpect(status().isOk());
+
+        ArgumentCaptor<UserReq> captor = ArgumentCaptor.forClass(UserReq.class);
+        verify(userService).update(eq("user-1"), captor.capture());
+        UserReq forwarded = captor.getValue();
+        assertEquals("no1hardy", forwarded.getUsername());
+        assertEquals("Hardy", forwarded.getFirstname());
+        assertEquals("Tester", forwarded.getLastname());
+    }
+
+    @Test
+    @DisplayName("POST /user/confirm - parses the email verification request")
+    void parsesVerifyEmailRequest() throws Exception {
+        mockMvc.perform(post("/user/confirm")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"code": "verify-code"}
+                                """))
+                .andExpect(status().isOk());
+
+        verify(userService).verifyEmail(new VerifyEmailReq("verify-code"));
+    }
+
+    @Test
+    @DisplayName("PUT /user/password-reset - parses the password reset request")
+    void parsesResetPasswordRequest() throws Exception {
+        mockMvc.perform(put("/user/password-reset")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"newPassword": "new-password", "code": "reset-code"}
+                                """))
+                .andExpect(status().isOk());
+
+        verify(userService).resetPassword(new ResetPasswordReq("reset-code", "new-password"));
     }
 }

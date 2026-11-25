@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
   java
   alias(libs.plugins.spring.boot)
@@ -47,4 +49,8 @@ dependencies {
 
 tasks.withType<Test> {
   useJUnitPlatform()
+  testLogging {
+    events("failed")
+    exceptionFormat = TestExceptionFormat.FULL
+  }
 }
