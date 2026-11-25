@@ -2,14 +2,14 @@ import {FeatureSlice} from '@ngrx/store'
 import * as feature from './tournament.feature'
 import {TournamentState} from './tournament.feature'
 import {
-  grantJDouble,
-  grantJTriple,
+  grantRemainingDoubleJoker,
+  grantRemainingTripleJoker,
   groupLoaded,
   loadGroup,
   overviewGroupsLoaded,
   resultsSaved,
-  revokeJDouble,
-  revokeJTriple,
+  revokeRemainingDoubleJoker,
+  revokeRemainingTripleJoker,
   saveResults
 } from './tournament.actions'
 import {Group} from '../../model/group/group'
@@ -44,47 +44,47 @@ describe('TournamentFeature', () => {
     expect(store).toBeTruthy()
   })
 
-  it('should set available jokers when setting active group', () => {
-    let availableJokers = initialState.availableJokers
-    expect(availableJokers).toBeFalsy()
-    availableJokers = store.reducer(initialState, groupLoaded({group: mockGroup})).availableJokers
-    expect(availableJokers).toBeTruthy()
+  it('should set joker quota when setting active group', () => {
+    let jokerQuota = initialState.jokerQuota
+    expect(jokerQuota).toBeFalsy()
+    jokerQuota = store.reducer(initialState, groupLoaded({group: mockGroup})).jokerQuota
+    expect(jokerQuota).toBeTruthy()
   })
 
   it('should add a double joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
-    let availableJokers = state.availableJokers
-    expect(availableJokers?.remainingDoubleJokers).toBe(2)
-    state = store.reducer(state, grantJDouble())
-    availableJokers = state.availableJokers
-    expect(availableJokers?.remainingDoubleJokers).toBe(3)
+    let jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingDoubleJokers).toBe(2)
+    state = store.reducer(state, grantRemainingDoubleJoker())
+    jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingDoubleJokers).toBe(3)
   })
 
   it('should remove a double joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
-    let availableJokers = state.availableJokers
-    expect(availableJokers?.remainingDoubleJokers).toBe(2)
-    state = store.reducer(state, revokeJDouble())
-    availableJokers = state.availableJokers
-    expect(availableJokers?.remainingDoubleJokers).toBe(1)
+    let jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingDoubleJokers).toBe(2)
+    state = store.reducer(state, revokeRemainingDoubleJoker())
+    jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingDoubleJokers).toBe(1)
   })
 
   it('should add a triple joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
-    let availableJokers = state.availableJokers
-    expect(availableJokers?.remainingTripleJokers).toBe(3)
-    state = store.reducer(state, grantJTriple())
-    availableJokers = state.availableJokers
-    expect(availableJokers?.remainingTripleJokers).toBe(4)
+    let jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingTripleJokers).toBe(3)
+    state = store.reducer(state, grantRemainingTripleJoker())
+    jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingTripleJokers).toBe(4)
   })
 
   it('should remove a triple joker', () => {
     let state = store.reducer(initialState, groupLoaded({group: mockGroup}))
-    let availableJokers = state.availableJokers
-    expect(availableJokers?.remainingTripleJokers).toBe(3)
-    state = store.reducer(state, revokeJTriple())
-    availableJokers = state.availableJokers
-    expect(availableJokers?.remainingTripleJokers).toBe(2)
+    let jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingTripleJokers).toBe(3)
+    state = store.reducer(state, revokeRemainingTripleJoker())
+    jokerQuota = state.jokerQuota
+    expect(jokerQuota?.remainingTripleJokers).toBe(2)
   })
 
   it('should start loading when selecting a group', () => {
@@ -131,12 +131,12 @@ describe('TournamentFeature', () => {
     expect(state.isTournamentSaving).toBe(false)
   })
 
-  it('should update group and available jokers when results have been saved', () => {
+  it('should update group and joker quota when results have been saved', () => {
     let state = initialState
     state = store.reducer(state, saveResults({groupId: 'group-1', results: []}))
     expect(state.isTournamentSaving).toBe(true)
     state = store.reducer(state, resultsSaved({group: mockGroup}))
     expect(state.activeGroup).toEqual(mockGroup)
-    expect(state.availableJokers).toEqual(mockGroup.jokerQuota)
+    expect(state.jokerQuota).toEqual(mockGroup.jokerQuota)
   })
 })

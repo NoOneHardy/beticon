@@ -5,8 +5,8 @@ import {
   dashboardDataLoaded,
   getLeaderboard,
   getOverviewGroups,
-  grantJDouble,
-  grantJTriple,
+  grantRemainingDoubleJoker,
+  grantRemainingTripleJoker,
   groupLoaded,
   leaderboardLoaded,
   loadDashboardData,
@@ -14,8 +14,8 @@ import {
   overviewGroupsLoaded,
   resetSaving,
   resultsSaved,
-  revokeJDouble,
-  revokeJTriple,
+  revokeRemainingDoubleJoker,
+  revokeRemainingTripleJoker,
   saveBets,
   saveResults
 } from './tournament.actions'
@@ -32,7 +32,7 @@ export interface TournamentState {
   percentage: number
   percentageResult: number
   activeGroup: Group | null
-  availableJokers: JokerQuota | null
+  jokerQuota: JokerQuota | null
   leaderboard: Ranking[]
 }
 
@@ -44,7 +44,7 @@ export const initialState: TournamentState = {
   percentage: 0,
   percentageResult: 0,
   activeGroup: null,
-  availableJokers: null,
+  jokerQuota: null,
   leaderboard: []
 }
 
@@ -80,7 +80,7 @@ export const tournamentFeature = createFeature({
         ...state,
         isTournamentSaving: false,
         activeGroup: action.group,
-        availableJokers: action.group.jokerQuota
+        jokerQuota: action.group.jokerQuota
       }
     }),
     on(getOverviewGroups, (state): TournamentState => {
@@ -110,48 +110,48 @@ export const tournamentFeature = createFeature({
         ...state,
         isTournamentLoading: false,
         activeGroup: action.group,
-        availableJokers: action.group.jokerQuota
+        jokerQuota: action.group.jokerQuota
       }
     }),
-    on(grantJDouble, (state): TournamentState => {
-      const jokers = state.availableJokers
+    on(grantRemainingDoubleJoker, (state): TournamentState => {
+      const jokers = state.jokerQuota
       if (!jokers) return state
       return {
         ...state,
-        availableJokers: {
+        jokerQuota: {
           ...jokers,
           remainingDoubleJokers: jokers.remainingDoubleJokers + 1,
         }
       }
     }),
-    on(revokeJDouble, (state): TournamentState => {
-      const jokers = state.availableJokers
+    on(revokeRemainingDoubleJoker, (state): TournamentState => {
+      const jokers = state.jokerQuota
       if (!jokers) return state
       return {
         ...state,
-        availableJokers: {
+        jokerQuota: {
           ...jokers,
           remainingDoubleJokers: jokers.remainingDoubleJokers - 1
         }
       }
     }),
-    on(grantJTriple, (state): TournamentState => {
-      const jokers = state.availableJokers
+    on(grantRemainingTripleJoker, (state): TournamentState => {
+      const jokers = state.jokerQuota
       if (!jokers) return state
       return {
         ...state,
-        availableJokers: {
+        jokerQuota: {
           ...jokers,
           remainingTripleJokers: jokers.remainingTripleJokers + 1
         }
       }
     }),
-    on(revokeJTriple, (state): TournamentState => {
-      const jokers = state.availableJokers
+    on(revokeRemainingTripleJoker, (state): TournamentState => {
+      const jokers = state.jokerQuota
       if (!jokers) return state
       return {
         ...state,
-        availableJokers: {
+        jokerQuota: {
           ...jokers,
           remainingTripleJokers: jokers.remainingTripleJokers - 1
         }
@@ -181,7 +181,7 @@ export const {
   selectPercentageResult,
   selectActiveGroup,
   selectIsTournamentSaving,
-  selectAvailableJokers,
+  selectJokerQuota,
   selectLeaderboard,
   selectDashboard
 } = tournamentFeature
