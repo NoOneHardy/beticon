@@ -37,11 +37,11 @@
           <div class="panel">
             <p class="panel-title">Verfügbare Joker</p>
             <div class="panel-content">
-              <bet-remaining-joker-display [jokersMax]="jokers.doubleJokerLimit"
-                                          [jokersRemaining]="jokers.remainingDoubleJokers"
+              <bet-remaining-joker-display [jokerLimit]="jokers.doubleJokerLimit"
+                                          [remainingJokers]="jokers.remainingDoubleJokers"
                                           [jokerMultiplier]="2"/>
-              <bet-remaining-joker-display [jokersMax]="jokers.tripleJokerLimit"
-                                          [jokersRemaining]="jokers.remainingTripleJokers"
+              <bet-remaining-joker-display [jokerLimit]="jokers.tripleJokerLimit"
+                                          [remainingJokers]="jokers.remainingTripleJokers"
                                           [jokerMultiplier]="3"/>
             </div>
           </div>
