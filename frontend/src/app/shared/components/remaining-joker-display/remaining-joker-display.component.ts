@@ -7,8 +7,8 @@ import {Component, input} from '@angular/core'
   styleUrl: './remaining-joker-display.component.css'
 })
 export class RemainingJokerDisplayComponent {
-  jokersRemaining = input.required<number>()
-  jokersMax = input.required<number>()
+  remainingJokers = input.required<number>()
+  jokerLimit = input.required<number>()
   jokerMultiplier = input.required<number>()
 
   get jokerArray(): number[] {

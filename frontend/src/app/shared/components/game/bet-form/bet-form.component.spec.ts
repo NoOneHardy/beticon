@@ -5,8 +5,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {BetFormComponent} from './bet-form.component'
 import {BetGame} from '../../../../model/game/bet-game'
 import {MockStore, provideMockStore} from '@ngrx/store/testing'
-import {selectAvailableJokers} from '../../../store/tournament.feature'
-import {grantJDouble, grantJTriple, revokeJDouble, revokeJTriple} from '../../../store/tournament.actions'
+import {selectJokerQuota} from '../../../store/tournament.feature'
+import {grantRemainingDoubleJoker, grantRemainingTripleJoker, revokeRemainingDoubleJoker, revokeRemainingTripleJoker} from '../../../store/tournament.actions'
 import {provideAnimations} from '@angular/platform-browser/animations'
 
 const future = new Date(
@@ -28,11 +28,11 @@ describe('BetFormComponent', () => {
     }).compileComponents()
 
     mockStore = TestBed.inject(MockStore)
-    mockStore.overrideSelector(selectAvailableJokers, {
-      jdouble: 5,
-      jtriple: 3,
-      jdoubleMax: 10,
-      jtripleMax: 6
+    mockStore.overrideSelector(selectJokerQuota, {
+      remainingDoubleJokers: 5,
+      remainingTripleJokers: 3,
+      doubleJokerLimit: 10,
+      tripleJokerLimit: 6
     })
     mockGame = {
       groupId: 'group-1',
@@ -75,12 +75,12 @@ describe('BetFormComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should load available jokers from store', () => {
-    expect(component.availableJokers()).toEqual({
-      jdouble: 5,
-      jtriple: 3,
-      jdoubleMax: 10,
-      jtripleMax: 6
+  it('should load joker quota from store', () => {
+    expect(component.jokerQuota()).toEqual({
+      remainingDoubleJokers: 5,
+      remainingTripleJokers: 3,
+      doubleJokerLimit: 10,
+      tripleJokerLimit: 6
     })
   })
 
@@ -232,41 +232,41 @@ describe('BetFormComponent', () => {
   })
 
   it('should return true if checked joker is 1', () => {
-    expect(component.hasJokersAvailable(1)).toBe(true)
+    expect(component.hasRemainingJokers(1)).toBe(true)
   })
 
-  it('should return true if checked joker is 2 and available jokers are greater than 0', () => {
-    expect(component.hasJokersAvailable(2)).toBe(true)
+  it('should return true if checked joker is 2 and Remaining Jokers are greater than 0', () => {
+    expect(component.hasRemainingJokers(2)).toBe(true)
   })
 
-  it('should return false if checked joker is 2 and available jokers are 0', () => {
-    mockStore.overrideSelector(selectAvailableJokers, {
-      jdouble: 0,
-      jtriple: 3,
-      jdoubleMax: 10,
-      jtripleMax: 6
+  it('should return false if checked joker is 2 and Remaining Jokers are 0', () => {
+    mockStore.overrideSelector(selectJokerQuota, {
+      remainingDoubleJokers: 0,
+      remainingTripleJokers: 3,
+      doubleJokerLimit: 10,
+      tripleJokerLimit: 6
     })
     mockStore.refreshState()
-    expect(component.hasJokersAvailable(2)).toBe(false)
+    expect(component.hasRemainingJokers(2)).toBe(false)
   })
 
-  it('should return true if checked joker is 3 and available jokers are greater than 0', () => {
-    expect(component.hasJokersAvailable(3)).toBe(true)
+  it('should return true if checked joker is 3 and Remaining Jokers are greater than 0', () => {
+    expect(component.hasRemainingJokers(3)).toBe(true)
   })
 
-  it('should return false if checked joker is 3 and available jokers are 0', () => {
-    mockStore.overrideSelector(selectAvailableJokers, {
-      jdouble: 5,
-      jtriple: 0,
-      jdoubleMax: 10,
-      jtripleMax: 6
+  it('should return false if checked joker is 3 and Remaining Jokers are 0', () => {
+    mockStore.overrideSelector(selectJokerQuota, {
+      remainingDoubleJokers: 5,
+      remainingTripleJokers: 0,
+      doubleJokerLimit: 10,
+      tripleJokerLimit: 6
     })
     mockStore.refreshState()
-    expect(component.hasJokersAvailable(3)).toBe(false)
+    expect(component.hasRemainingJokers(3)).toBe(false)
   })
 
   it('should return false if checked joker is not 1, 2 or 3', () => {
-    expect(component.hasJokersAvailable(4)).toBe(false)
+    expect(component.hasRemainingJokers(4)).toBe(false)
   })
 
   it('should grant a joker if joker has changed and was limited', () => {
@@ -276,12 +276,12 @@ describe('BetFormComponent', () => {
     component.formGroup.controls.joker.setValue(2)
     fixture.detectChanges()
     expect(component['value'].joker).toBe(2)
-    expect(spy).toHaveBeenCalledWith(grantJTriple())
+    expect(spy).toHaveBeenCalledWith(grantRemainingTripleJoker())
 
     component.formGroup.controls.joker.setValue(1)
     fixture.detectChanges()
     expect(component['value'].joker).toBe(1)
-    expect(spy).toHaveBeenCalledWith(grantJDouble())
+    expect(spy).toHaveBeenCalledWith(grantRemainingDoubleJoker())
   })
 
   it('should revoke a joker if joker has changed and was limited', () => {
@@ -290,12 +290,12 @@ describe('BetFormComponent', () => {
     component.formGroup.controls.joker.setValue(2)
     fixture.detectChanges()
     expect(component['value'].joker).toBe(2)
-    expect(spy).toHaveBeenCalledWith(revokeJDouble())
+    expect(spy).toHaveBeenCalledWith(revokeRemainingDoubleJoker())
 
     component.formGroup.controls.joker.setValue(3)
     fixture.detectChanges()
     expect(component['value'].joker).toBe(3)
-    expect(spy).toHaveBeenCalledWith(revokeJTriple())
+    expect(spy).toHaveBeenCalledWith(revokeRemainingTripleJoker())
   })
 
   it('should not revoke or grant a joker if joker has not changed', () => {
@@ -317,13 +317,13 @@ describe('BetFormComponent', () => {
     component.formGroup.controls.joker.setValue(1)
     fixture.detectChanges()
     expect(component['value'].joker).toBe(1)
-    expect(spy).toHaveBeenCalledWith(grantJTriple())
+    expect(spy).toHaveBeenCalledWith(grantRemainingTripleJoker())
     expect(spy).toHaveBeenCalledTimes(1)
 
     component.formGroup.controls.joker.setValue(2)
     fixture.detectChanges()
     expect(component['value'].joker).toBe(2)
-    expect(spy).toHaveBeenCalledWith(revokeJDouble())
+    expect(spy).toHaveBeenCalledWith(revokeRemainingDoubleJoker())
     expect(spy).toHaveBeenCalledTimes(2)
   })
 

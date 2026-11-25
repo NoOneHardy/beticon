@@ -13,11 +13,11 @@ const mockGroup: Group = {
   percentageResult: 40,
   percentage: 50,
   name: 'Gruppe A',
-  availableJokers: {
-    jdouble: 0,
-    jtriple: 0,
-    jdoubleMax: 10,
-    jtripleMax: 6
+  jokerQuota: {
+    remainingDoubleJokers: 0,
+    remainingTripleJokers: 0,
+    doubleJokerLimit: 10,
+    tripleJokerLimit: 6
   },
   games: [
     {

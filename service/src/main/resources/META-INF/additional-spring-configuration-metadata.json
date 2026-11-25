@@ -23,12 +23,12 @@
     {
       "name": "beticon.joker.double",
       "type": "java.lang.Integer",
-      "description": "The amount of double jokers available."
+      "description": "The ×2 Joker limit: the most ×2 Jokers one user may attach to Bets in one tournament."
     },
     {
       "name": "beticon.joker.triple",
       "type": "java.lang.Integer",
-      "description": "The amount of triple jokers available."
+      "description": "The ×3 Joker limit: the most ×3 Jokers one user may attach to Bets in one tournament."
     }
   ]
 }

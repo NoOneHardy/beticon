@@ -53,11 +53,11 @@ public class UserHelper {
     }
 
     /**
-     * Returns the number of available double jokers for the current user.
-     * @return the number of available double jokers
+     * Returns the current user's Remaining Jokers for ×2.
+     * @return the Remaining ×2 Jokers
      */
-    @Named("getAvailableDoubleJokers")
-    public int getAvailableDoubleJokers() {
+    @Named("getRemainingDoubleJokers")
+    public int getRemainingDoubleJokers() {
         Optional<User> user$ = authService.getLoggedInUser();
         if (user$.isEmpty()) return getDoubleJokerLimit();
 
@@ -66,8 +66,12 @@ public class UserHelper {
         return getDoubleJokerLimit() - usedDoubleJokers;
     }
 
-    @Named("getAvailableTripleJokers")
-    public int getAvailableTripleJokers() {
+    /**
+     * Returns the current user's Remaining Jokers for ×3.
+     * @return the Remaining ×3 Jokers
+     */
+    @Named("getRemainingTripleJokers")
+    public int getRemainingTripleJokers() {
         Optional<User> user$ = authService.getLoggedInUser();
         if (user$.isEmpty()) return getTripleJokerLimit();
 

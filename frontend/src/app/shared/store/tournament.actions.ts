@@ -16,10 +16,10 @@ export const saveBets = createAction('[Tournament] Save Bets', props<{ groupId: 
 export const betsSaved = createAction('[Tournament] Bets Saved', props<{ group: Group }>())
 export const resetSaving = createAction('[Tournament] Reset Saving')
 
-export const grantJDouble = createAction('[Joker] Grant double joker')
-export const revokeJDouble = createAction('[Joker] Revoke double joker')
-export const grantJTriple = createAction('[Joker] Grant triple joker')
-export const revokeJTriple = createAction('[Joker] Revoke triple joker')
+export const grantRemainingDoubleJoker = createAction('[Joker] Grant double joker')
+export const revokeRemainingDoubleJoker = createAction('[Joker] Revoke double joker')
+export const grantRemainingTripleJoker = createAction('[Joker] Grant triple joker')
+export const revokeRemainingTripleJoker = createAction('[Joker] Revoke triple joker')
 
 export const saveResults = createAction('[Tournament Admin] Save results', props<{
   groupId: string,

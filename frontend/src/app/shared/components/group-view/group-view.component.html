@@ -33,15 +33,15 @@
 
     <div class="action-bar">
       @if (mode() === 'bet') {
-        @if (jokers(); as jokers) {
+        @if (jokerQuota(); as quota) {
           <div class="panel">
             <p class="panel-title">Verfügbare Joker</p>
             <div class="panel-content">
-              <bet-remaining-joker-display [jokersMax]="jokers.jdoubleMax"
-                                          [jokersRemaining]="jokers.jdouble"
+              <bet-remaining-joker-display [jokerLimit]="quota.doubleJokerLimit"
+                                          [remainingJokers]="quota.remainingDoubleJokers"
                                           [jokerMultiplier]="2"/>
-              <bet-remaining-joker-display [jokersMax]="jokers.jtripleMax"
-                                          [jokersRemaining]="jokers.jtriple"
+              <bet-remaining-joker-display [jokerLimit]="quota.tripleJokerLimit"
+                                          [remainingJokers]="quota.remainingTripleJokers"
                                           [jokerMultiplier]="3"/>
             </div>
           </div>

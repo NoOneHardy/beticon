@@ -7,8 +7,8 @@ import {DatePipe, NgOptimizedImage} from '@angular/common'
 import {ScoreFormFieldComponent} from '../../score-form-field/score-form-field.component'
 import {toSignal} from '@angular/core/rxjs-interop'
 import {Store} from '@ngrx/store'
-import {selectAvailableJokers} from '../../../store/tournament.feature'
-import {grantJDouble, grantJTriple, revokeJDouble, revokeJTriple} from '../../../store/tournament.actions'
+import {selectJokerQuota} from '../../../store/tournament.feature'
+import {grantRemainingDoubleJoker, grantRemainingTripleJoker, revokeRemainingDoubleJoker, revokeRemainingTripleJoker} from '../../../store/tournament.actions'
 import {ResultComponent} from '../result/result.component'
 import {ExpandableComponent} from '../../expandable/expandable.component'
 import {PointTableComponent} from '../point-table/point-table.component'
@@ -59,7 +59,7 @@ export class BetFormComponent implements ControlValueAccessor {
   })
   disabledChange = output<boolean>()
 
-  availableJokers = this.store.selectSignal(selectAvailableJokers)
+  jokerQuota = this.store.selectSignal(selectJokerQuota)
 
   get isDisabled(): boolean {
     return this.formGroup.disabled
@@ -96,11 +96,11 @@ export class BetFormComponent implements ControlValueAccessor {
         const game = this.game()
 
         if (this.value.joker != bet.joker) {
-          if (this.value.joker === 2) this.store.dispatch(grantJDouble())
-          else if (this.value.joker === 3) this.store.dispatch(grantJTriple())
+          if (this.value.joker === 2) this.store.dispatch(grantRemainingDoubleJoker())
+          else if (this.value.joker === 3) this.store.dispatch(grantRemainingTripleJoker())
 
-          if (bet.joker === 2) this.store.dispatch(revokeJDouble())
-          else if (bet.joker === 3) this.store.dispatch(revokeJTriple())
+          if (bet.joker === 2) this.store.dispatch(revokeRemainingDoubleJoker())
+          else if (bet.joker === 3) this.store.dispatch(revokeRemainingTripleJoker())
         }
 
         this.value = {
@@ -150,14 +150,14 @@ export class BetFormComponent implements ControlValueAccessor {
     return value <= selectedJoker
   }
 
-  hasJokersAvailable(joker: number): boolean {
+  hasRemainingJokers(joker: number): boolean {
     switch (joker) {
     case 1:
       return true
     case 2:
-      return (this.availableJokers()?.jdouble ?? 0) > 0
+      return (this.jokerQuota()?.remainingDoubleJokers ?? 0) > 0
     case 3:
-      return (this.availableJokers()?.jtriple ?? 0) > 0
+      return (this.jokerQuota()?.remainingTripleJokers ?? 0) > 0
     }
     return false
   }
