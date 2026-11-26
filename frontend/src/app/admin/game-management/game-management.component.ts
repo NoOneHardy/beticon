@@ -100,7 +100,7 @@ export class GameManagementComponent implements OnInit {
       groups: this.adminService.getGroupOptions(),
       teams: this.adminService.getTeams()
     }).pipe(
-      finalize(() => { this.isLoadingOptions.set(false) }),
+      finalize(() => this.isLoadingOptions.set(false)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(({groups, teams}) => {
       this.groups.set([...groups].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name)))
@@ -128,7 +128,7 @@ export class GameManagementComponent implements OnInit {
       teamHome: teamHome.id,
       teamGuest: teamGuest.id
     }).pipe(
-      finalize(() => { this.isSaving.set(false) }),
+      finalize(() => this.isSaving.set(false)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(game => {
       this.createdGame.set(game)

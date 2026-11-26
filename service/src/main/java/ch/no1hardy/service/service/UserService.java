@@ -205,15 +205,13 @@ public class UserService {
      * @throws UserValidationException if the dto is invalid
      */
     private void checkAvailableDtoValues(@NotNull UserReq dto) throws UserValidationException {
-        if (!isEmailAvailable(dto.email()))
-            throw new UserValidationException(
-                    "Email " + dto.email() + " is already taken", "Email ist bereits vergeben"
-            );
+        if (!isEmailAvailable(dto.email())) throw new UserValidationException(
+                "Email " + dto.email() + " is already taken", "Email ist bereits vergeben"
+        );
 
-        if (!isUsernameAvailable(dto.username()))
-            throw new UserValidationException(
-                    "Username " + dto.username() + " is already taken", "Username ist bereits vergeben"
-            );
+        if (!isUsernameAvailable(dto.username())) throw new UserValidationException(
+                "Username " + dto.username() + " is already taken", "Username ist bereits vergeben"
+        );
     }
 
     /**

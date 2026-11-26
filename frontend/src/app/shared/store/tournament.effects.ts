@@ -73,7 +73,7 @@ export class TournamentEffects {
         type: 'success',
         message: 'Erfolgreich gespeichert'
       })
-      void this.router.navigate(['bets'])
+      this.router.navigate(['bets'])
     })
   ), {dispatch: false})
 
@@ -98,7 +98,7 @@ export class TournamentEffects {
         type: 'success',
         message: 'Erfolgreich gespeichert'
       })
-      void this.router.navigate(['admin/results'])
+      this.router.navigate(['admin/results'])
     })
   ), {dispatch: false})
 

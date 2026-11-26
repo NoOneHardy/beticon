@@ -18,13 +18,20 @@ class ScoringTest {
     /** Cases from the frontend points-service spec: bet home/guest, result home/guest, expected points (Joker x1). */
     @ParameterizedTest(name = "bet {0}:{1} result {2}:{3} -> {4}")
     @CsvSource({
-            "1,2,1,2,10", "2,1,2,1,10", "0,0,0,0,10",
-            "2,1,2,0,7", "1,2,0,2,7",
+            "1,2,1,2,10",
+            "2,1,2,1,10",
+            "0,0,0,0,10",
+            "2,1,2,0,7",
+            "1,2,0,2,7",
             "2,2,1,1,5",
-            "2,1,3,0,6", "1,2,0,3,6",
-            "2,1,4,0,5", "1,2,2,4,5",
-            "2,1,0,1,2", "1,2,1,0,2",
-            "2,1,0,3,1", "1,4,3,2,1",
+            "2,1,3,0,6",
+            "1,2,0,3,6",
+            "2,1,4,0,5",
+            "1,2,2,4,5",
+            "2,1,0,1,2",
+            "1,2,1,0,2",
+            "2,1,0,3,1",
+            "1,4,3,2,1",
             "2,1,0,0,0"
     })
     @DisplayName("score() - should give the expected points for every Joker")

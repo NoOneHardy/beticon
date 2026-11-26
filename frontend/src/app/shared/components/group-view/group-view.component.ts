@@ -132,6 +132,6 @@ export class GroupViewComponent {
   }
 
   back(): void {
-    void this.router.navigate([this.mode() === 'admin' ? '/admin/results' : 'bets'])
+    this.router.navigate([this.mode() === 'admin' ? '/admin/results' : 'bets'])
   }
 }
