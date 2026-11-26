@@ -14,7 +14,7 @@
         <setting id="org.eclipse.jdt.core.formatter.keep_simple_if_on_one_line" value="true"/>
         <setting id="org.eclipse.jdt.core.formatter.wrap_before_string_concatenation" value="false"/>
         <setting id="org.eclipse.jdt.core.formatter.keep_then_statement_on_same_line" value="true"/>
-        <setting id="org.eclipse.jdt.core.formatter.keep_else_statement_on_same_line" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_else_statement_on_same_line" value="false"/>
         <setting id="org.eclipse.jdt.core.formatter.keep_annotation_declaration_on_one_line" value="one_line_if_empty"/>
         <setting id="org.eclipse.jdt.core.formatter.alignment_for_enum_constants" value="49"/>
         <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_annotation" value="16"/>

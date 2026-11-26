@@ -71,12 +71,11 @@ public class DashboardService {
         if (user.getUserApplicationStatus() == UserApplicationStatus.ACCEPTED
                 && user.getApplicationReviewedAt() != null)
             isConfirmed = true;
+        else if (user.getUserApplicationStatus() == UserApplicationStatus.DENIED
+                && user.getApplicationReviewedAt() != null)
+            isConfirmed = false;
         else
-            if (user.getUserApplicationStatus() == UserApplicationStatus.DENIED
-                    && user.getApplicationReviewedAt() != null)
-                isConfirmed = false;
-            else
-                isConfirmed = null;
+            isConfirmed = null;
 
         List<RankingRes> userLeaderboard = leaderboardService.getUserLeaderboard(user);
         return new UserSummary(
