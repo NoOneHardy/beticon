@@ -47,7 +47,7 @@ export class AvatarUploadComponent implements ControlValueAccessor {
     const reader = new FileReader()
     reader.readAsDataURL(value)
     reader.onload = () => {
-      this._url.set(typeof reader.result === 'string' ? reader.result : null)
+      this._url.set(typeof reader.result === 'string' ? reader.result : this.defaultUrl())
     }
   }
 
