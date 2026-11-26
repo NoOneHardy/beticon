@@ -15,7 +15,7 @@ Run from the repo root:
 
 ## Configuration
 
-`application.yml` reads its settings from environment variables: `DATABASE_HOST`/`DATABASE_USER`/`DATABASE_PW`, `SECRET_KEY` (JWT), `SMTP_*`, and the optional `BASE_URL` (frontend URL used in email links), `JOKER_DOUBLE`, `JOKER_TRIPLE`. Nothing loads `service/.env` automatically (copy it from `.env.example`): export it into the shell first (`set -a; . service/.env; set +a`). The `local` profile (`--args='--spring.profiles.active=local'`) points email links at http://localhost:26000 and fixes the Joker limits.
+`application.yml` reads its settings from environment variables: `DATABASE_HOST`/`DATABASE_USER`/`DATABASE_PW`, `SECRET_KEY` (JWT), `SMTP_*`, and the optional `BASE_URL` (frontend URL used in email links), `JOKER_DOUBLE`, `JOKER_TRIPLE`. `bootRun` loads `service/.env` (copy it from `.env.example`) into its environment through the root `build.gradle.kts`. That parser keeps everything after the `=`, so the inline `# …` comments from `.env.example` have to be deleted, or they end up in the values. The `local` profile (`--args='--spring.profiles.active=local'`) points email links at http://localhost:26000 and fixes the Joker limits.
 
 ## Where things live
 

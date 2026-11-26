@@ -144,10 +144,9 @@ You'll need **Java 25**, **Node 22** with **pnpm**, and **Docker**.
    docker compose up -d mysql cdn proxy
    ```
 
-2. **Start the service.** Copy `service/.env.example` to `service/.env` and fill it in (`DATABASE_HOST=localhost:26006`, plus SMTP settings; a local mail catcher such as [Mailpit](https://mailpit.axllent.org) works fine). Then run:
+2. **Start the service.** Copy `service/.env.example` to `service/.env` and fill it in (`DATABASE_HOST=localhost:26006`, plus SMTP settings; a local mail catcher such as [Mailpit](https://mailpit.axllent.org) works fine). Delete the inline `# …` comments while you're at it: `bootRun` reads the file as is and would keep them in the values. Then run:
 
    ```bash
-   set -a; . service/.env; set +a
    ./gradlew :service:bootRun --args='--spring.profiles.active=local'
    ```
 
