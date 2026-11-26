@@ -23,9 +23,9 @@
         @for (joker of [1, 2, 3]; track $index) {
           <div class="joker">
             <input name="joker" formControlName="joker"
-                   [id]="game.id + '-joker-' + joker"
+                   [id]="`${game.id}-joker-${joker}`"
                    [value]="joker" type="radio"/>
-            <label [for]="game.id + '-joker-' + joker" class="material-symbols-rounded"
+            <label [for]="`${game.id}-joker-${joker}`" class="material-symbols-rounded"
                    [class.-disabled]="!hasRemainingJokers(joker)"
                    [class.-fill]="fillJoker(joker)">star</label>
           </div>

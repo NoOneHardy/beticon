@@ -41,7 +41,7 @@
     @for (group of groups; track group.id) {
       <div class="group">
         <h3 class="gradient-text">{{ group.name }}</h3>
-        <div class="thumbnail" [style]="{'--group-progress': group.percentage + '%'}">
+        <div class="thumbnail" [style]="{'--group-progress': `${group.percentage}%`}">
           <div class="thumbnail-progress">
             @for (flag of group.thumbnail.slice(0, 4); track flag) {
               <div class="flag">
@@ -70,7 +70,7 @@
     @for (group of groups; track group.id) {
       <div class="group">
         <h3>{{ group.name }}</h3>
-        <div class="thumbnail" [style]="{'--group-progress': group.percentage + '%'}">
+        <div class="thumbnail" [style]="{'--group-progress': `${group.percentage}%`}">
           <div class="thumbnail-progress">
             @let thumbnail = group.thumbnail.length > 0 ? group.thumbnail[0] : '';
             @if (thumbnail.startsWith('icon{')) {
