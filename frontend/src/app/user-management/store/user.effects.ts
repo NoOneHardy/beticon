@@ -87,7 +87,7 @@ export class UserEffects {
   loggedIn = createEffect(() => this.actions$.pipe(
     ofType(userLoggedIn),
     tap(() => {
-      void this.router.navigateByUrl('/')
+      this.router.navigateByUrl('/')
     }),
     map(() => noAction())
   ))
@@ -107,7 +107,7 @@ export class UserEffects {
       if (showMessage) this.snackbarService.addMessage({
         message: 'Erfolgreich abgemeldet',
       })
-      void this.router.navigateByUrl('/')
+      this.router.navigateByUrl('/')
     }),
     map(() => noAction())
   ))
@@ -156,7 +156,7 @@ export class UserEffects {
       this.snackbarService.addMessage({
         message: 'Avatar erfolgreich hochgeladen',
       })
-      void this.router.navigateByUrl('/')
+      this.router.navigateByUrl('/')
     })
   ), {dispatch: false})
 
@@ -174,7 +174,7 @@ export class UserEffects {
       this.snackbarService.addMessage({
         message: 'Benutzerinformationen erfolgreich aktualisiert'
       })
-      void this.router.navigateByUrl('/')
+      this.router.navigateByUrl('/')
     }),
     map(action => userInfoFetched({user: action.user}))
   ))
@@ -207,7 +207,7 @@ export class UserEffects {
     exhaustMap((action) => this.userService.verifyEmail({code: action.code}).pipe(
       map(user => emailVerified({user})),
       catchError(() => {
-        void this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/')
         return of()
       })
     ))
@@ -288,7 +288,7 @@ export class UserEffects {
       this.snackbarService.addMessage({
         message: 'Passwort erfolgreich zurückgesetzt'
       })
-      void this.router.navigateByUrl('/')
+      this.router.navigateByUrl('/')
     })
   ), {dispatch: false})
 }

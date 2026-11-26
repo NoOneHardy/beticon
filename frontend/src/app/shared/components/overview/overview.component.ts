@@ -79,7 +79,7 @@ export class OverviewComponent implements OnInit {
   })
 
   selectGroup(groupId: string): void {
-    void this.router.navigate([this.mode() === 'admin' ? '/admin/results' : 'bets', groupId])
+    this.router.navigate([this.mode() === 'admin' ? '/admin/results' : 'bets', groupId])
     this.store.dispatch(loadGroup({groupId}))
   }
 }

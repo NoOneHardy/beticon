@@ -83,6 +83,14 @@ module.exports = tseslint.config(
         'error',
         {ignoreArrowShorthand: true}
       ],
+      '@typescript-eslint/no-floating-promises': [
+        'error',
+        {
+          allowForKnownSafeCalls: [
+            {from: 'package', package: '@angular/router', name: ['navigate', 'navigateByUrl']}
+          ]
+        }
+      ],
       '@typescript-eslint/no-deprecated': 'error'
     },
   },
