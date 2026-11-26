@@ -1,4 +1,4 @@
-import {Component, HostBinding, input} from '@angular/core'
+import {Component, input} from '@angular/core'
 import {animate, state, style, transition, trigger} from '@angular/animations'
 
 @Component({
@@ -6,6 +6,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations'
   standalone: true,
   templateUrl: './expandable.component.html',
   styleUrl: './expandable.component.scss',
+  host: {
+    '[class.-large]': 'large()'
+  },
   animations: [
     trigger('expandable', [
       state('collapsed', style({
@@ -27,11 +30,6 @@ export class ExpandableComponent {
   readonly large = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v
   })
-
-  @HostBinding('class.-large')
-  get largeClass(): boolean {
-    return this.large()
-  }
 
   expanded = false
 }
