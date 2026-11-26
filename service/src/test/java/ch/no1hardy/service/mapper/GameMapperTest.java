@@ -1,6 +1,7 @@
 package ch.no1hardy.service.mapper;
 
 import ch.no1hardy.service.front.game.BetRes;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.Game;
 import ch.no1hardy.service.model.game.Score;
@@ -25,8 +26,7 @@ public class GameMapperTest {
         Bet bet = new Bet();
         bet.setId("bet-1");
         bet.setGame(game);
-        bet.setScoreTeamHome(home);
-        bet.setScoreTeamGuest(guest);
+        bet.setScoreline(new Scoreline(home, guest));
         bet.setJoker(joker);
         game.setBets(List.of(bet));
         return bet;
@@ -34,8 +34,7 @@ public class GameMapperTest {
 
     private Score result(int home, int guest) {
         Score score = new Score();
-        score.setScoreTeamHome(home);
-        score.setScoreTeamGuest(guest);
+        score.setScoreline(new Scoreline(home, guest));
         return score;
     }
 

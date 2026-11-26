@@ -1,6 +1,7 @@
 package ch.no1hardy.service.service;
 
 import ch.no1hardy.service.exception.KnockoutTieException;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.exception.NotFoundException;
 import ch.no1hardy.service.front.game.ResultReq;
 import ch.no1hardy.service.front.group.CardGroupRes;
@@ -331,8 +332,7 @@ public class GroupServiceTest {
 
     private Score activeScore(int home, int guest) {
         Score score = new Score();
-        score.setScoreTeamHome(home);
-        score.setScoreTeamGuest(guest);
+        score.setScoreline(new Scoreline(home, guest));
         return score;
     }
 

@@ -1,6 +1,7 @@
 package ch.no1hardy.service.model;
 
 import ch.no1hardy.service.model.game.Bet;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.model.game.Game;
 import ch.no1hardy.service.model.game.PointsBreakdown;
 import ch.no1hardy.service.model.game.Score;
@@ -22,8 +23,7 @@ public class BetTest {
     void beforeEach() {
         bet = new Bet();
         bet.setId("bet-1");
-        bet.setScoreTeamHome(2);
-        bet.setScoreTeamGuest(3);
+        bet.setScoreline(new Scoreline(2, 3));
 
         game = new Game();
         bet.setGame(game);
@@ -35,16 +35,14 @@ public class BetTest {
         game.setResult(score);
         score.setGame(game);
 
-        score.setScoreTeamHome(2);
-        score.setScoreTeamGuest(3);
+        score.setScoreline(new Scoreline(2, 3));
     }
 
     @Test
     @DisplayName("pointsBreakdown() - should score the bet against its game's result")
     void shouldScoreBetAgainstGameResult() {
         bet.setJoker(2);
-        score.setScoreTeamHome(1);
-        score.setScoreTeamGuest(3);
+        score.setScoreline(new Scoreline(1, 3));
 
         assertEquals(Optional.of(new PointsBreakdown(5, 0, 2, 0, 2)), bet.pointsBreakdown());
     }

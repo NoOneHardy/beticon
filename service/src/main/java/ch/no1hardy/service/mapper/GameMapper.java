@@ -35,8 +35,7 @@ public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
      * The Game is not looked up from the request: the caller sets the Game the Result was entered for.
      */
     @Mapping(target = "game", ignore = true)
-    @Mapping(target = "scoreTeamHome", expression = "java(dto.clampedScoreTeamHome())")
-    @Mapping(target = "scoreTeamGuest", expression = "java(dto.clampedScoreTeamGuest())")
+    @Mapping(target = "scoreline", expression = "java(dto.scoreline())")
     Score toEntity(ResultReq dto);
 
     /**
@@ -44,9 +43,8 @@ public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
      */
     @Mapping(target = "game", ignore = true)
     @Mapping(target = "user", ignore = true)
-    @Mapping(target = "scoreTeamHome", expression = "java(dto.clampedScoreTeamHome())")
-    @Mapping(target = "scoreTeamGuest", expression = "java(dto.clampedScoreTeamGuest())")
-    @Mapping(target = "joker", expression = "java(dto.clampedJoker())")
+    @Mapping(target = "scoreline", expression = "java(dto.scoreline())")
+    @Mapping(target = "joker", expression = "java(dto.normalizedJoker())")
     Bet toEntity(BetReq dto);
 
     @Mapping(target = "correctWinner", source = "correctWinner", qualifiedByName = "nullIfZero")

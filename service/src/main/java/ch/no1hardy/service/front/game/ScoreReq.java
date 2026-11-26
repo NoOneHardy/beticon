@@ -22,20 +22,16 @@ public interface ScoreReq {
     }
 
     default boolean isTie() {
-        return !isNull() && new Scoreline(clampedScoreTeamHome(), clampedScoreTeamGuest()).isTie();
+        return !isNull() && scoreline().isTie();
     }
 
     /**
-     * @return the home score, 0 when only the guest score is set
+     * @return the goals as a Scoreline, a missing score counted as 0; null when both are missing
      */
-    default Integer clampedScoreTeamHome() {
-        return scoreTeamHome() == null && scoreTeamGuest() != null ? Integer.valueOf(0) : scoreTeamHome();
-    }
-
-    /**
-     * @return the guest score, 0 when only the home score is set
-     */
-    default Integer clampedScoreTeamGuest() {
-        return scoreTeamGuest() == null && scoreTeamHome() != null ? Integer.valueOf(0) : scoreTeamGuest();
+    default Scoreline scoreline() {
+        if (isNull()) return null;
+        return new Scoreline(
+                scoreTeamHome() == null ? 0 : scoreTeamHome(),
+                scoreTeamGuest() == null ? 0 : scoreTeamGuest());
     }
 }

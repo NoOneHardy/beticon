@@ -12,9 +12,10 @@ public record BetReq(
     }
 
     /**
-     * @return the Joker, 1 when it is outside 1 to 3
+     * @return the Joker, 1 when it is outside 1 to 3; null when it is missing
      */
-    public Integer clampedJoker() {
+    public Integer normalizedJoker() {
+        if (joker() == null) return null;
         return joker() > 3 || joker() < 1 ? Integer.valueOf(1) : joker();
     }
 }

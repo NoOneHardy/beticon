@@ -1,6 +1,7 @@
 package ch.no1hardy.service;
 
 import ch.no1hardy.service.model.game.Bet;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.model.game.Game;
 import ch.no1hardy.service.model.game.Score;
 import ch.no1hardy.service.model.user.User;
@@ -19,8 +20,7 @@ public abstract class GameHelper {
         Score score = new Score();
         score.setId(id);
         score.setGame(game);
-        score.setScoreTeamGuest(guestScore);
-        score.setScoreTeamHome(homeScore);
+        score.setScoreline(new Scoreline(homeScore, guestScore));
         game.setResult(score);
         return score;
     }
@@ -34,8 +34,7 @@ public abstract class GameHelper {
         bet.setId(id);
         bet.setUser(user);
         bet.setGame(game);
-        bet.setScoreTeamGuest(guestScore);
-        bet.setScoreTeamHome(homeScore);
+        bet.setScoreline(new Scoreline(homeScore, guestScore));
         bet.setJoker(joker);
 
         if (game.getBets() == null) game.setBets(List.of(bet));

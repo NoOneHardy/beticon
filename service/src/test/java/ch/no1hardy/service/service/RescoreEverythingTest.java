@@ -1,6 +1,7 @@
 package ch.no1hardy.service.service;
 
 import ch.no1hardy.service.front.admin.PointsChangeRes;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.front.game.ResultReq;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.BetRepository;
@@ -122,8 +123,7 @@ public class RescoreEverythingTest {
         Bet bet = new Bet();
         bet.setUser(user);
         bet.setGame(game);
-        bet.setScoreTeamHome(home);
-        bet.setScoreTeamGuest(guest);
+        bet.setScoreline(new Scoreline(home, guest));
         bet.setJoker(joker);
         return betRepository.save(bet);
     }

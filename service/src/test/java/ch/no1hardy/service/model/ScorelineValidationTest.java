@@ -1,6 +1,7 @@
 package ch.no1hardy.service.model;
 
 import ch.no1hardy.service.model.game.Bet;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.model.game.Score;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -43,8 +44,7 @@ public class ScorelineValidationTest {
     @DisplayName("Score - should reject a Result without home goals")
     void shouldRejectResultWithoutHomeGoals() {
         Score result = new Score();
-        result.setScoreTeamHome(null);
-        result.setScoreTeamGuest(1);
+        result.setScoreline(new Scoreline(null, 1));
 
         assertTrue(invalidPaths(result).contains("scoreline.home"));
     }
@@ -53,8 +53,7 @@ public class ScorelineValidationTest {
     @DisplayName("Bet - should reject a Bet without guest goals")
     void shouldRejectBetWithoutGuestGoals() {
         Bet bet = new Bet();
-        bet.setScoreTeamHome(1);
-        bet.setScoreTeamGuest(null);
+        bet.setScoreline(new Scoreline(1, null));
 
         assertTrue(invalidPaths(bet).contains("scoreline.guest"));
     }
@@ -63,8 +62,7 @@ public class ScorelineValidationTest {
     @DisplayName("Score - should accept a Result with both goals")
     void shouldAcceptResultWithBothGoals() {
         Score result = new Score();
-        result.setScoreTeamHome(0);
-        result.setScoreTeamGuest(0);
+        result.setScoreline(new Scoreline(0, 0));
 
         assertFalse(invalidPaths(result).stream().anyMatch(path -> path.startsWith("scoreline")));
     }
