@@ -54,22 +54,22 @@ export class GameManagementComponent implements OnInit {
   private snackbarService = inject(SnackbarService)
   private destroyRef = inject(DestroyRef)
 
-  isLoadingOptions = signal(true)
-  isSaving = signal(false)
-  groups = signal<GroupOption[]>([])
-  teams = signal<LightTeam[]>([])
-  createdGame = signal<BetGame | null>(null)
-  groupSearch = signal('')
-  teamHomeSearch = signal('')
-  teamGuestSearch = signal('')
+  readonly isLoadingOptions = signal(true)
+  readonly isSaving = signal(false)
+  readonly groups = signal<GroupOption[]>([])
+  readonly teams = signal<LightTeam[]>([])
+  readonly createdGame = signal<BetGame | null>(null)
+  readonly groupSearch = signal('')
+  readonly teamHomeSearch = signal('')
+  readonly teamGuestSearch = signal('')
 
-  private groupSearchInput: Signal<ElementRef<HTMLInputElement> | undefined> = viewChild('groupSearchInput')
-  private teamHomeSearchInput: Signal<ElementRef<HTMLInputElement> | undefined> = viewChild('teamHomeSearchInput')
-  private teamGuestSearchInput: Signal<ElementRef<HTMLInputElement> | undefined> = viewChild('teamGuestSearchInput')
+  private readonly groupSearchInput: Signal<ElementRef<HTMLInputElement> | undefined> = viewChild('groupSearchInput')
+  private readonly teamHomeSearchInput: Signal<ElementRef<HTMLInputElement> | undefined> = viewChild('teamHomeSearchInput')
+  private readonly teamGuestSearchInput: Signal<ElementRef<HTMLInputElement> | undefined> = viewChild('teamGuestSearchInput')
 
-  filteredGroups = computed(() => this.filterOptions(this.groups(), this.groupSearch(), (group) => this.groupDisplayFn(group)))
-  filteredHomeTeams = computed(() => this.filterOptions(this.teams(), this.teamHomeSearch(), team => this.teamDisplayFn(team)))
-  filteredGuestTeams = computed(() => this.filterOptions(this.teams(), this.teamGuestSearch(), team => this.teamDisplayFn(team)))
+  readonly filteredGroups = computed(() => this.filterOptions(this.groups(), this.groupSearch(), (group) => this.groupDisplayFn(group)))
+  readonly filteredHomeTeams = computed(() => this.filterOptions(this.teams(), this.teamHomeSearch(), team => this.teamDisplayFn(team)))
+  readonly filteredGuestTeams = computed(() => this.filterOptions(this.teams(), this.teamGuestSearch(), team => this.teamDisplayFn(team)))
 
   formGroup = new FormGroup({
     date: new FormControl<string>('', {

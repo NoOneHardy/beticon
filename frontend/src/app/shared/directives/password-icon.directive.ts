@@ -10,9 +10,9 @@ import {AfterViewInit, Directive, effect, ElementRef, inject, signal} from '@ang
 })
 export class PasswordIconDirective implements AfterViewInit {
   private _elRef: ElementRef<HTMLElement> = inject(ElementRef)
-  private input = signal<HTMLInputElement | null>(null)
+  private readonly input = signal<HTMLInputElement | null>(null)
 
-  isVisible = signal(false)
+  readonly isVisible = signal(false)
 
   toggleVisibility(): void {
     this.isVisible.update(v => !v)

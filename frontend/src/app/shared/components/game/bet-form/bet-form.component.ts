@@ -40,17 +40,17 @@ export class BetFormComponent implements ControlValueAccessor {
   private store = inject(Store)
   private cdr = inject(ChangeDetectorRef)
 
-  game = input.required<BetGame>()
-  highlight = input<boolean, boolean | ''>(false, {
+  readonly game = input.required<BetGame>()
+  readonly highlight = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
-  knockout = input<boolean, boolean | ''>(false, {
+  readonly knockout = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
-  admin = input<boolean, boolean | ''>(false, {
+  readonly admin = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
-  hasStarted = computed(() => {
+  readonly hasStarted = computed(() => {
     const now = new Date()
     const diff = now.getTimezoneOffset() + 120
     const ect = new Date(now.valueOf() + diff * 60 * 1000)
@@ -76,7 +76,7 @@ export class BetFormComponent implements ControlValueAccessor {
     ...this.formGroup.getRawValue()
   }
 
-  valueChanges = toSignal(this.formGroup.valueChanges)
+  readonly valueChanges = toSignal(this.formGroup.valueChanges)
 
   onChange: OnChangeFn<BetForm> = EMPTY_METHOD
   onTouch: OnTouchFn = EMPTY_METHOD

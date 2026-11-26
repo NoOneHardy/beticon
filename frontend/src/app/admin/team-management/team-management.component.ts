@@ -30,8 +30,8 @@ export class TeamManagementComponent {
   private snackbarService = inject(SnackbarService)
   private destroyRef = inject(DestroyRef)
 
-  isSaving = signal(false)
-  createdTeam = signal<LightTeam | null>(null)
+  readonly isSaving = signal(false)
+  readonly createdTeam = signal<LightTeam | null>(null)
 
   formGroup = new FormGroup({
     flag: new FormControl<File | null>(null, {

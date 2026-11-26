@@ -14,7 +14,7 @@ import {RouterLink} from '@angular/router'
   styleUrl: './recent-results.component.css'
 })
 export class RecentResultsComponent {
-  games = input.required<BetGame[], BetGame[]>({
+  readonly games = input.required<BetGame[], BetGame[]>({
     transform: v => {
       const sorted = [...v]
       sorted.sort((a, b) => {

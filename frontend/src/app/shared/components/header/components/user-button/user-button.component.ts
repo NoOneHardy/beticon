@@ -12,10 +12,10 @@ import {MatRipple} from '@angular/material/core'
   styleUrl: './user-button.component.css'
 })
 export class UserButtonComponent {
-  secondary = input<boolean, boolean | ''>(false, {
+  readonly secondary = input<boolean, boolean | ''>(false, {
     transform: (value) => value === '' || value
   })
-  route = input<string | null>(null)
-  content = input<string>('')
+  readonly route = input<string | null>(null)
+  readonly content = input<string>('')
   clickButton = output<void>()
 }

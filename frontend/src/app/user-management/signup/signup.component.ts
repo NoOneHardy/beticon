@@ -36,7 +36,7 @@ export class SignupComponent {
   private userValidatorService = inject(UserValidatorService)
   private store = inject(Store)
 
-  isLoading: Signal<boolean> = this.store.selectSignal(selectIsUserLoading)
+  readonly isLoading: Signal<boolean> = this.store.selectSignal(selectIsUserLoading)
   formGroup = this.fb.group({
     username: this.fb.control<string>('', {
       nonNullable: true,

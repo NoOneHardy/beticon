@@ -8,9 +8,9 @@ import {Score} from '../../../../model/game/score'
   styleUrl: './result.component.css'
 })
 export class ResultComponent {
-  result = input<Score | null>(null)
+  readonly result = input<Score | null>(null)
 
-  large = input<boolean, boolean | ''>(false, {
+  readonly large = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v
   })
 

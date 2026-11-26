@@ -7,9 +7,9 @@ import {Component, input} from '@angular/core'
   styleUrl: './remaining-joker-display.component.css'
 })
 export class RemainingJokerDisplayComponent {
-  remainingJokers = input.required<number>()
-  jokerLimit = input.required<number>()
-  jokerMultiplier = input.required<number>()
+  readonly remainingJokers = input.required<number>()
+  readonly jokerLimit = input.required<number>()
+  readonly jokerMultiplier = input.required<number>()
 
   get jokerArray(): number[] {
     return Array.from({length: this.jokerMultiplier()}, (_, i) => i)

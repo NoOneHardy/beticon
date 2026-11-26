@@ -17,5 +17,5 @@ export class RootComponent {
   private store = inject(Store)
 
   user = this.store.selectSignal(selectUser)
-  isLoggedIn = computed(() => !!this.user())
+  readonly isLoggedIn = computed(() => !!this.user())
 }

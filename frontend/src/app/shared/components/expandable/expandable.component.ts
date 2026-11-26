@@ -23,8 +23,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations'
   ]
 })
 export class ExpandableComponent {
-  name = input.required<string>()
-  large = input<boolean, boolean | ''>(false, {
+  readonly name = input.required<string>()
+  readonly large = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v
   })
 

@@ -14,7 +14,7 @@ import {RouterLink} from '@angular/router'
   styleUrl: './upcoming-games.component.css'
 })
 export class UpcomingGamesComponent {
-  games = input.required<BetGame[], BetGame[]>({
+  readonly games = input.required<BetGame[], BetGame[]>({
     transform: v => {
       const sorted = [...v]
       sorted.sort((a, b) => {

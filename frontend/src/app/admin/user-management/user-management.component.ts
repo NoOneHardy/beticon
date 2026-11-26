@@ -35,18 +35,18 @@ import {MatFormField, MatInput, MatLabel, MatPrefix} from '@angular/material/inp
 export class UserManagementComponent implements OnInit {
   private store = inject(Store)
 
-  _users: Signal<User[]> = this.store.selectSignal(selectUsers)
-  currentUser: Signal<User | null> = this.store.selectSignal(selectUser)
-  isLoading: Signal<boolean> = this.store.selectSignal(selectIsAdminLoading)
+  readonly _users: Signal<User[]> = this.store.selectSignal(selectUsers)
+  readonly currentUser: Signal<User | null> = this.store.selectSignal(selectUser)
+  readonly isLoading: Signal<boolean> = this.store.selectSignal(selectIsAdminLoading)
 
   formGroup = new FormGroup({
     quickFilter: new FormControl<UserApplicationStatus[]>([UserApplicationStatus.PENDING], {nonNullable: true}),
     search: new FormControl<string>('', {nonNullable: true})
   })
 
-  filters = toSignal(this.formGroup.valueChanges)
+  readonly filters = toSignal(this.formGroup.valueChanges)
 
-  users = computed(() => {
+  readonly users = computed(() => {
     const filters = this.filters()
     const quickFilter = filters?.quickFilter ?? this.formGroup.controls.quickFilter.getRawValue()
     const search = filters?.search ?? this.formGroup.controls.search.getRawValue()

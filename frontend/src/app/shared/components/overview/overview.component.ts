@@ -30,10 +30,10 @@ export class OverviewComponent implements OnInit {
   private router = inject(Router)
   private activatedRoute = inject(ActivatedRoute)
 
-  mode = input<Mode>('bet', {alias: 'mode'})
+  readonly mode = input<Mode>('bet', {alias: 'mode'})
 
   groups = this.store.selectSignal(selectGroups)
-  totalPercentage = computed(() => {
+  readonly totalPercentage = computed(() => {
     if (this.mode() === 'admin') return this.store.selectSignal(selectPercentageResult)()
 
     return this.store.selectSignal(selectPercentage)()
@@ -58,7 +58,7 @@ export class OverviewComponent implements OnInit {
     this.store.dispatch(getOverviewGroups())
   }
 
-  defaultGroups: Signal<CardGroup[]> = computed(() => {
+  readonly defaultGroups: Signal<CardGroup[]> = computed(() => {
     const groups = this.groups()
     return groups.filter(group => !group.isKnockout).map(group => {
       return {
@@ -68,7 +68,7 @@ export class OverviewComponent implements OnInit {
     }).sort((a, b) => a.name > b.name ? 1 : -1)
   })
 
-  knockoutGroups = computed(() => {
+  readonly knockoutGroups = computed(() => {
     const groups = this.groups()
     return groups.filter(group => group.isKnockout).map(group => {
       return {

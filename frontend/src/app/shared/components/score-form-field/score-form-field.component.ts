@@ -22,13 +22,13 @@ export class ScoreFormFieldComponent implements ControlValueAccessor {
   onChange: OnChangeFn<number | null> = EMPTY_METHOD
   onTouch: OnTouchFn = EMPTY_METHOD
 
-  isLarge = input<boolean, boolean | ''>(false, {
+  readonly isLarge = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v,
     alias: 'large'
   })
 
-  value = signal<number | null>(null)
-  isDisabled = signal(false)
+  readonly value = signal<number | null>(null)
+  readonly isDisabled = signal(false)
 
   registerOnChange(fn: OnChangeFn<number | null>): void {
     this.onChange = fn

@@ -44,8 +44,8 @@ export default class AccountSettingsComponent {
   private store = inject(Store)
   private userValidatorService = inject(UserValidatorService)
 
-  user: Signal<User | null> = this.store.selectSignal(selectUser)
-  isUserLoading: Signal<boolean> = this.store.selectSignal(selectIsUserLoading)
+  readonly user: Signal<User | null> = this.store.selectSignal(selectUser)
+  readonly isUserLoading: Signal<boolean> = this.store.selectSignal(selectIsUserLoading)
 
   formGroup = new FormGroup({
     avatar: new FormControl<File | null>(null),

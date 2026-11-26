@@ -23,7 +23,7 @@ export class LeaderboardComponent implements OnInit {
   user = this.store.selectSignal(selectUser)
   isLoading = this.store.selectSignal(selectIsTournamentLoading)
 
-  userPos: Signal<Ranking | null> = computed(() => {
+  readonly userPos: Signal<Ranking | null> = computed(() => {
     const leaderboard = this.leaderboard()
     const user = this.user()
     if (!user) return null

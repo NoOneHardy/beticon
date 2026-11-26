@@ -24,9 +24,9 @@ export class UserMenuComponent {
   private store = inject(Store)
   private el = inject(ElementRef)
 
-  user = input<User | null>()
+  readonly user = input<User | null>()
 
-  isDropdownExpanded = signal(false)
+  readonly isDropdownExpanded = signal(false)
 
   toggleDropdown(): void {
     this.isDropdownExpanded.update(isExpanded => !isExpanded)

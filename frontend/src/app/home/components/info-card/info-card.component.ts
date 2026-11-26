@@ -10,9 +10,9 @@ import {Component, input} from '@angular/core'
   }
 })
 export class InfoCardComponent {
-  icon = input.required<string>()
-  name = input.required<string>()
-  accent = input<boolean, boolean | ''>(false, {
+  readonly icon = input.required<string>()
+  readonly name = input.required<string>()
+  readonly accent = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v
   })
 }

@@ -55,8 +55,8 @@ export class HeaderComponent implements OnInit {
   user = this.store.selectSignal(selectUser)
   isAdmin = this.store.selectSignal(selectIsAdmin)
 
-  isVpL = computed(() => !this.viewportService.isVPMorSmaller())
-  isExpanded = signal(false)
+  readonly isVpL = computed(() => !this.viewportService.isVPMorSmaller())
+  readonly isExpanded = signal(false)
 
   ngOnInit(): void {
     this.router.events.subscribe(($event) => {

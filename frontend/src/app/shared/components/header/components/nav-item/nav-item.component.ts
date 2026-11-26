@@ -14,13 +14,13 @@ import {MatRipple} from '@angular/material/core'
   styleUrl: './nav-item.component.css'
 })
 export class NavItemComponent {
-  icon = input<string | null>(null)
-  displayName = input<string | null>(null)
-  route = input<string | null>('/')
-  exact = input<boolean, boolean | ''>(false, {
+  readonly icon = input<string | null>(null)
+  readonly displayName = input<string | null>(null)
+  readonly route = input<string | null>('/')
+  readonly exact = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
-  gradient = input<boolean, boolean | ''>(false, {
+  readonly gradient = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
   clickEvent = output<void>()

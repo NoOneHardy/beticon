@@ -22,9 +22,9 @@ export class NotificationsComponent {
   private store = inject(Store)
 
   notifications = this.store.selectSignal(selectNotifications)
-  hasNotifications = computed(() => this.notifications().length > 0)
+  readonly hasNotifications = computed(() => this.notifications().length > 0)
 
-  mobile = input<boolean, boolean | ''>(false, {
+  readonly mobile = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
 

@@ -18,10 +18,10 @@ import {Bet} from '../../../../model/game/bet'
 export class GamePreviewComponent {
   private router = inject(Router)
 
-  game = input.required<BetGame>()
+  readonly game = input.required<BetGame>()
 
-  openBet: Signal<boolean> = computed(() => !this.game().bet && !this.game().result)
-  points: Signal<number> = computed(() => this.game().bet?.points?.total ?? 0)
+  readonly openBet: Signal<boolean> = computed(() => !this.game().bet && !this.game().result)
+  readonly points: Signal<number> = computed(() => this.game().bet?.points?.total ?? 0)
 
   focusGame(): void {
     const id = this.game().id

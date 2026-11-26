@@ -39,12 +39,12 @@ export class GroupViewComponent {
   private router = inject(Router)
 
   jokerQuota = this.store.selectSignal(selectJokerQuota)
-  group: Signal<Group | null> = this.store.selectSignal(selectActiveGroup)
+  readonly group: Signal<Group | null> = this.store.selectSignal(selectActiveGroup)
   isLoading = this.store.selectSignal(selectIsTournamentLoading)
   isSaving = this.store.selectSignal(selectIsTournamentSaving)
 
-  mode = input<Mode>('bet', {alias: 'mode'})
-  highlight = input<string | null>(null)
+  readonly mode = input<Mode>('bet', {alias: 'mode'})
+  readonly highlight = input<string | null>(null)
 
   form = new FormGroup({
     bets: new FormArray<FormControl<BetForm>>([])

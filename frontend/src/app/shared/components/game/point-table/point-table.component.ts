@@ -8,11 +8,11 @@ import {PointsBreakdown} from '../../../../model/game/points-breakdown'
   styleUrl: './point-table.component.css'
 })
 export class PointTableComponent {
-  points = input.required<PointsBreakdown>()
-  summary = input<boolean, boolean | ''>(false, {
+  readonly points = input.required<PointsBreakdown>()
+  readonly summary = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v
   })
-  large = input<boolean, boolean | ''>(false, {
+  readonly large = input<boolean, boolean | ''>(false, {
     transform: (v) => v === '' || v
   })
 

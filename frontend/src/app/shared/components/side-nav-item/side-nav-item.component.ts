@@ -11,7 +11,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router'
   styleUrl: './side-nav-item.component.css'
 })
 export class SideNavItemComponent {
-  route = input<string | null>(null)
-  icon = input<string | null>(null)
+  readonly route = input<string | null>(null)
+  readonly icon = input<string | null>(null)
   clickAction = output<Event>()
 }

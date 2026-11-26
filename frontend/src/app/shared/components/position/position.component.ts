@@ -11,12 +11,12 @@ import { NgOptimizedImage } from '@angular/common'
   styleUrl: './position.component.css'
 })
 export class PositionComponent {
-  ranking = input.required<Ranking>()
-  highlight = input<boolean, boolean | ''>(false, {
+  readonly ranking = input.required<Ranking>()
+  readonly highlight = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
 
-  movementIcon = computed(() => {
+  readonly movementIcon = computed(() => {
     const ranking = this.ranking()
     const movement = ranking.prevRanking - ranking.ranking
 

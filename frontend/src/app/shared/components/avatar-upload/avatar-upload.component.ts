@@ -15,17 +15,17 @@ import {EMPTY_METHOD, OnChangeFn, OnTouchFn} from '../../helper/control-value-ac
   ]
 })
 export class AvatarUploadComponent implements ControlValueAccessor {
-  defaultUrl = input<string, string | null | undefined>('/assets/user.jpg', {
+  readonly defaultUrl = input<string, string | null | undefined>('/assets/user.jpg', {
     transform: (v: string | null | undefined) => {
       const value = v?.trim()
       return value ? value : '/assets/user.jpg'
     }
   })
-  buttonLabel = input<string>('Profilbild ändern')
+  readonly buttonLabel = input<string>('Profilbild ändern')
 
   private onTouch: OnTouchFn = EMPTY_METHOD
   private onChange: OnChangeFn<File | null> = EMPTY_METHOD
-  protected _url = signal<string | null>(null)
+  protected readonly _url = signal<string | null>(null)
 
   onInputChange(event: Event): void {
     if (!this.isInputElement(event.target)) return

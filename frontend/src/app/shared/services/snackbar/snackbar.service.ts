@@ -5,7 +5,7 @@ import {SnackbarMessage} from '../../components/snackbar/model/snackbar-message'
   providedIn: 'root'
 })
 export class SnackbarService {
-  private _messages = signal<SnackbarMessage[]>([])
+  private readonly _messages = signal<SnackbarMessage[]>([])
 
   get messages() {
     return this._messages.asReadonly()

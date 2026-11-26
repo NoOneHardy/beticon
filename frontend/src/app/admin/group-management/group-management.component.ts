@@ -27,11 +27,11 @@ export class GroupManagementComponent implements OnInit {
   private snackbarService = inject(SnackbarService)
   private destroyRef = inject(DestroyRef)
 
-  isSaving = signal(false)
-  existingGroups = signal<GroupOption[]>([])
-  createdGroup = signal<GroupOption | null>(null)
+  readonly isSaving = signal(false)
+  readonly existingGroups = signal<GroupOption[]>([])
+  readonly createdGroup = signal<GroupOption | null>(null)
 
-  suggestedOrder = computed(() => {
+  readonly suggestedOrder = computed(() => {
     const order = this.existingGroups().reduce((maxOrder, group) => Math.max(maxOrder, group.order), 0)
     return order + 1
   })

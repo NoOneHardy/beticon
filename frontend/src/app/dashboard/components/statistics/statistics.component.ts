@@ -19,10 +19,10 @@ import {ShortNumberPipe} from '../../../shared/pipes/short-number.pipe'
 export class StatisticsComponent {
   private store = inject(Store)
 
-  personalStats = input<Statistics>()
-  globalStats = input<GlobalStatistics>()
+  readonly personalStats = input<Statistics>()
+  readonly globalStats = input<GlobalStatistics>()
 
-  stats: Signal<{ key: string; value: number }[]> = computed(() => {
+  readonly stats: Signal<{ key: string; value: number }[]> = computed(() => {
     const globalStats = this.globalStats()
     const personalStats = this.personalStats()
 
@@ -42,7 +42,7 @@ export class StatisticsComponent {
     ]
   })
 
-  showGlobalStats = signal<boolean>(false)
+  readonly showGlobalStats = signal<boolean>(false)
 
   isLoading = this.store.selectSignal(selectIsTournamentLoading)
 }

@@ -15,9 +15,9 @@ export class RescoreManagementComponent {
   private adminService = inject(AdminService)
   private destroyRef = inject(DestroyRef)
 
-  isConfirming = signal(false)
-  isRunning = signal(false)
-  changes = signal<PointsChange[] | null>(null)
+  readonly isConfirming = signal(false)
+  readonly isRunning = signal(false)
+  readonly changes = signal<PointsChange[] | null>(null)
 
   askConfirmation(): void {
     this.isConfirming.set(true)

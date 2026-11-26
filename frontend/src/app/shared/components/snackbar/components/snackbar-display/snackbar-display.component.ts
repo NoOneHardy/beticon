@@ -14,5 +14,5 @@ import {SnackbarService} from '../../../../services/snackbar/snackbar.service'
 })
 export class SnackbarDisplayComponent {
   private service = inject(SnackbarService)
-  messages: Signal<SnackbarMessage[]> = this.service.messages
+  readonly messages: Signal<SnackbarMessage[]> = this.service.messages
 }

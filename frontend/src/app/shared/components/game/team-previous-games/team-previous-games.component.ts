@@ -11,5 +11,5 @@ import {Team} from '../../../../model/team/team'
   styleUrl: './team-previous-games.component.css'
 })
 export class TeamPreviousGamesComponent {
-  teamSignal = input.required<Team>({alias: 'team'})
+  readonly teamSignal = input.required<Team>({alias: 'team'})
 }

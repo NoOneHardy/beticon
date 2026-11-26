@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
 
   user = this.store.selectSignal(selectUser)
 
-  greeting = computed(() => {
+  readonly greeting = computed(() => {
     const time = new Date().getHours()
     let greeting: string
 
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   isLoading = this.store.selectSignal(selectIsTournamentLoading)
 
   dashboardData = this.store.selectSignal(selectDashboard)
-  leaderboardPreview = computed(() => {
+  readonly leaderboardPreview = computed(() => {
     return this.dashboardData()?.leaderboardPreview.filter((item) => !!item) ?? []
   })
 

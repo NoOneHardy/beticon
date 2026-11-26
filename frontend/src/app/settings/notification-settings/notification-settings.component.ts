@@ -25,7 +25,7 @@ import {ButtonComponent} from '../../shared/components/button/button.component'
 export default class NotificationSettingsComponent implements OnInit {
   private store = inject(Store)
 
-  notifications: Signal<NotificationPreference[]> = this.store.selectSignal(selectNotificationPreferences)
+  readonly notifications: Signal<NotificationPreference[]> = this.store.selectSignal(selectNotificationPreferences)
 
   form = new FormGroup({
     channels: new FormArray<ChannelFormGroup>([])

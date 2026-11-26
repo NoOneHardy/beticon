@@ -13,7 +13,7 @@ import {sendEmailVerificationLink} from '../../../user-management/store/user.act
 export class BannerDisplayComponent {
   private store = inject(Store)
 
-  user: Signal<User | null> = this.store.selectSignal(selectUser)
+  readonly user: Signal<User | null> = this.store.selectSignal(selectUser)
 
   sendEmailVerificationLink(): void {
     this.store.dispatch(sendEmailVerificationLink())

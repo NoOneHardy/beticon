@@ -7,5 +7,5 @@ import {Component, input} from '@angular/core'
   styleUrl: './user-management-panel.component.css'
 })
 export class UserManagementPanelComponent {
-  heading = input<string | null>(null)
+  readonly heading = input<string | null>(null)
 }

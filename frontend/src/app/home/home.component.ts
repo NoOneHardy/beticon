@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   isLoading = this.store.selectSignal(selectIsHomeLoading)
   homeData = this.store.selectSignal(selectHomeData)
-  stats = computed(() => {
+  readonly stats = computed(() => {
     const data = this.homeData()
     return {
       jackpot: data ? `CHF ${data.jackpot}` : 'CHF --',
