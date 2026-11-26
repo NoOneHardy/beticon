@@ -26,7 +26,7 @@ Feature routes are lazy-loaded via `loadComponent` in `app.routes.ts`. App confi
 
 ## Code quality
 
-ESLint (`eslint.config.js`) enforces: 2-space indentation, single quotes (template literals allowed), no semicolons, `bet-` kebab-case selectors, warn on unused variables (except `_`-prefixed), Angular rules (e.g. no input renaming). TypeScript is in strict mode.
+The lint rules live in `eslint.config.js`. TypeScript is in strict mode.
 
 ## Bundle budgets (enforced in CI)
 

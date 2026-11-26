@@ -56,7 +56,7 @@ Rules reviewers (human or agent) check changes against.
 
 ## Frontend (Angular)
 
-- Components are standalone, and their selectors use the `bet-` prefix in kebab-case (e.g. `bet-dashboard`).
+- Mechanical frontend rules are enforced by `frontend/eslint.config.js`.
 - Business logic goes in `@Injectable()` services. Models live in `shared/model/` or a feature-specific `model/` folder.
-- Components use the default OnPush change detection (the Angular 22 default), so there is no `changeDetection` override. State is held in signals (`signal()`, `input()`, `computed()`, `store.selectSignal`, `toSignal`), not plain fields.
+- State is held in signals (`signal()`, `computed()`, `store.selectSignal`, `toSignal`), not plain fields.
 - Styles are SCSS, scoped to the component; Material theming goes in `theming.scss`.
