@@ -86,6 +86,7 @@ module.exports = tseslint.config(
       '@angular-eslint/template/no-any': 'error',
       '@angular-eslint/template/prefer-ngsrc': 'error',
       '@angular-eslint/template/prefer-built-in-pipes': 'error',
+      '@angular-eslint/template/no-non-null-assertion': 'error',
     },
   }
 );
