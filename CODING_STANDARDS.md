@@ -2,7 +2,18 @@
 
 Rules reviewers (human or agent) check changes against. Subproject conventions in `service/CLAUDE.md` and `frontend/CLAUDE.md` apply as well.
 
+## Comments
+
+- A comment says only what the code, the `GLOSSARY.md` or graphify can't: a non-obvious reason, a gotcha, a link to an issue. Purpose and `@return` comments that repeat the name or signature are removed, including ones already in files a change touches.
+- A comment sits on the code it explains, never on another method's behaviour.
+- If a comment is needed to tell two methods apart, rename them.
+
 ## Service (Java)
+
+### DTOs
+
+- DTOs carry data only. Validation that is business logic lives in a service or the domain.
+- A DTO value that may be missing is `Optional<T>`, so the caller sees it can be absent and doesn't null-check by hand.
 
 ### Records for immutable objects
 
@@ -21,7 +32,7 @@ Rules reviewers (human or agent) check changes against. Subproject conventions i
 
 - A request is never changed in place (no `clamp()`-style methods). Derived values are accessors that return a new value, e.g. `ScoreReq.scoreline()`, `BetReq.normalizedJoker()`.
 - Name an accessor after what it does. A method that only fills in a missing value is not "clamped".
-- A derived accessor does not throw on input that validation rejects anyway; it returns null for a missing value.
+- A derived accessor does not throw on input that validation rejects anyway; it returns an empty `Optional` for a missing value.
 
 ### Domain types over loose values
 
