@@ -83,6 +83,7 @@ module.exports = tseslint.config(
       '@angular-eslint/template/prefer-template-literal': 'error',
       '@angular-eslint/template/prefer-control-flow': 'error',
       '@angular-eslint/template/eqeqeq': 'error',
+      '@angular-eslint/template/no-any': 'error',
     },
   }
 );
