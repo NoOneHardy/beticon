@@ -5,8 +5,7 @@
       @if (user()) {
         <bet-nav-item displayName="Dashboard" icon="home" route="/" exact/>
         <bet-nav-item displayName="Mein Tippschein" icon="ballot" route="/bets"/>
-      }
-      @if (!user()) {
+      } @else {
         <bet-nav-item displayName="Home" icon="home" route="/" exact/>
       }
       <bet-nav-item displayName="Rangliste" icon="bookmark_star" route="/leaderboard"/>
@@ -22,8 +21,7 @@
     <div class="user-actions">
       @if (user(); as user) {
         <bet-user-menu [user]="user"/>
-      }
-      @if (!user()) {
+      } @else {
         <bet-user-button route="/login" secondary content="Anmelden"/>
         <bet-user-button route="/signup" content="Registrieren"/>
       }
@@ -46,8 +44,7 @@
           (click)="toggleMenu()">
           @if (isExpanded()) {
             <span class="material-symbols-rounded">close</span>
-          }
-          @if (!isExpanded()) {
+          } @else {
             <span class="material-symbols-rounded open">dehaze</span>
           }
         </button>
@@ -82,8 +79,7 @@
           <p class="user-name">{{ user.username }}</p>
           <bet-nav-item displayName="Einstellungen" icon="manage_accounts" route="/settings"/>
         </div>
-      }
-      @if (!user()) {
+      } @else {
         <div class="menu-section">
           <p class="section-title">Zugang</p>
           <bet-nav-item displayName="Anmelden" icon="login" route="/login"/>

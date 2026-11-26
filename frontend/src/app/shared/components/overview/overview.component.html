@@ -6,8 +6,7 @@
         <p class="sub-heading">Du hast bereits <span
           class="highlight">{{ totalPercentage() | number:'1.1-1' }}%</span> der
           Tipps ausgefüllt!</p>
-      }
-      @if (totalPercentage() <= 0) {
+      } @else {
         <p class="sub-heading">Bereit deinen ersten Tipp abzugeben?</p>
       }
     } @else {
@@ -20,8 +19,7 @@
       @if (totalPercentage() > 0) {
         <p class="sub-heading">Es wurden bereits <span
           class="highlight">{{ totalPercentage() | number:'1.1-1' }}%</span> der Resultate hochgeladen!</p>
-      }
-      @if (totalPercentage() <= 0) {
+      } @else {
         <p class="sub-heading">Es wurde noch keine Resultate hochgeladen.</p>
       }
     } @else {
