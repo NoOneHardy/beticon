@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<profiles version="23">
+    <profile kind="CodeFormatterProfile" name="beticon" version="23">
+        <setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
+        <setting id="org.eclipse.jdt.core.formatter.tabulation.size" value="4"/>
+        <setting id="org.eclipse.jdt.core.formatter.indentation.size" value="4"/>
+        <setting id="org.eclipse.jdt.core.formatter.continuation_indentation" value="2"/>
+        <setting id="org.eclipse.jdt.core.formatter.continuation_indentation_for_array_initializer" value="2"/>
+        <setting id="org.eclipse.jdt.core.formatter.lineSplit" value="120"/>
+        <setting id="org.eclipse.jdt.core.formatter.join_wrapped_lines" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.comment.format_javadoc_comments" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.comment.format_block_comments" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.comment.format_line_comments" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_simple_if_on_one_line" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.wrap_before_string_concatenation" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_then_statement_on_same_line" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_else_statement_on_same_line" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_annotation_declaration_on_one_line" value="one_line_if_empty"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_enum_constants" value="49"/>
+        <setting id="org.eclipse.jdt.core.formatter.alignment_for_arguments_in_annotation" value="16"/>
+        <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_invocation" value="separate_lines_if_wrapped"/>
+        <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_method_delcaration" value="separate_lines_if_wrapped"/>
+        <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_enum_constant_declaration" value="separate_lines_if_wrapped"/>
+        <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_record_declaration" value="separate_lines_if_wrapped"/>
+        <setting id="org.eclipse.jdt.core.formatter.parentheses_positions_in_annotation" value="preserve_positions"/>
+    </profile>
+</profiles>

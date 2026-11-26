@@ -10,11 +10,13 @@ spring-dependency-management = "1.1.7"
 mapstruct = "1.6.3"
 lombok-mapstruct-binding = "0.2.0"
 jjwt = "0.13.0"
+spotless = "8.12.0"
 
 [plugins]
 spring-boot = {id = 'org.springframework.boot', version.ref = "spring-boot"}
 spring-dependency-management = {id = 'io.spring.dependency-management', version.ref = "spring-dependency-management"}
 node-gradle = {id = 'com.github.node-gradle.node', version.ref = "node-gradle"}
+spotless = {id = 'com.diffplug.spotless', version.ref = "spotless"}
 
 [libraries]
 spring-boot-starter-web = {module = "org.springframework.boot:spring-boot-starter-web" }

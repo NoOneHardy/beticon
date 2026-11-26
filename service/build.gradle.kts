@@ -4,6 +4,7 @@ plugins {
   java
   alias(libs.plugins.spring.boot)
   alias(libs.plugins.spring.dependency.management)
+  alias(libs.plugins.spotless)
 }
 
 configurations {
@@ -53,4 +54,19 @@ tasks.withType<Test> {
     events("failed")
     exceptionFormat = TestExceptionFormat.FULL
   }
+}
+
+spotless {
+  java {
+    eclipse().configFile("config/eclipse-formatter.xml")
+    removeUnusedImports()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
+}
+
+tasks.register("lint") {
+  description = "Lints project"
+  group = "verification"
+  dependsOn(tasks.named("spotlessCheck"))
 }
