@@ -19,11 +19,11 @@ Subproject specifics live in `frontend/CLAUDE.md` and `service/CLAUDE.md`; the r
 
 ## Local Development
 
-`docker-compose up` starts everything: frontend dev server (http://localhost:4200), backend (http://localhost:8080), MySQL (3306) and the nginx proxy (http://localhost:80).
+`docker-compose.yaml` pulls the service and frontend images from the private registry, so for local work start only `docker compose up -d mysql cdn proxy` and run the service (`bootRun`, port 26001) and frontend (`pnpm start`, port 4200) natively. Open the app through the proxy on http://localhost:26000: the frontend calls `/api` relative to itself, and the proxy routes it to the service. MySQL is on 26006, the CDN on 26009. The `.env` files and full steps are in `README.md`.
 
 ## CI/CD
 
-GitHub Actions run on every push (`.github/workflows/frontend.yml`, `service.yml`): lint/tests via Gradle, then Docker build. Images are pushed to the private registry `docker.no1hardy.ch/beticon/...` only from the `develop` branch.
+GitHub Actions run on every push (`.github/workflows/frontend.yml`, `service.yml`): lint/tests via Gradle, then Docker build. Images are pushed to the private registry `docker.no1hardy.ch/noonehardy/beticon/...` only from the `develop` branch.
 
 ## graphify
 
