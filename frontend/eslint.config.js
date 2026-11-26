@@ -79,6 +79,10 @@ module.exports = tseslint.config(
         {allowPrivateClassPropertyAccess: true, allowProtectedClassPropertyAccess: true}
       ],
       '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-confusing-void-expression': [
+        'error',
+        {ignoreArrowShorthand: true}
+      ],
       '@typescript-eslint/no-deprecated': 'error'
     },
   },

@@ -19,7 +19,7 @@ export abstract class BaseHttpService {
 
   private getDefaultPipes<T>() {
     return pipe(
-      tap((r: BaseResponse<T>) => { this.updateNotifications(r.globalData.notifications) }),
+      tap((r: BaseResponse<T>) => this.updateNotifications(r.globalData.notifications)),
       map((r: BaseResponse<T>) => r.data),
       catchError((err: HttpErrorResponse) => {
         const error = err.error as ServiceError | null

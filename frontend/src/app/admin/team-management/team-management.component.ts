@@ -61,7 +61,7 @@ export class TeamManagementComponent {
         shortName: value.shortName.trim().toUpperCase(),
         flag
       })),
-      finalize(() => { this.isSaving.set(false) }),
+      finalize(() => this.isSaving.set(false)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(team => {
       this.createdTeam.set(team)

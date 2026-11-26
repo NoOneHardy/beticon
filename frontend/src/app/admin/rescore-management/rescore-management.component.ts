@@ -31,8 +31,8 @@ export class RescoreManagementComponent {
     this.isConfirming.set(false)
     this.isRunning.set(true)
     this.adminService.rescoreEverything().pipe(
-      finalize(() => { this.isRunning.set(false) }),
+      finalize(() => this.isRunning.set(false)),
       takeUntilDestroyed(this.destroyRef)
-    ).subscribe(changes => { this.changes.set(changes) })
+    ).subscribe(changes => this.changes.set(changes))
   }
 }

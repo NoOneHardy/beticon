@@ -71,7 +71,7 @@ export class GroupManagementComponent implements OnInit {
       isKnockout: value.isKnockout,
       thumbnail
     }).pipe(
-      finalize(() => { this.isSaving.set(false) }),
+      finalize(() => this.isSaving.set(false)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(group => {
       const createdGroup: GroupOption = {
