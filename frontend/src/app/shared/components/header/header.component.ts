@@ -35,8 +35,8 @@ export class HeaderComponent implements OnInit {
   private viewportService = inject(ViewportService)
   private router = inject(Router)
 
-  user = this.store.selectSignal(selectUser)
-  isAdmin = this.store.selectSignal(selectIsAdmin)
+  readonly user = this.store.selectSignal(selectUser)
+  readonly isAdmin = this.store.selectSignal(selectIsAdmin)
 
   readonly isVpL = computed(() => !this.viewportService.isVPMorSmaller())
   readonly isExpanded = signal(false)
