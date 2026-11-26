@@ -46,6 +46,10 @@ button {
     }
   }
 
+  &.-full-width {
+    width: 100%;
+  }
+
   &.secondary {
     color: var(--beticon-color-neutral-500);
     background-image: none;

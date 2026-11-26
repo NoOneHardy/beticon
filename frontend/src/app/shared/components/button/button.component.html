@@ -3,7 +3,7 @@
   [class.-with-icon]="icon()"
   [disabled]="disabled()"
   [type]="submit() ? 'submit' : 'button'"
-  [style.width]="fullWidth() ? '100%' : 'auto'"
+  [class.-full-width]="fullWidth()"
   (click)="click($event)"
   (touchend)="click($event)"
   (keyup.enter)="click($event)"
