@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {SnackbarDisplayComponent} from './snackbar-display.component'
 import {provideMockStore} from '@ngrx/store/testing'
 import {SnackbarService} from '../../../../services/snackbar/snackbar.service'
+import {queryElement} from '../../../../helper/test.helper'
 
 describe('SnackbarDisplayComponent', () => {
   let component: SnackbarDisplayComponent
@@ -38,7 +39,7 @@ describe('SnackbarDisplayComponent', () => {
     service.addMessage({message: 'test'})
     fixture.detectChanges()
 
-    const snackbar = fixture.nativeElement.querySelector('bet-snackbar')
+    const snackbar = queryElement(fixture, 'bet-snackbar', HTMLElement)
     expect(snackbar).toBeTruthy()
     expect(snackbar.textContent).toContain('test')
   })
@@ -48,14 +49,14 @@ describe('SnackbarDisplayComponent', () => {
     service.addMessage({message: 'test'})
     fixture.detectChanges()
 
-    const snackbar = fixture.nativeElement.querySelector('bet-snackbar')
+    const snackbar = queryElement(fixture, 'bet-snackbar', HTMLElement)
     expect(snackbar).toBeTruthy()
     expect(snackbar.textContent).toContain('test')
 
     service.addMessage({message: 'test2'})
     fixture.detectChanges()
 
-    const snackbars = fixture.nativeElement.querySelectorAll('bet-snackbar')
+    const snackbars = (fixture.nativeElement as HTMLElement).querySelectorAll('bet-snackbar')
     expect(snackbars.length).toEqual(2)
     expect(snackbars[1].textContent).toContain('test2')
   })

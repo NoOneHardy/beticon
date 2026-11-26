@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
     else if (time >= 10 && time < 18) greeting = 'Hallo'
     else greeting = 'Guten Abend'
 
-    return greeting + ' ' + this.user()?.username
+    return `${greeting} ${this.user()?.username ?? ''}`
   })
 
   isLoading = this.store.selectSignal(selectIsTournamentLoading)

@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing'
-import {ActivatedRouteSnapshot, GuardResult, provideRouter, Router, RouterStateSnapshot} from '@angular/router'
+import {ActivatedRoute, GuardResult, provideRouter, Router} from '@angular/router'
 
 import {isAdminGuard} from './is-admin.guard'
 import {MockStore, provideMockStore} from '@ngrx/store/testing'
@@ -7,12 +7,12 @@ import {selectIsAdmin, selectIsUserLoading} from '../user-management/store/user.
 import {Observable} from 'rxjs'
 
 describe('isAdminGuard', () => {
-  const route: ActivatedRouteSnapshot = {} as ActivatedRouteSnapshot
-  const state: RouterStateSnapshot = {} as RouterStateSnapshot
   let store: MockStore
   let result: GuardResult | null
 
   const subscribeToGuard = () => {
+    const route = TestBed.inject(ActivatedRoute).snapshot
+    const state = TestBed.inject(Router).routerState.snapshot
     const guard$: Observable<GuardResult> = TestBed.runInInjectionContext(() => isAdminGuard(route, state)) as Observable<GuardResult>
     guard$.subscribe((guardResult) => {
       result = guardResult
@@ -25,7 +25,7 @@ describe('isAdminGuard', () => {
     })
 
     result = null
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectIsUserLoading, false)
   })
 

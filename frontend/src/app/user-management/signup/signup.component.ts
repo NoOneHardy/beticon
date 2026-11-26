@@ -1,16 +1,15 @@
 import {Component, effect, inject, Signal} from '@angular/core'
 import {UserManagementPanelComponent} from '../user-management-panel/user-management-panel.component'
-import {FormBuilder, FormControl, FormGroupDirective, NgForm, ReactiveFormsModule, Validators} from '@angular/forms'
+import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms'
 import {ButtonComponent} from '../../shared/components/button/button.component'
 
-import {hasError} from '../../shared/helper/form-field-error'
+import {errorStateMatcher, hasError} from '../../shared/helper/form-field-error'
 import {UserValidatorService} from './validators/user-validator.service'
 import {passwordMatch} from './validators/password-validator'
 import {Store} from '@ngrx/store'
 import {createUser} from '../store/user.actions'
 import {selectIsUserLoading} from '../store/user.feature'
 import {MatFormFieldModule} from '@angular/material/form-field'
-import {ErrorStateMatcher} from '@angular/material/core'
 import {MatInput} from '@angular/material/input'
 import {MatProgressSpinner} from '@angular/material/progress-spinner'
 import {MatIcon} from '@angular/material/icon'
@@ -97,17 +96,13 @@ export class SignupComponent {
     })
   })
 
-  passwordErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState: (control: FormControl | null, _: FormGroupDirective | NgForm | null): boolean => {
-      return !!control && (hasError(control) || this.showPasswordMatchError('password'))
-    }
-  }
+  passwordErrorStateMatcher = errorStateMatcher((control: FormControl | null): boolean => {
+    return !!control && (hasError(control) || this.showPasswordMatchError('password'))
+  })
 
-  confirmPasswordErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState: (control: FormControl | null, _: FormGroupDirective | NgForm | null): boolean => {
-      return !!control && (hasError(control) || this.showPasswordMatchError('confirmPassword'))
-    }
-  }
+  confirmPasswordErrorStateMatcher = errorStateMatcher((control: FormControl | null): boolean => {
+    return !!control && (hasError(control) || this.showPasswordMatchError('confirmPassword'))
+  })
 
   constructor() {
     effect(() => {

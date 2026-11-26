@@ -6,6 +6,7 @@ import {MatIcon} from '@angular/material/icon'
 import {MatInput, MatSuffix} from '@angular/material/input'
 
 import {PasswordIconDirective} from './password-icon.directive'
+import {queryElement} from '../helper/test.helper'
 
 @Component({
   imports: [
@@ -43,11 +44,11 @@ describe('PasswordIconDirective', () => {
   }
 
   function getInput(): HTMLInputElement {
-    return fixture.nativeElement.querySelector('input')
+    return queryElement(fixture, 'input', HTMLInputElement)
   }
 
   function getIcon(): HTMLElement {
-    return fixture.nativeElement.querySelector('mat-icon')
+    return queryElement(fixture, 'mat-icon', HTMLElement)
   }
 
   it('should initialize with a hidden password input', () => {
@@ -57,7 +58,7 @@ describe('PasswordIconDirective', () => {
     expect(directive['input']()).toBe(getInput())
     expect(directive.isVisible()).toBe(false)
     expect(getInput().type).toBe('password')
-    expect(getIcon().textContent?.trim()).toBe('visibility')
+    expect(getIcon().textContent.trim()).toBe('visibility')
   })
 
   it('should toggle the password visibility on pointerup', () => {
@@ -68,14 +69,14 @@ describe('PasswordIconDirective', () => {
 
     expect(getDirective().isVisible()).toBe(true)
     expect(getInput().type).toBe('text')
-    expect(icon.textContent?.trim()).toBe('visibility_off')
+    expect(icon.textContent.trim()).toBe('visibility_off')
 
     icon.dispatchEvent(new Event('pointerup'))
     fixture.detectChanges()
 
     expect(getDirective().isVisible()).toBe(false)
     expect(getInput().type).toBe('password')
-    expect(icon.textContent?.trim()).toBe('visibility')
+    expect(icon.textContent.trim()).toBe('visibility')
   })
 
   it('should expose pointer styling on the host', () => {

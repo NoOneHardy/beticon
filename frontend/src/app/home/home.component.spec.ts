@@ -16,7 +16,7 @@ describe('HomeComponent', () => {
       providers: [provideMockStore(), provideRouter([])]
     }).compileComponents()
 
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectHomeData, {
       jackpot: 210,
       players: 42,

@@ -20,7 +20,7 @@ describe('NotificationsComponent', () => {
 
     fixture = TestBed.createComponent(NotificationsComponent)
     component = fixture.componentInstance
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectNotifications, [])
     fixture.detectChanges()
   })

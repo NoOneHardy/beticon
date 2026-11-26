@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ScoreFormFieldComponent } from './score-form-field.component'
+import {queryElement} from '../../helper/test.helper'
 
 describe('ScoreFormFieldComponent', () => {
   let component: ScoreFormFieldComponent
@@ -52,7 +53,7 @@ describe('ScoreFormFieldComponent', () => {
   })
 
   it('should change value on input', () => {
-    const input = fixture.nativeElement.querySelector('input')
+    const input = queryElement(fixture, 'input', HTMLInputElement)
     input.value = '5'
     input.dispatchEvent(new Event('input'))
     expect(component.value()).toBe(5)
@@ -60,14 +61,14 @@ describe('ScoreFormFieldComponent', () => {
 
   it('should allow deletion of value', () => {
     component.value.set(5)
-    const input = fixture.nativeElement.querySelector('input')
+    const input = queryElement(fixture, 'input', HTMLInputElement)
     input.value = ''
     input.dispatchEvent(new Event('input'))
     expect(component.value()).toBeNull()
   })
 
   it('should change input value on value change', () => {
-    const input = fixture.nativeElement.querySelector('input')
+    const input = queryElement(fixture, 'input', HTMLInputElement)
     expect(input.value).toBe('')
     component.writeValue(5)
     fixture.detectChanges()
@@ -75,9 +76,9 @@ describe('ScoreFormFieldComponent', () => {
   })
 
   it('should hide buttons if disabled', () => {
-    expect(fixture.nativeElement.querySelectorAll('button').length).toBe(2)
+    expect((fixture.nativeElement as HTMLElement).querySelectorAll('button').length).toBe(2)
     component.setDisabledState(true)
     fixture.detectChanges()
-    expect(fixture.nativeElement.querySelectorAll('button').length).toBe(0)
+    expect((fixture.nativeElement as HTMLElement).querySelectorAll('button').length).toBe(0)
   })
 })

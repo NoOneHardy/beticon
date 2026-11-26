@@ -19,7 +19,7 @@ export class GroupService extends BaseHttpService {
   }
 
   public saveBets(groupId: string, bets: BetForm[]): Observable<Group> {
-    return this.put<Group, BetForm[]>(`/api/group/${groupId}/bets`, bets, {
+    return this.put<Group>(`/api/group/${groupId}/bets`, bets, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -27,7 +27,7 @@ export class GroupService extends BaseHttpService {
   }
 
   public saveResults(groupId: string, results: ScoreForm[]): Observable<Group> {
-    return this.put<Group, ScoreForm[]>(`/api/group/${groupId}/results`, results, {
+    return this.put<Group>(`/api/group/${groupId}/results`, results, {
       headers: {
         'Content-Type': 'application/json'
       }

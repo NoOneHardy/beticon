@@ -58,7 +58,6 @@ export class ScoreFormFieldComponent implements ControlValueAccessor {
   }
 
   onInput(value: string | number): void {
-    if (value === '') return this.writeValue(null)
-    this.writeValue(Number(value))
+    this.writeValue(value === '' ? null : Number(value))
   }
 }

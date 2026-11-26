@@ -22,7 +22,7 @@ describe('UserManagementComponent', () => {
 
     fixture = TestBed.createComponent(UserManagementComponent)
     component = fixture.componentInstance
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     mockUser = {...mockUser1}
 
     store.overrideSelector(selectUsers, [mockUser])

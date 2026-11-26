@@ -18,7 +18,7 @@ describe('EmailSettingsComponent', () => {
       providers: [provideMockStore()]
     }).compileComponents()
 
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectNotificationPreferences, [])
 
     fixture = TestBed.createComponent(NotificationSettingsComponent)
@@ -247,6 +247,6 @@ describe('EmailSettingsComponent', () => {
     fixture.detectChanges()
 
     expect(component.form.controls.channels.length).toBe(1)
-    expect(component.form.controls.channels.at(0)?.controls.data.value).toBe(NotificationChannel.IN_APP)
+    expect(component.form.controls.channels.at(0).controls.data.value).toBe(NotificationChannel.IN_APP)
   })
 })

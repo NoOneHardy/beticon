@@ -99,7 +99,7 @@ describe('GroupViewComponent', () => {
 
     fixture = TestBed.createComponent(GroupViewComponent)
     component = fixture.componentInstance
-    mockStore = TestBed.inject(MockStore)
+    mockStore = TestBed.inject<MockStore>(MockStore)
     mockStore.overrideSelector(selectActiveGroup, mockGroup)
     mockStore.refreshState()
     fixture.detectChanges()
@@ -134,14 +134,14 @@ describe('GroupViewComponent', () => {
     const game1Control = component.form.controls.bets.at(0)
     const game2Control = component.form.controls.bets.at(1)
 
-    expect(game1Control?.getRawValue()).toEqual({
+    expect(game1Control.getRawValue()).toEqual({
       game: 'game1',
       joker: 1,
       scoreTeamHome: 2,
       scoreTeamGuest: 1
     })
 
-    expect(game2Control?.getRawValue()).toEqual({
+    expect(game2Control.getRawValue()).toEqual({
       game: 'game2',
       joker: 1,
       scoreTeamHome: null,

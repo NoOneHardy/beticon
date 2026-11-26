@@ -20,7 +20,7 @@ describe('BetManagementComponent', () => {
 
     fixture = TestBed.createComponent(BetManagementComponent)
     component = fixture.componentInstance
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectGroups, [])
     store.refreshState()
     fixture.detectChanges()

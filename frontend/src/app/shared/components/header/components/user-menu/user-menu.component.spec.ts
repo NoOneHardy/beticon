@@ -19,7 +19,7 @@ describe('UserMenuComponent', () => {
     }).compileComponents()
 
     fixture = TestBed.createComponent(UserMenuComponent)
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectNotifications, [])
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -39,12 +39,12 @@ describe('UserMenuComponent', () => {
   })
 
   it('should not display anything if user is null', () => {
-    expect(fixture.nativeElement.querySelector('*')).toBeNull()
+    expect((fixture.nativeElement as HTMLElement).querySelector('*')).toBeNull()
   })
 
   it('should display user name if user is not null', () => {
     fixture.componentRef.setInput('user', user)
     fixture.detectChanges()
-    expect(fixture.nativeElement.querySelector('bet-user-button')?.textContent).toContain('User1')
+    expect((fixture.nativeElement as HTMLElement).querySelector('bet-user-button')?.textContent).toContain('User1')
   })
 })

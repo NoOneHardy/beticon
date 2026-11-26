@@ -22,7 +22,7 @@ describe('RootComponent', () => {
 
     fixture = TestBed.createComponent(RootComponent)
     mockUser = {...mockUser1}
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectHomeData, null)
     component = fixture.componentInstance
     store.refreshState()

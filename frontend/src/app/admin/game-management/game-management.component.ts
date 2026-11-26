@@ -16,7 +16,7 @@ import {finalize, forkJoin} from 'rxjs'
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
 import {GroupOption} from '../model/group-option'
 import {LightTeam} from '../../model/team/light-team'
-import {hasError} from '../../shared/helper/form-field-error'
+import {errorStateMatcher, hasError} from '../../shared/helper/form-field-error'
 import {BetGame} from '../../model/game/bet-game'
 import {SnackbarService} from '../../shared/services/snackbar/snackbar.service'
 import {SpinnerComponent} from '../../shared/components/spinner/spinner.component'
@@ -26,7 +26,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker'
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete'
 import {MatIcon} from '@angular/material/icon'
 import {MatTimepicker, MatTimepickerInput, MatTimepickerToggle} from '@angular/material/timepicker'
-import {ErrorStateMatcher} from '@angular/material/core'
 
 @Component({
   selector: 'bet-game-management',
@@ -101,7 +100,7 @@ export class GameManagementComponent implements OnInit {
       groups: this.adminService.getGroupOptions(),
       teams: this.adminService.getTeams()
     }).pipe(
-      finalize(() => this.isLoadingOptions.set(false)),
+      finalize(() => { this.isLoadingOptions.set(false) }),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(({groups, teams}) => {
       this.groups.set([...groups].sort((a, b) => a.order - b.order || a.name.localeCompare(b.name)))
@@ -129,7 +128,7 @@ export class GameManagementComponent implements OnInit {
       teamHome: teamHome.id,
       teamGuest: teamGuest.id
     }).pipe(
-      finalize(() => this.isSaving.set(false)),
+      finalize(() => { this.isSaving.set(false) }),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(game => {
       this.createdGame.set(game)
@@ -203,11 +202,9 @@ export class GameManagementComponent implements OnInit {
     this.teamGuestSearch.set('')
   }
 
-  guestTeamErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean {
-      return !!control && (hasError(control) || form?.hasError('sameTeams') || false)
-    }
-  }
+  guestTeamErrorStateMatcher = errorStateMatcher((control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean => {
+    return !!control && (hasError(control) || (form?.hasError('sameTeams') ?? false))
+  })
 
   private filterOptions<T>(options: T[], query: string, getLabel: (option: T) => string): T[] {
     const normalizedQuery = query.trim().toLowerCase()
@@ -218,8 +215,8 @@ export class GameManagementComponent implements OnInit {
 
   private differentTeamsValidator(): ValidatorFn {
     return (group: AbstractControl) => {
-      const teamHome = `${group.get('teamHome')?.value ?? ''}`.trim()
-      const teamGuest = `${group.get('teamGuest')?.value ?? ''}`.trim()
+      const teamHome = String(group.get('teamHome')?.value ?? '').trim()
+      const teamGuest = String(group.get('teamGuest')?.value ?? '').trim()
       if (!teamHome || !teamGuest) return null
       return teamHome === teamGuest ? {sameTeams: true} : null
     }

@@ -67,7 +67,7 @@ describe('OverviewComponent', () => {
     })
       .compileComponents()
 
-    mockStore = TestBed.inject(MockStore)
+    mockStore = TestBed.inject<MockStore>(MockStore)
     fixture = TestBed.createComponent(OverviewComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

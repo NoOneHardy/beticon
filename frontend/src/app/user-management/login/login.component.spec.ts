@@ -4,6 +4,7 @@ import {LoginComponent} from './login.component'
 import {provideMockStore} from '@ngrx/store/testing'
 import {provideRouter} from '@angular/router'
 import {provideAnimations} from '@angular/platform-browser/animations'
+import {queryElement} from '../../shared/helper/test.helper'
 
 describe('LoginComponent', () => {
   let component: LoginComponent
@@ -54,7 +55,7 @@ describe('LoginComponent', () => {
 
   it('should call login on click', () => {
     vi.spyOn(component, 'login').mockReturnValue(undefined)
-    fixture.nativeElement.querySelector('bet-button button').click()
+    queryElement(fixture, 'bet-button button', HTMLElement).click()
     fixture.detectChanges()
     expect(component.login).toHaveBeenCalled()
   })

@@ -40,14 +40,12 @@ export default class NotificationSettingsComponent implements OnInit {
       this.form.reset()
       this.form.controls.channels.clear()
       const prefs = this.notifications()
-      if (prefs) {
-        const channels = prefs.map(p => p.channel)
-          .filter((p, i, self) => self.indexOf(p) === i)
-        for (const channel of channels) {
-          const channelPreferences = prefs.filter(p => p.channel === channel)
-          const group = this.createFormGroup(channelPreferences)
-          if (group) this.form.controls.channels.controls.push(group)
-        }
+      const channels = prefs.map(p => p.channel)
+        .filter((p, i, self) => self.indexOf(p) === i)
+      for (const channel of channels) {
+        const channelPreferences = prefs.filter(p => p.channel === channel)
+        const group = this.createFormGroup(channelPreferences)
+        if (group) this.form.controls.channels.controls.push(group)
       }
     })
   }

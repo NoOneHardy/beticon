@@ -38,19 +38,19 @@ export class AdminService extends BaseHttpService {
     const formData = new FormData()
     formData.append('file', file)
 
-    return this.post<string, FormData>('/api/team/flag', formData)
+    return this.post<string>('/api/team/flag', formData)
   }
 
   createTeam(team: CreateTeam): Observable<LightTeam> {
-    return this.post<LightTeam, CreateTeam>('/api/team', team)
+    return this.post<LightTeam>('/api/team', team)
   }
 
   createGroup(group: CreateGroup): Observable<GroupOption> {
-    return this.post<GroupOption, CreateGroup>('/api/group', group)
+    return this.post<GroupOption>('/api/group', group)
   }
 
   createGame(game: CreateGame): Observable<BetGame> {
-    return this.post<BetGame, CreateGame>('/api/game', game)
+    return this.post<BetGame>('/api/game', game)
   }
 
   rescoreEverything(): Observable<PointsChange[]> {

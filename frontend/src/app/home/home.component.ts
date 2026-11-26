@@ -26,9 +26,9 @@ export class HomeComponent implements OnInit {
   readonly stats = computed(() => {
     const data = this.homeData()
     return {
-      jackpot: data ? `CHF ${data.jackpot}` : 'CHF --',
-      players: data ? `${data.players}` : '--',
-      games: data ? `${data.games}` : '--'
+      jackpot: data ? `CHF ${String(data.jackpot)}` : 'CHF --',
+      players: data ? String(data.players) : '--',
+      games: data ? String(data.games) : '--'
     }
   })
 

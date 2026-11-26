@@ -36,7 +36,7 @@ describe('HeaderComponent', () => {
       providers: [provideRouter([]), provideMockStore(), provideAnimations()]
     }).compileComponents()
 
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     viewportService = TestBed.inject(ViewportService)
     store.overrideSelector(selectUser, null)
     store.overrideSelector(selectNotifications, [])
@@ -105,7 +105,7 @@ describe('HeaderComponent', () => {
 
   it('should not close menu on blur if click is inside the component', () => {
     const event = new MouseEvent('click')
-    vi.spyOn(event, 'target', 'get').mockReturnValue(fixture.nativeElement)
+    vi.spyOn(event, 'target', 'get').mockReturnValue(fixture.nativeElement as HTMLElement)
 
     component.isExpanded.set(true)
     component.closeMenuOnBlur(event)
@@ -117,7 +117,7 @@ describe('HeaderComponent', () => {
     viewportService.viewportWidth.set(480)
     fixture.detectChanges()
 
-    expect(fixture.nativeElement.querySelector('.menu-button')).toBeTruthy()
+    expect((fixture.nativeElement as HTMLElement).querySelector('.menu-button')).toBeTruthy()
   })
 
   it('should render guest navigation and auth links in the mobile menu', () => {
@@ -125,7 +125,7 @@ describe('HeaderComponent', () => {
     component.isExpanded.set(true)
     fixture.detectChanges()
 
-    const mobileMenu = fixture.nativeElement.querySelector('#mobile-menu') as HTMLElement | null
+    const mobileMenu = (fixture.nativeElement as HTMLElement).querySelector('#mobile-menu')
     expect(mobileMenu?.textContent).toContain('Home')
     expect(mobileMenu?.textContent).toContain('Rangliste')
     expect(mobileMenu?.textContent).toContain('Anmelden')
@@ -138,7 +138,7 @@ describe('HeaderComponent', () => {
     viewportService.viewportWidth.set(480)
     fixture.detectChanges()
 
-    expect(fixture.nativeElement.querySelector('.menu-button')).toBeTruthy()
+    expect((fixture.nativeElement as HTMLElement).querySelector('.menu-button')).toBeTruthy()
   })
 
   it('should render admin actions in the mobile menu', () => {
@@ -149,7 +149,7 @@ describe('HeaderComponent', () => {
     component.isExpanded.set(true)
     fixture.detectChanges()
 
-    const mobileMenu = fixture.nativeElement.querySelector('#mobile-menu') as HTMLElement | null
+    const mobileMenu = (fixture.nativeElement as HTMLElement).querySelector('#mobile-menu')
     expect(mobileMenu).toBeTruthy()
     expect(mobileMenu?.textContent).toContain('Teams')
     expect(mobileMenu?.textContent).toContain('Gruppen')

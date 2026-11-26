@@ -55,8 +55,7 @@ export class GroupViewComponent {
       this.games.forEach((game, i) => {
         const defaultValue: BetForm = this.getDefaultValues(game)
 
-        const control = this.form.controls.bets.at(i)
-        if (control) control.setValue(defaultValue)
+        if (i < this.form.controls.bets.length) this.form.controls.bets.at(i).setValue(defaultValue)
         else this.form.controls.bets.push(
           new FormControl<BetForm>(defaultValue, {nonNullable: true})
         )
@@ -105,7 +104,7 @@ export class GroupViewComponent {
     const group = this.group()
     if (!group) return
 
-    const bets = (this.form.controls.bets.controls ?? [])
+    const bets = this.form.controls.bets.controls
       .filter(c => c.enabled)
       .map(c => c.getRawValue())
     if (this.mode() === 'bet') this.store.dispatch(saveBets({
@@ -133,6 +132,6 @@ export class GroupViewComponent {
   }
 
   back(): void {
-    this.router.navigate([this.mode() === 'admin' ? '/admin/results' : 'bets']).then()
+    void this.router.navigate([this.mode() === 'admin' ? '/admin/results' : 'bets'])
   }
 }

@@ -9,8 +9,8 @@ describe('PointTableComponent', () => {
     fixture.componentRef.setInput('points', points)
     fixture.componentRef.setInput('summary', summary)
     fixture.detectChanges()
-    const el: HTMLElement = fixture.nativeElement
-    return Array.from(el.querySelectorAll('span')).map(s => (s.textContent ?? '').replace(/\s/g, ' ').trim())
+    const el = fixture.nativeElement as HTMLElement
+    return Array.from(el.querySelectorAll('span')).map(s => s.textContent.replace(/\s/g, ' ').trim())
   }
 
   beforeEach(async () => {
@@ -38,7 +38,7 @@ describe('PointTableComponent', () => {
       'Joker', 'x2',
       'Total', '+ 20'
     ])
-    expect(fixture.nativeElement.querySelector('.separator')).not.toBeNull()
+    expect((fixture.nativeElement as HTMLElement).querySelector('.separator')).not.toBeNull()
   })
 
   it('should skip items that are null', () => {
@@ -92,6 +92,6 @@ describe('PointTableComponent', () => {
     }, true)
 
     expect(texts).toEqual(['Total', '+ 5'])
-    expect(fixture.nativeElement.querySelector('.separator')).toBeNull()
+    expect((fixture.nativeElement as HTMLElement).querySelector('.separator')).toBeNull()
   })
 })

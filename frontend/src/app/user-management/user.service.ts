@@ -23,15 +23,15 @@ export class UserService extends BaseHttpService {
   }
 
   createUser(user: NewUser): Observable<User> {
-    return this.post<User, NewUser>('/api/signup', user)
+    return this.post<User>('/api/signup', user)
   }
 
   login(data: LoginData): Observable<User> {
-    return this.post<User, LoginData>('/api/login', data)
+    return this.post<User>('/api/login', data)
   }
 
-  logout(): Observable<void> {
-    return this.post<void>('/api/log-out', {})
+  logout(): Observable<unknown> {
+    return this.post<unknown>('/api/log-out', {})
   }
 
   fetchUserInfo(): Observable<User> {

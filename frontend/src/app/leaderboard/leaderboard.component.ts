@@ -39,9 +39,9 @@ export class LeaderboardComponent implements OnInit {
     if (userPos) {
       const movement = userPos.prevRanking - userPos.ranking
       if (movement > 0) {
-        return `Gratuliere, du bist ${movement === 1 ? '1 Rang' : `${movement} Ränge`} aufgestiegen!`
+        return `Gratuliere, du bist ${movement === 1 ? '1 Rang' : `${String(movement)} Ränge`} aufgestiegen!`
       } else if (movement < 0) {
-        return `Schade, du bist ${movement === -1 ? '1 Rang' : `${Math.abs(movement)} Ränge`} abgestiegen.`
+        return `Schade, du bist ${movement === -1 ? '1 Rang' : `${String(Math.abs(movement))} Ränge`} abgestiegen.`
       }
       return 'Keine Veränderung, das ist auch eine Leistung!'
     }

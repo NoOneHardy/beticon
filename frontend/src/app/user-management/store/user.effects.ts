@@ -62,9 +62,11 @@ export class UserEffects {
 
   userCreated = createEffect(() => this.actions$.pipe(
     ofType(userCreated),
-    tap(() => this.snackbarService.addMessage({
-      message: 'Benutzer erfolgreich erstellt',
-    })),
+    tap(() => {
+      this.snackbarService.addMessage({
+        message: 'Benutzer erfolgreich erstellt',
+      })
+    }),
     map((data) => userLogin(data))
   ))
 
@@ -85,7 +87,7 @@ export class UserEffects {
   loggedIn = createEffect(() => this.actions$.pipe(
     ofType(userLoggedIn),
     tap(() => {
-      this.router.navigateByUrl('/').then()
+      void this.router.navigateByUrl('/')
     }),
     map(() => noAction())
   ))
@@ -105,7 +107,7 @@ export class UserEffects {
       if (showMessage) this.snackbarService.addMessage({
         message: 'Erfolgreich abgemeldet',
       })
-      this.router.navigateByUrl('/').then()
+      void this.router.navigateByUrl('/')
     }),
     map(() => noAction())
   ))
@@ -154,7 +156,7 @@ export class UserEffects {
       this.snackbarService.addMessage({
         message: 'Avatar erfolgreich hochgeladen',
       })
-      this.router.navigateByUrl('/').then()
+      void this.router.navigateByUrl('/')
     })
   ), {dispatch: false})
 
@@ -172,7 +174,7 @@ export class UserEffects {
       this.snackbarService.addMessage({
         message: 'Benutzerinformationen erfolgreich aktualisiert'
       })
-      this.router.navigateByUrl('/').then()
+      void this.router.navigateByUrl('/')
     }),
     map(action => userInfoFetched({user: action.user}))
   ))
@@ -205,7 +207,7 @@ export class UserEffects {
     exhaustMap((action) => this.userService.verifyEmail({code: action.code}).pipe(
       map(user => emailVerified({user})),
       catchError(() => {
-        this.router.navigateByUrl('/').then()
+        void this.router.navigateByUrl('/')
         return of()
       })
     ))
@@ -214,7 +216,7 @@ export class UserEffects {
   emailVerified = createEffect(() => this.actions$.pipe(
     ofType(emailVerified),
     tap(() => {
-      this.router.navigateByUrl('/').then(() => {
+      void this.router.navigateByUrl('/').then(() => {
         this.snackbarService.addMessage({
           message: 'E-Mail erfolgreich verifiziert'
         })
@@ -232,9 +234,12 @@ export class UserEffects {
   emailVerificationLinkSent = createEffect(() => this.actions$.pipe(
     ofType(emailVerificationLinkSent),
     tap(({isSent}) => {
-      if (isSent) return this.snackbarService.addMessage({
-        message: 'E-Mail erfolgreich gesendet'
-      })
+      if (isSent) {
+        this.snackbarService.addMessage({
+          message: 'E-Mail erfolgreich gesendet'
+        })
+        return
+      }
 
       this.snackbarService.addMessage({
         message: 'Es ist ein Fehler aufgetreten',
@@ -255,10 +260,13 @@ export class UserEffects {
   passwordResetLinkRequested = createEffect(() => this.actions$.pipe(
     ofType(passwordResetLinkRequested),
     tap(({isSent}) => {
-      if (!isSent) return this.snackbarService.addMessage({
-        message: 'Es ist ein Fehler aufgetreten',
-        type: 'error'
-      })
+      if (!isSent) {
+        this.snackbarService.addMessage({
+          message: 'Es ist ein Fehler aufgetreten',
+          type: 'error'
+        })
+        return
+      }
       this.snackbarService.addMessage({
         message: 'Link zum Zurücksetzen des Passworts versendet'
       })
@@ -280,7 +288,7 @@ export class UserEffects {
       this.snackbarService.addMessage({
         message: 'Passwort erfolgreich zurückgesetzt'
       })
-      this.router.navigateByUrl('/').then()
+      void this.router.navigateByUrl('/')
     })
   ), {dispatch: false})
 }

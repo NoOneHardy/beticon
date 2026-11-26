@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing'
-import {ActivatedRouteSnapshot, GuardResult, provideRouter, Router, RouterStateSnapshot} from '@angular/router'
+import {ActivatedRoute, GuardResult, provideRouter, Router} from '@angular/router'
 
 import {isLoggedInGuard} from './is-logged-in.guard'
 import {MockStore, provideMockStore} from '@ngrx/store/testing'
@@ -9,13 +9,13 @@ import {User} from '../model/user/user'
 import {mockUser1} from '../model/mock/user.mock'
 
 describe('isLoggedInGuard', () => {
-  const route: ActivatedRouteSnapshot = {} as ActivatedRouteSnapshot
-  const state: RouterStateSnapshot = {} as RouterStateSnapshot
   let store: MockStore
   let result: GuardResult | null
   let mockUser: User
 
   const subscribeToGuard = () => {
+    const route = TestBed.inject(ActivatedRoute).snapshot
+    const state = TestBed.inject(Router).routerState.snapshot
     const guard$: Observable<GuardResult> = TestBed.runInInjectionContext(() => isLoggedInGuard(route, state)) as Observable<GuardResult>
     guard$.subscribe((guardResult) => {
       result = guardResult
@@ -30,7 +30,7 @@ describe('isLoggedInGuard', () => {
     mockUser = {...mockUser1}
 
     result = null
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectUser, {...mockUser})
     store.overrideSelector(selectIsUserLoading, false)
   })

@@ -17,5 +17,5 @@ export class UserButtonComponent {
   })
   readonly route = input<string | null>(null)
   readonly content = input<string>('')
-  clickButton = output<void>()
+  clickButton = output()
 }

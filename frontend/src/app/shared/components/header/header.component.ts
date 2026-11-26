@@ -48,7 +48,7 @@ import {NotificationsComponent} from './components/notifications/notifications.c
 })
 export class HeaderComponent implements OnInit {
   private store = inject(Store)
-  private el = inject(ElementRef)
+  private el = inject<ElementRef<HTMLElement>>(ElementRef)
   private viewportService = inject(ViewportService)
   private router = inject(Router)
 
@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit {
   }
 
   closeMenuOnBlur(e: MouseEvent): void {
-    if (!this.el.nativeElement.contains(e.target)) {
+    if (!(e.target instanceof Node) || !this.el.nativeElement.contains(e.target)) {
       this.isExpanded.set(false)
     }
   }

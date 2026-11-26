@@ -16,7 +16,7 @@ export class UserValidatorService {
   usernameAvailable(): AsyncValidatorFn {
     return (control: AbstractControl) => {
       const currentUsername = this.currentUser()?.username
-      const inputUsername = control.value
+      const inputUsername = control.value as string
 
       if (currentUsername === inputUsername) return of(null)
       return timer(500).pipe(
@@ -34,7 +34,7 @@ export class UserValidatorService {
   emailAvailable(): AsyncValidatorFn {
     return (control: AbstractControl) => {
       const currentEmail = this.currentUser()?.email
-      const inputEmail = control.value
+      const inputEmail = control.value as string
 
       if (currentEmail === inputEmail) return of(null)
       return timer(500).pipe(

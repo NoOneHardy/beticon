@@ -2,16 +2,27 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { GamePreviewComponent } from './game-preview.component'
 import {BetGame} from '../../../../model/game/bet-game'
+import {Bet} from '../../../../model/game/bet'
 
 describe('GamePreviewComponent', () => {
   let component: GamePreviewComponent
   let fixture: ComponentFixture<GamePreviewComponent>
+  let mockBet: Bet
   let mockGame: BetGame
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [GamePreviewComponent]
     }).compileComponents()
+
+    mockBet = {
+      id: 'asdf-1',
+      scoreTeamHome: 3,
+      scoreTeamGuest: 2,
+      joker: 3,
+      gameId: 'bet-1',
+      points: null
+    }
 
     mockGame = {
       groupId: 'group-1',
@@ -37,14 +48,7 @@ describe('GamePreviewComponent', () => {
         shortName: ''
       },
       result: null,
-      bet: {
-        id: 'asdf-1',
-        scoreTeamHome: 3,
-        scoreTeamGuest: 2,
-        joker: 3,
-        gameId: 'bet-1',
-        points: null
-      }
+      bet: mockBet
     }
 
     fixture = TestBed.createComponent(GamePreviewComponent)
@@ -62,14 +66,14 @@ describe('GamePreviewComponent', () => {
       ...mockGame,
       result: {id: 'r', gameId: 'game-1', scoreTeamHome: 3, scoreTeamGuest: 2},
       bet: {
-        ...mockGame.bet!,
+        ...mockBet,
         points: {correctWinner: 5, correctGoalsHome: 2, correctGoalsGuest: 2, correctGoalsTotal: 1, joker: 3, total: 30}
       }
     })
     fixture.detectChanges()
 
     const points = (fixture.nativeElement as HTMLElement).querySelector('.bet-points')
-    expect(points?.textContent?.trim()).toBe('+30')
+    expect(points?.textContent.trim()).toBe('+30')
   })
 
   it('should render +0 when the bet has no points payload', () => {
@@ -80,6 +84,6 @@ describe('GamePreviewComponent', () => {
     fixture.detectChanges()
 
     const points = (fixture.nativeElement as HTMLElement).querySelector('.bet-points')
-    expect(points?.textContent?.trim()).toBe('+0')
+    expect(points?.textContent.trim()).toBe('+0')
   })
 })

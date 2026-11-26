@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ButtonComponent } from './button.component'
+import {queryElement} from '../../helper/test.helper'
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent
@@ -46,7 +47,7 @@ describe('ButtonComponent', () => {
   })
 
   it('should contain a button', () => {
-    expect(fixture.nativeElement.querySelector('button')).toBeTruthy()
+    expect((fixture.nativeElement as HTMLElement).querySelector('button')).toBeTruthy()
   })
 
   it('should emit click', () => {
@@ -57,7 +58,7 @@ describe('ButtonComponent', () => {
 
   it('should emit click event on button click', () => {
     const spy = vi.spyOn(component.clickEvent, 'emit').mockReturnValue(undefined)
-    fixture.nativeElement.querySelector('button').click()
+    queryElement(fixture, 'button', HTMLElement).click()
     expect(spy).toHaveBeenCalled()
   })
 
@@ -67,14 +68,14 @@ describe('ButtonComponent', () => {
 
   it('should have default tab index of 0', () => {
     expect(component.tabindex()).toBe(0)
-    expect(fixture.nativeElement.querySelector('button').tabIndex).toBe(0)
+    expect(queryElement(fixture, 'button', HTMLElement).tabIndex).toBe(0)
   })
 
   it('should set tab index to 1', () => {
     fixture.componentRef.setInput('tabindex', 1)
     fixture.detectChanges()
     expect(component.tabindex()).toBe(1)
-    expect(fixture.nativeElement.querySelector('button').tabIndex).toBe(1)
+    expect(queryElement(fixture, 'button', HTMLElement).tabIndex).toBe(1)
   })
 
   it('should stop propagation on click', () => {
@@ -90,13 +91,13 @@ describe('ButtonComponent', () => {
   })
 
   it('should have a default primary design', () => {
-    expect(fixture.nativeElement.querySelector('button').classList).not.toContain('secondary')
+    expect(queryElement(fixture, 'button', HTMLElement).classList).not.toContain('secondary')
   })
 
   it('should have a secondary design', () => {
     fixture.componentRef.setInput('secondary', true)
     fixture.detectChanges()
-    expect(fixture.nativeElement.querySelector('button').classList).toContain('secondary')
+    expect(queryElement(fixture, 'button', HTMLElement).classList).toContain('secondary')
   })
 
   it('should have an input for disabled', () => {
@@ -120,12 +121,12 @@ describe('ButtonComponent', () => {
   })
 
   it('should have a default enabled state', () => {
-    expect(fixture.nativeElement.querySelector('button').disabled).toBe(false)
+    expect(queryElement(fixture, 'button', HTMLButtonElement).disabled).toBe(false)
   })
 
   it('should be disabled', () => {
     fixture.componentRef.setInput('disabled', true)
     fixture.detectChanges()
-    expect(fixture.nativeElement.querySelector('button').disabled).toBe(true)
+    expect(queryElement(fixture, 'button', HTMLButtonElement).disabled).toBe(true)
   })
 })

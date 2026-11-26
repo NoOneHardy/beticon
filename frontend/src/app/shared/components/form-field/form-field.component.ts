@@ -10,7 +10,7 @@ import {SpinnerComponent} from '../spinner/spinner.component'
   templateUrl: './form-field.component.html'
 })
 export class FormFieldComponent implements AfterContentInit {
-  private el = inject(ElementRef)
+  private el = inject<ElementRef<HTMLElement>>(ElementRef)
   private input: HTMLInputElement | null = null
 
   isPassword = false

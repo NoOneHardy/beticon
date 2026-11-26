@@ -24,7 +24,7 @@ describe('LeaderboardComponent', () => {
 
     mockUser = {...mockUser1}
 
-    store = TestBed.inject(MockStore)
+    store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectLeaderboard, [])
     store.refreshState()
     fixture = TestBed.createComponent(LeaderboardComponent)

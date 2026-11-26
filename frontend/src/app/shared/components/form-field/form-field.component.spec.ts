@@ -2,6 +2,7 @@ import {ComponentFixture} from '@angular/core/testing'
 
 import {FormFieldComponent} from './form-field.component'
 import {configureTestHost, TestHostComponent} from '../test-host/test-host.component'
+import {queryElement} from '../../helper/test.helper'
 
 describe('FormFieldComponent', () => {
   let component: TestHostComponent
@@ -19,7 +20,7 @@ describe('FormFieldComponent', () => {
   })
 
   it('should set placeholder to ""', () => {
-    const input = fixture.nativeElement.querySelector('input')
+    const input = queryElement(fixture, 'input', HTMLInputElement)
     expect(input.placeholder).toBe('')
   })
 
@@ -29,7 +30,7 @@ describe('FormFieldComponent', () => {
       template: '<bet-form-field><input type="password"></bet-form-field>'
     })
 
-    expect(fixture.nativeElement.querySelector('button.show-password-icon')).toBeTruthy()
+    expect((fixture.nativeElement as HTMLElement).querySelector('button.show-password-icon')).toBeTruthy()
   })
 
   it('should toggle password visibility', async () => {
@@ -38,9 +39,9 @@ describe('FormFieldComponent', () => {
       template: '<bet-form-field><input type="password"></bet-form-field>'
     })
 
-    expect(fixture.nativeElement.querySelector('button.show-password-icon')).toBeTruthy()
-    fixture.nativeElement.querySelector('button.show-password-icon').click()
+    expect((fixture.nativeElement as HTMLElement).querySelector('button.show-password-icon')).toBeTruthy()
+    queryElement(fixture, 'button.show-password-icon', HTMLElement).click()
     fixture.detectChanges()
-    expect(fixture.nativeElement.querySelector('input').type).toBe('text')
+    expect(queryElement(fixture, 'input', HTMLInputElement).type).toBe('text')
   })
 })

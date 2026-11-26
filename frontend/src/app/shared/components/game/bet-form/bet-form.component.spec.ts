@@ -27,7 +27,7 @@ describe('BetFormComponent', () => {
       providers: [provideMockStore(), provideAnimations()]
     }).compileComponents()
 
-    mockStore = TestBed.inject(MockStore)
+    mockStore = TestBed.inject<MockStore>(MockStore)
     mockStore.overrideSelector(selectJokerQuota, {
       remainingDoubleJokers: 5,
       remainingTripleJokers: 3,

@@ -15,7 +15,7 @@ describe('RescoreManagementComponent', () => {
   ]
 
   const buttons = () => Array.from(element.querySelectorAll('button'))
-  const buttonByText = (text: string) => buttons().find(b => b.textContent?.includes(text))
+  const buttonByText = (text: string) => buttons().find(b => b.textContent.includes(text))
 
   async function click(text: string): Promise<void> {
     buttonByText(text)?.click()
@@ -33,7 +33,7 @@ describe('RescoreManagementComponent', () => {
     }).compileComponents()
 
     fixture = TestBed.createComponent(RescoreManagementComponent)
-    element = fixture.nativeElement
+    element = fixture.nativeElement as HTMLElement
     fixture.detectChanges()
   })
 
@@ -70,7 +70,7 @@ describe('RescoreManagementComponent', () => {
     await click('Alles neu berechnen')
     await click('Bestätigen')
 
-    const rows = Array.from(element.querySelectorAll('tbody tr')).map(r => r.textContent?.replace(/\s+/g, ' ').trim())
+    const rows = Array.from(element.querySelectorAll('tbody tr')).map(r => r.textContent.replace(/\s+/g, ' ').trim())
     expect(rows).toHaveLength(2)
     expect(rows[0]).toContain('hardy')
     expect(rows[0]).toContain('12')

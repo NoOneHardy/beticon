@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { SnackbarComponent } from './snackbar.component'
 import {provideMockStore} from '@ngrx/store/testing'
+import {queryElement} from '../../helper/test.helper'
 
 describe('SnackbarComponent', () => {
   let component: SnackbarComponent
@@ -36,11 +37,11 @@ describe('SnackbarComponent', () => {
     })
     fixture.detectChanges()
     expect(component.message().type).toBe('error')
-    expect(fixture.nativeElement.querySelector('.snackbar').classList).toContain('-error')
+    expect(queryElement(fixture, '.snackbar', HTMLElement).classList).toContain('-error')
   })
 
   it('should change icon based on type', () => {
-    const icon = fixture.nativeElement.querySelector('.icon')
+    const icon = queryElement(fixture, '.icon', HTMLElement)
     expect(icon.innerHTML).toBe('check_circle')
 
     fixture.componentRef.setInput('message', {

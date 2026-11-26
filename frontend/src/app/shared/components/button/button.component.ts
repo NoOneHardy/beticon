@@ -27,7 +27,7 @@ export class ButtonComponent {
   })
   readonly icon = input<string | null>(null)
 
-  clickEvent = output<void>()
+  clickEvent = output()
 
   click(event: Event): void {
     event.stopPropagation()

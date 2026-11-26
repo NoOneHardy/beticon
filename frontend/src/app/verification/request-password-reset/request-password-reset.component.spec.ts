@@ -26,7 +26,7 @@ describe('RequestPasswordResetComponent', () => {
 
   it('should load isLoading from store', () => {
     expect(component.isLoading).toBeDefined()
-    const store = TestBed.inject(MockStore)
+    const store = TestBed.inject<MockStore>(MockStore)
     store.overrideSelector(selectIsUserLoading, false)
     store.refreshState()
     fixture.detectChanges()

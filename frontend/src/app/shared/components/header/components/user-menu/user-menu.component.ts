@@ -22,7 +22,7 @@ import {NotificationsComponent} from '../notifications/notifications.component'
 })
 export class UserMenuComponent {
   private store = inject(Store)
-  private el = inject(ElementRef)
+  private el = inject<ElementRef<HTMLElement>>(ElementRef)
 
   readonly user = input<User | null>()
 
@@ -33,7 +33,7 @@ export class UserMenuComponent {
   }
 
   closeDropdownOnBlur(e: MouseEvent): void {
-    if (!this.el.nativeElement.contains(e.target)) {
+    if (!(e.target instanceof Node) || !this.el.nativeElement.contains(e.target)) {
       this.isDropdownExpanded.set(false)
     }
   }

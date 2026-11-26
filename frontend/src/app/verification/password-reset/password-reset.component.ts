@@ -1,14 +1,13 @@
 import {Component, inject, OnInit} from '@angular/core'
 import {UserManagementPanelComponent} from '../../user-management/user-management-panel/user-management-panel.component'
-import {FormControl, FormGroup, FormGroupDirective, NgForm, ReactiveFormsModule, Validators} from '@angular/forms'
-import {hasError} from '../../shared/helper/form-field-error'
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
+import {errorStateMatcher, hasError} from '../../shared/helper/form-field-error'
 import {passwordMatch} from '../../user-management/signup/validators/password-validator'
 import {ButtonComponent} from '../../shared/components/button/button.component'
 import {Store} from '@ngrx/store'
 import {selectIsUserLoading} from '../../user-management/store/user.feature'
 import {ActivatedRoute, Router} from '@angular/router'
 import {resetPassword} from '../../user-management/store/user.actions'
-import {ErrorStateMatcher} from '@angular/material/core'
 import {MatInput} from '@angular/material/input'
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatIcon} from '@angular/material/icon'
@@ -66,17 +65,13 @@ export class PasswordResetComponent implements OnInit {
     }))
   }
 
-  passwordErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState: (control: FormControl | null, _: FormGroupDirective | NgForm | null): boolean => {
-      return !!control && (hasError(control) || this.showPasswordMatchError('password'))
-    }
-  }
+  passwordErrorStateMatcher = errorStateMatcher((control: FormControl | null): boolean => {
+    return !!control && (hasError(control) || this.showPasswordMatchError('password'))
+  })
 
-  confirmPasswordErrorStateMatcher: ErrorStateMatcher = {
-    isErrorState: (control: FormControl | null, _: FormGroupDirective | NgForm | null): boolean => {
-      return !!control && (hasError(control) || this.showPasswordMatchError('confirmPassword'))
-    }
-  }
+  confirmPasswordErrorStateMatcher = errorStateMatcher((control: FormControl | null): boolean => {
+    return !!control && (hasError(control) || this.showPasswordMatchError('confirmPassword'))
+  })
 
   showPasswordMatchError(formField: 'password' | 'confirmPassword'): boolean {
     return hasError(this.formGroup, 'passwordMatch') && !hasError(this.formGroup.get(formField))

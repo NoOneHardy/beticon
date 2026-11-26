@@ -19,14 +19,16 @@ export abstract class BaseHttpService {
 
   private getDefaultPipes<T>() {
     return pipe(
-      tap((r: BaseResponse<T>) => this.updateNotifications(r.globalData.notifications)),
+      tap((r: BaseResponse<T>) => { this.updateNotifications(r.globalData.notifications) }),
       map((r: BaseResponse<T>) => r.data),
       catchError((err: HttpErrorResponse) => {
+        const error = err.error as ServiceError | null
+        const displayMessage = error?.displayMessage ?? ''
         this.snackbarService.addMessage({
           type: 'error',
-          message: err.error?.displayMessage || 'Ein unerwarteter Fehler ist aufgetreten'
+          message: displayMessage === '' ? 'Ein unerwarteter Fehler ist aufgetreten' : displayMessage
         })
-        return throwError((): ServiceError => err.error)
+        return throwError(() => error)
       })
     )
   }
@@ -35,11 +37,11 @@ export abstract class BaseHttpService {
     return this.http.get<BaseResponse<T>>(url, options).pipe(this.getDefaultPipes<T>())
   }
 
-  protected post<T, D = object>(url: string, data: D, options?: HttpOptions): Observable<T> {
+  protected post<T>(url: string, data: object, options?: HttpOptions): Observable<T> {
     return this.http.post<BaseResponse<T>>(url, data, options).pipe(this.getDefaultPipes<T>())
   }
 
-  protected put<T, D = object>(url: string, data: D, options?: HttpOptions): Observable<T> {
+  protected put<T>(url: string, data: object, options?: HttpOptions): Observable<T> {
     return this.http.put<BaseResponse<T>>(url, data, options).pipe(this.getDefaultPipes<T>())
   }
 

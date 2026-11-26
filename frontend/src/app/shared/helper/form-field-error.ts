@@ -1,4 +1,5 @@
 import {AbstractControl} from '@angular/forms'
+import {ErrorStateMatcher} from '@angular/material/core'
 
 export function hasError(control?: AbstractControl | null, error?: string): boolean {
   if (!control || control.untouched || !control.errors) return false
@@ -8,4 +9,10 @@ export function hasError(control?: AbstractControl | null, error?: string): bool
     if (index !== 0) return false
   }
   return control.invalid
+}
+
+export function errorStateMatcher(isErrorState: ErrorStateMatcher['isErrorState']): ErrorStateMatcher {
+  const matcher = new ErrorStateMatcher()
+  matcher.isErrorState = isErrorState
+  return matcher
 }
