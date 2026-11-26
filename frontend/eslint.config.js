@@ -44,6 +44,7 @@ module.exports = tseslint.config(
       'eqeqeq': 'error',
       'no-console': 'error',
       'complexity': ['error', 10],
+      '@angular-eslint/prefer-signals': 'error',
       'no-restricted-syntax': [
         'error',
         {
