@@ -47,6 +47,13 @@ module.exports = tseslint.config(
     },
   },
   {
+    files: ['**/*.ts'],
+    ignores: ['**/*.spec.ts'],
+    rules: {
+      'max-lines': ['error', 300]
+    },
+  },
+  {
     files: ['**/*.html'],
     extends: [
       ...angular.configs.templateRecommended,
