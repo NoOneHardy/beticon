@@ -42,7 +42,8 @@ module.exports = tseslint.config(
       ],
       '@angular-eslint/no-input-rename': 'off',
       'eqeqeq': 'error',
-      'no-console': 'error'
+      'no-console': 'error',
+      'complexity': ['error', 10]
     },
   },
   {

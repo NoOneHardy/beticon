@@ -70,12 +70,19 @@ export class GroupViewComponent {
   }
 
   private getDefaultValues(game: BetGame): BetForm {
-    if (this.mode() === 'bet') return {
+    return this.mode() === 'bet' ? this.getBetDefaultValues(game) : this.getResultDefaultValues(game)
+  }
+
+  private getBetDefaultValues(game: BetGame): BetForm {
+    return {
       game: game.id,
       joker: game.bet?.joker ?? 1,
       scoreTeamHome: game.bet?.scoreTeamHome ?? null,
       scoreTeamGuest: game.bet?.scoreTeamGuest ?? null
     }
+  }
+
+  private getResultDefaultValues(game: BetGame): BetForm {
     return {
       game: game.id,
       joker: 1,
