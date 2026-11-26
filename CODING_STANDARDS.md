@@ -1,6 +1,6 @@
 # Coding Standards
 
-Rules reviewers (human or agent) check changes against. Subproject conventions in `service/CLAUDE.md` and `frontend/CLAUDE.md` apply as well.
+Rules reviewers (human or agent) check changes against. The conventions in `frontend/CLAUDE.md` apply as well.
 
 ## Comments
 
@@ -9,6 +9,11 @@ Rules reviewers (human or agent) check changes against. Subproject conventions i
 - If a comment is needed to tell two methods apart, rename them.
 
 ## Service (Java)
+
+### Layers
+
+- One controller per domain (`GameController`, `UserController`, `AdminController`, …). Business logic lives in service classes, not controllers.
+- API contracts expose DTOs, mapped from entities with MapStruct.
 
 ### DTOs
 
@@ -37,7 +42,7 @@ Rules reviewers (human or agent) check changes against. Subproject conventions i
 ### Domain types over loose values
 
 - Values that always travel together become one type (the home and guest goals are a `Scoreline`), and the rule that belongs to them lives on that type, not repeated at each call site.
-- Scoring rules live in the Scoring module (`model/game/Scoring`, `Scoreline`, `PointsBreakdown`) and nowhere else.
+- Scoring rules (point values, Joker multiplication, winner/tie/total checks) live in the Scoring module (`model/game/Scoring`, `Scoreline`, `PointsBreakdown`) and nowhere else.
 
 ### Refactors stay refactors
 

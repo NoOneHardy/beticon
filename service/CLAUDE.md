@@ -16,12 +16,9 @@ Run from the repo root:
 
 Requires a `.env` file (copy from `.env.example`); values override `application.properties`. Key settings: `jwt.secret`, database credentials, SMTP settings, `base.url` (frontend URL used in email links).
 
-## Conventions
+## Where things live
 
-- One controller per domain (GameController, UserController, AdminController, …); keep business logic in service classes, not controllers.
-- Always expose DTOs in API contracts, mapped from entities via MapStruct.
 - Exceptions are mapped to `ApiError` in `GlobalExceptionHandler` (exception/); `ApiResponseAdvice` (config/) wraps successful responses in the `BaseResponse` envelope.
 - Authentication: `JwtAuthenticationFilter` validates tokens.
-- Emails (verification/reset) are sent asynchronously.
-- Scoring rules (point values, Joker multiplication, winner/tie/total checks) live in the Scoring module in the game model (`model/game/Scoring`, `Scoreline`, `PointsBreakdown`); never re-implement them elsewhere.
+- Verification and password-reset emails: `MailService` (service/).
 - Helper classes: `DateHelper`, `StringHelper`, `ListHelper`.
