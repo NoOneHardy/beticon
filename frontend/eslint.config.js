@@ -9,12 +9,18 @@ module.exports = tseslint.config(
     files: ['**/*.ts'],
     extends: [
       eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
+      ...tseslint.configs.strictTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked,
       ...angular.configs.tsRecommended,
     ],
     plugins: {
       '@stylistic': stylistic
+    },
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.app.json', './tsconfig.spec.json'],
+        tsconfigRootDir: __dirname,
+      },
     },
     processor: angular.processInlineTemplates,
     rules: {
@@ -52,7 +58,9 @@ module.exports = tseslint.config(
           selector: 'Decorator > CallExpression[callee.name="Component"] > ObjectExpression > Property[key.name="changeDetection"]',
           message: 'Components keep the default OnPush change detection, so do not set changeDetection.',
         },
-      ]
+      ],
+      '@typescript-eslint/unbound-method': 'off',
+      '@typescript-eslint/no-deprecated': 'off'
     },
   },
   {
