@@ -54,3 +54,9 @@ _Avoid_: Correct game, perfect bet
 
 **Wasted Joker**:
 A Joker on a Bet that earned 0 Points. Counted per Bet, so a wasted ×3 Joker is one Wasted Joker.
+
+### Running a game
+
+**Host**:
+The person who runs a Beticon game for a group of players, usually as its admin. If a group plays for stakes, the Host collects and pays out the money outside the app.
+_Avoid_: Organiser, game master
