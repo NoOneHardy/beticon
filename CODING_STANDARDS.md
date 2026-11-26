@@ -8,6 +8,11 @@ Rules reviewers (human or agent) check changes against.
 - A comment sits on the code it explains, never on another method's behaviour.
 - If a comment is needed to tell two methods apart, rename them.
 
+## Lint and formatter rules
+
+- A new lint or formatter setting that changes the shape of existing code changes the house style. The PR lists each new shape with one before/after example.
+- Prefer the rule's options that keep the existing style over rewriting the code to fit the rule's defaults.
+
 ## Service (Java)
 
 ### Layers
