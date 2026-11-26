@@ -81,6 +81,7 @@ module.exports = tseslint.config(
         {allowBindToStyle: 'dynamic'}
       ],
       '@angular-eslint/template/prefer-template-literal': 'error',
+      '@angular-eslint/template/prefer-control-flow': 'error',
     },
   }
 );
