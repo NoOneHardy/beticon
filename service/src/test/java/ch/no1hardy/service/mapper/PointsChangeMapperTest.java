@@ -22,9 +22,9 @@ public class PointsChangeMapperTest {
 
         PointsChangeRes change = pointsChangeMapper.toPointsChange(user, 7);
 
-        assertEquals("user-1", change.getUserId());
-        assertEquals("alice", change.getUsername());
-        assertEquals(7, change.getOldPoints());
-        assertEquals(12, change.getNewPoints());
+        assertEquals("user-1", change.userId());
+        assertEquals("alice", change.username());
+        assertEquals(7, change.oldPoints());
+        assertEquals(12, change.newPoints());
     }
 }

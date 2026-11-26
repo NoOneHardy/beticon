@@ -38,11 +38,12 @@ public class UserControllerTest extends ApiTestBase {
                 .password("newsecurepassword")
                 .build();
 
-        UserRes res = new UserRes();
-        res.setId("user-id-123");
-        res.setUsername("No1HardyUpdated");
-        res.setFirstname("SilasUpdated");
-        res.setLastname("HardyUpdated");
+        UserRes res = UserRes.builder()
+                .id("user-id-123")
+                .username("No1HardyUpdated")
+                .firstname("SilasUpdated")
+                .lastname("HardyUpdated")
+                .build();
 
         when(userService.update(ArgumentMatchers.any(UserReq.class))).thenReturn(res);
 
@@ -108,8 +109,9 @@ public class UserControllerTest extends ApiTestBase {
     @Test
     @DisplayName("POST /login - parses the login request")
     void parsesLoginRequest() throws Exception {
-        UserRes user = new UserRes();
-        user.setId("user-1");
+        UserRes user = UserRes.builder()
+                .id("user-1")
+                .build();
         when(userService.login(any(LoginReq.class))).thenReturn(user);
         when(jwtService.generateJwtCookie(anyString())).thenReturn(new Cookie("jwt", "token"));
 

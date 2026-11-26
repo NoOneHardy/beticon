@@ -80,7 +80,7 @@ public class DashboardService {
                 .points(user.getPoints())
                 .percentage(groupService.getOverallPercentage(user))
                 .isConfirmed(isConfirmed)
-                .ranking(userLeaderboard.size() == 3 ? userLeaderboard.get(1).getRanking() : null)
+                .ranking(userLeaderboard.size() == 3 ? userLeaderboard.get(1).ranking() : null)
                 .build();
     }
 

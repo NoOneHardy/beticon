@@ -25,9 +25,9 @@ public class GlobalExceptionHandlerTest {
         ResponseEntity<ApiError> response500 = handler.handleApiException(exception);
         ApiError body = response500.getBody();
         assertNotNull(body);
-        assertEquals(500, body.getStatus());
-        assertEquals("Storage exception", body.getMessage());
-        assertEquals("display message", body.getDisplayMessage());
+        assertEquals(500, body.status());
+        assertEquals("Storage exception", body.message());
+        assertEquals("display message", body.displayMessage());
     }
 
     @Test
@@ -38,8 +38,8 @@ public class GlobalExceptionHandlerTest {
         ResponseEntity<ApiError> response500 = handler.handleApiException(exception);
         ApiError body = response500.getBody();
         assertNotNull(body);
-        assertEquals(400, body.getStatus());
-        assertEquals("Storage exception", body.getMessage());
-        assertEquals("display message", body.getDisplayMessage());
+        assertEquals(400, body.status());
+        assertEquals("Storage exception", body.message());
+        assertEquals("display message", body.displayMessage());
     }
 }

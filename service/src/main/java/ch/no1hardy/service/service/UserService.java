@@ -296,7 +296,7 @@ public class UserService {
      * @return the current user as UserRes DTO, or an empty UserRes if not authenticated.
      */
     public UserRes getCurrentUser() {
-        return authService.getLoggedInUser().map(mapper::toDto).orElse(new UserRes());
+        return authService.getLoggedInUser().map(mapper::toDto).orElse(UserRes.builder().build());
     }
 
     /**

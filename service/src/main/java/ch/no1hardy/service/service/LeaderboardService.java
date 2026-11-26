@@ -37,7 +37,7 @@ public class LeaderboardService {
                         .points(user.getPoints())
                         .username(user.getUsername())
                         .build()
-                ).sorted(Comparator.comparingInt(RankingRes::getRanking)).toList();
+                ).sorted(Comparator.comparingInt(RankingRes::ranking)).toList();
     }
 
     /**
@@ -70,7 +70,7 @@ public class LeaderboardService {
 
         for (int i = 0; i < leaderboard.size(); i++) {
             RankingRes pos = leaderboard.get(i);
-            if (pos.getId().equals(user.getId())) {
+            if (pos.id().equals(user.getId())) {
                 slimBoard[0] = i == 0 ? null : leaderboard.get(i - 1);
                 slimBoard[1] = pos;
                 slimBoard[2] = i == (leaderboard.size() - 1) ? null : leaderboard.get(i + 1);

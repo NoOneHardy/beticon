@@ -52,10 +52,10 @@ public class TeamServiceTest {
         );
 
         TeamRes res = teamService.create(req);
-        assertEquals("flag-1", res.getFlag());
-        assertEquals("Team 1", res.getName());
-        assertEquals("T1", res.getShortName());
-        assertEquals("team-1", res.getId());
+        assertEquals("flag-1", res.flag());
+        assertEquals("Team 1", res.name());
+        assertEquals("T1", res.shortName());
+        assertEquals("team-1", res.id());
     }
 
     @Test
@@ -83,8 +83,8 @@ public class TeamServiceTest {
 
         List<TeamRes> teams = teamService.list();
         assertEquals(2, teams.size());
-        assertEquals("Alpha", teams.getFirst().getName());
-        assertEquals("Zulu", teams.get(1).getName());
+        assertEquals("Alpha", teams.getFirst().name());
+        assertEquals("Zulu", teams.get(1).name());
     }
 
     @Test

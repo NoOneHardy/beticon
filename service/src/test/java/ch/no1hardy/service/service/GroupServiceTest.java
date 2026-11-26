@@ -115,9 +115,9 @@ public class GroupServiceTest {
 
         List<GroupOptionRes> options = service.listOptions();
         assertEquals(2, options.size());
-        assertEquals("group-1", options.getFirst().getId());
-        assertEquals("group-2", options.get(1).getId());
-        assertEquals("/cdn/knockout.png", options.get(1).getThumbnail());
+        assertEquals("group-1", options.getFirst().id());
+        assertEquals("group-2", options.get(1).id());
+        assertEquals("/cdn/knockout.png", options.get(1).thumbnail());
     }
 
     @Test

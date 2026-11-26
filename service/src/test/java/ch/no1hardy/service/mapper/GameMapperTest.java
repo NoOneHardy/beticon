@@ -43,30 +43,30 @@ public class GameMapperTest {
     @DisplayName("toDto(Bet) - should map points to null when the game has no result")
     void toDto01() {
         BetRes res = gameMapper.toDto(bet(2, 1, 2, null));
-        assertThat(res.getPoints()).isNull();
+        assertThat(res.points()).isNull();
     }
 
     @Test
     @DisplayName("toDto(Bet) - should map the awarded items, joker and total of a scored bet")
     void toDto02() {
         BetRes res = gameMapper.toDto(bet(2, 1, 2, result(2, 1)));
-        assertThat(res.getPoints().getCorrectWinner()).isEqualTo(5);
-        assertThat(res.getPoints().getCorrectGoalsHome()).isEqualTo(2);
-        assertThat(res.getPoints().getCorrectGoalsGuest()).isEqualTo(2);
-        assertThat(res.getPoints().getCorrectGoalsTotal()).isEqualTo(1);
-        assertThat(res.getPoints().getJoker()).isEqualTo(2);
-        assertThat(res.getPoints().getTotal()).isEqualTo(20);
+        assertThat(res.points().correctWinner()).isEqualTo(5);
+        assertThat(res.points().correctGoalsHome()).isEqualTo(2);
+        assertThat(res.points().correctGoalsGuest()).isEqualTo(2);
+        assertThat(res.points().correctGoalsTotal()).isEqualTo(1);
+        assertThat(res.points().joker()).isEqualTo(2);
+        assertThat(res.points().total()).isEqualTo(20);
     }
 
     @Test
     @DisplayName("toDto(Bet) - should map items that are not awarded to null and send the joker as-is")
     void toDto03() {
         BetRes res = gameMapper.toDto(bet(3, 0, 1, result(1, 0)));
-        assertThat(res.getPoints().getCorrectWinner()).isEqualTo(5);
-        assertThat(res.getPoints().getCorrectGoalsHome()).isNull();
-        assertThat(res.getPoints().getCorrectGoalsGuest()).isEqualTo(2);
-        assertThat(res.getPoints().getCorrectGoalsTotal()).isNull();
-        assertThat(res.getPoints().getJoker()).isEqualTo(1);
-        assertThat(res.getPoints().getTotal()).isEqualTo(7);
+        assertThat(res.points().correctWinner()).isEqualTo(5);
+        assertThat(res.points().correctGoalsHome()).isNull();
+        assertThat(res.points().correctGoalsGuest()).isEqualTo(2);
+        assertThat(res.points().correctGoalsTotal()).isNull();
+        assertThat(res.points().joker()).isEqualTo(1);
+        assertThat(res.points().total()).isEqualTo(7);
     }
 }

@@ -158,7 +158,7 @@ public class RescoreEverythingTest {
     }
 
     private PointsChangeRes changeOf(List<PointsChangeRes> changes, User user) {
-        return changes.stream().filter(c -> c.getUserId().equals(user.getId())).findFirst().orElse(null);
+        return changes.stream().filter(c -> c.userId().equals(user.getId())).findFirst().orElse(null);
     }
 
     @Test
@@ -184,12 +184,12 @@ public class RescoreEverythingTest {
         List<PointsChangeRes> changes = adminService.rescoreEverything();
 
         PointsChangeRes drifted = changeOf(changes, driftedUser);
-        assertEquals(driftedUser.getUsername(), drifted.getUsername());
-        assertEquals(123, drifted.getOldPoints());
-        assertEquals(10, drifted.getNewPoints());
+        assertEquals(driftedUser.getUsername(), drifted.username());
+        assertEquals(123, drifted.oldPoints());
+        assertEquals(10, drifted.newPoints());
         PointsChangeRes idle = changeOf(changes, idleUser);
-        assertEquals(5, idle.getOldPoints());
-        assertEquals(0, idle.getNewPoints());
+        assertEquals(5, idle.oldPoints());
+        assertEquals(0, idle.newPoints());
         assertNull(changeOf(changes, untouchedUser));
     }
 

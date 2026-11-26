@@ -29,11 +29,7 @@ public class GroupControllerTest extends ApiTestBase {
     @WithMockUser
     @DisplayName("GET /group/{id} - sends the joker quota under the glossary property names")
     void sendsJokerQuotaPropertyNames() throws Exception {
-        JokerQuota jokerQuota = new JokerQuota();
-        jokerQuota.setRemainingDoubleJokers(2);
-        jokerQuota.setRemainingTripleJokers(1);
-        jokerQuota.setDoubleJokerLimit(10);
-        jokerQuota.setTripleJokerLimit(6);
+        JokerQuota jokerQuota = new JokerQuota(2, 1, 10, 6);
         when(groupService.getGroup("group-a")).thenReturn(GroupRes.builder()
                 .id("group-a")
                 .jokerQuota(jokerQuota)
