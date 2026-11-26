@@ -76,6 +76,10 @@ module.exports = tseslint.config(
       '@angular-eslint/template/prefer-at-else': 'error',
       '@angular-eslint/template/prefer-contextual-for-variables': 'error',
       '@angular-eslint/template/prefer-self-closing-tags': 'error',
+      '@angular-eslint/template/no-inline-styles': [
+        'error',
+        {allowBindToStyle: 'dynamic'}
+      ],
     },
   }
 );
