@@ -64,6 +64,7 @@ module.exports = tseslint.config(
       '@angular-eslint/inject-at-top': 'error',
       '@angular-eslint/no-uncalled-signals': 'error',
       '@angular-eslint/prefer-signal-model': 'error',
+      '@angular-eslint/no-implicit-take-until-destroyed': 'error',
       '@typescript-eslint/no-extraneous-class': [
         'error',
         {allowWithDecorator: true}
