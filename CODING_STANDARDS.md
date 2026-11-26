@@ -1,6 +1,6 @@
 # Coding Standards
 
-Rules reviewers (human or agent) check changes against. The conventions in `frontend/CLAUDE.md` apply as well.
+Rules reviewers (human or agent) check changes against.
 
 ## Comments
 
@@ -53,3 +53,10 @@ Rules reviewers (human or agent) check changes against. The conventions in `fron
 ### Tests
 
 - Tests are written first, integration tests included. Each new test is seen failing for the reason it claims before it is made green.
+
+## Frontend (Angular)
+
+- Components are standalone, and their selectors use the `bet-` prefix in kebab-case (e.g. `bet-dashboard`).
+- Business logic goes in `@Injectable()` services. Models live in `shared/model/` or a feature-specific `model/` folder.
+- Components use the default OnPush change detection (the Angular 22 default), so there is no `changeDetection` override. State is held in signals (`signal()`, `input()`, `computed()`, `store.selectSignal`, `toSignal`), not plain fields.
+- Styles are SCSS, scoped to the component; Material theming goes in `theming.scss`.

@@ -24,13 +24,6 @@ Tests use Vitest + jsdom via the Angular `unit-test` builder. Coverage is not co
 
 Feature routes are lazy-loaded via `loadComponent` in `app.routes.ts`. App config is in `app.config.ts`; the API base URL is set by an HTTP interceptor. No `.env` is needed.
 
-## Conventions
-
-- Components are standalone, selectors use the `bet-` prefix in kebab-case (e.g. `bet-dashboard`).
-- Business logic goes in `@Injectable()` services; models in `shared/model/` or a feature-specific `model/` folder.
-- All components use the default OnPush change detection (Angular 22 default; no `changeDetection` override). Hold state in signals (`signal()`, `input()`, `computed()`, `store.selectSignal`, `toSignal`) rather than plain fields.
-- Styling is SCSS (`theming.scss` for Material theming, component-scoped styles).
-
 ## Code quality
 
 ESLint (`eslint.config.js`) enforces: 2-space indentation, single quotes (template literals allowed), no semicolons, `bet-` kebab-case selectors, warn on unused variables (except `_`-prefixed), Angular rules (e.g. no input renaming). TypeScript is in strict mode.
