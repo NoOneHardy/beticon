@@ -56,7 +56,9 @@ public abstract class StorageUtils {
             Files.createDirectories(path);
             return path;
         } catch (Exception e) {
-            throw new StorageException("Could not initialize directory " + dir, "Fehler beim Erstellen des Verzeichnisses.");
+            throw new StorageException(
+                    "Could not initialize directory " + dir, "Fehler beim Erstellen des Verzeichnisses."
+            );
         }
     }
 }

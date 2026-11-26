@@ -1,6 +1,5 @@
 package ch.no1hardy.service.front.game;
 
-
 public record BetRes(
         String id,
         String gameId,

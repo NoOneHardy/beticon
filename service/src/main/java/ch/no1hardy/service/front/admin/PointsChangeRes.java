@@ -1,6 +1,5 @@
 package ch.no1hardy.service.front.admin;
 
-
 /**
  * A user whose total Points changed during "re-score everything".
  */

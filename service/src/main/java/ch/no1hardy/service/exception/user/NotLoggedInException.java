@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class NotLoggedInException extends ApiException {
-  private final HttpStatus status = HttpStatus.UNAUTHORIZED;
+    private final HttpStatus status = HttpStatus.UNAUTHORIZED;
 
     public NotLoggedInException() {
         super("Not logged in", "Du bist nicht eingeloggt");

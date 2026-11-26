@@ -69,7 +69,10 @@ public class GameService {
         try {
             notificationService.notifyUsersRankingChange();
         } catch (RuntimeException e) {
-            log.error("Result of game {} is saved, but notifying the users about their ranking change failed", game.getId(), e);
+            log.error(
+                    "Result of game {} is saved, but notifying the users about their ranking change failed",
+                    game.getId(), e
+            );
         }
     }
 
@@ -83,7 +86,8 @@ public class GameService {
      * @throws NotFoundException    if the game with the given ID does not exist
      * @throws NotLoggedInException if the user is not logged in
      */
-    public BetGameRes uploadBet(@NotNull String id, @NotNull BetReq dto) throws BetPlaceException, NotFoundException, NotLoggedInException {
+    public BetGameRes uploadBet(@NotNull String id, @NotNull BetReq dto)
+            throws BetPlaceException, NotFoundException, NotLoggedInException {
         Game game = repository.findById(id).orElse(null);
         User user = authService.getLoggedInUser().orElseThrow(NotLoggedInException::new);
         if (game == null) throw new NotFoundException("Game " + id + " not found", "Spiel '" + id + "' nicht gefunden");
@@ -93,7 +97,10 @@ public class GameService {
         }
 
         if (game.getGroup().getIsKnockout() && dto.isTie()) {
-            throw new KnockoutTieException("Game " + id + " is in a knockout group and cannot end in a tie", "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden");
+            throw new KnockoutTieException(
+                    "Game " + id + " is in a knockout group and cannot end in a tie",
+                    "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden"
+            );
         }
 
         if (DateHelper.isBeforeNow(game.getTimestamp()) || game.getResult() != null || !dto.isValid()) {

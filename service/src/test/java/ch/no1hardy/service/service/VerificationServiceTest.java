@@ -110,7 +110,9 @@ public class VerificationServiceTest {
     @DisplayName("verifyCode(Optional<VerificationCode>, VerificationReq) - should throw exception for empty optional")
     public void verifyCode04() {
         VerificationReq req = new VerifyEmailReq("some-code");
-        VerificationException exception = assertThrows(VerificationException.class, () -> verificationService.verifyCode(Optional.empty(), req));
+        VerificationException exception = assertThrows(
+                VerificationException.class, () -> verificationService.verifyCode(Optional.empty(), req)
+        );
         assertEquals("Invalid verification code", exception.getMessage());
     }
 
@@ -119,7 +121,9 @@ public class VerificationServiceTest {
     public void verifyCode05() {
         VerificationCode code = new VerificationCode();
         VerificationReq req = new VerifyEmailReq("some-code");
-        VerificationException exception = assertThrows(VerificationException.class, () -> verificationService.verifyCode(Optional.of(code), req));
+        VerificationException exception = assertThrows(
+                VerificationException.class, () -> verificationService.verifyCode(Optional.of(code), req)
+        );
         assertEquals("Invalid verification code", exception.getMessage());
     }
 

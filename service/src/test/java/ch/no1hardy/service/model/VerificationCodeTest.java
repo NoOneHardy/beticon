@@ -42,7 +42,9 @@ public class VerificationCodeTest {
     @DisplayName("VerificationCode(VerificationCodeType, User) - should set default expiration time to 10 minutes")
     void VerificationCode04() {
         User user = new User();
-        TestUtils.checkTime(() -> new VerificationCode(VerificationCodeType.EMAIL, user), VerificationCode::getExpiresAt, true, 10);
+        TestUtils.checkTime(
+                () -> new VerificationCode(VerificationCodeType.EMAIL, user), VerificationCode::getExpiresAt, true, 10
+        );
     }
 
     @Test
@@ -65,7 +67,10 @@ public class VerificationCodeTest {
         LocalDateTime end = LocalDateTime.now();
 
         assertNotNull(code.getExpiresAt());
-        assertTrue(DateHelper.isBetween(code.getExpiresAt(), start.plusMinutes(validMinutes), end.plusMinutes(validMinutes)));
+        assertTrue(
+                DateHelper
+                        .isBetween(code.getExpiresAt(), start.plusMinutes(validMinutes), end.plusMinutes(validMinutes))
+        );
     }
 
     @Test

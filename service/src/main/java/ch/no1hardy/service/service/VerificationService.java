@@ -37,7 +37,9 @@ public class VerificationService {
     public boolean verifyCode(Optional<VerificationCode> code, VerificationReq req) {
         return code.map(c -> verifyCode(c, req))
                 .filter(Boolean::booleanValue)
-                .orElseThrow(() -> new VerificationException("Invalid verification code", "Ungültiger Verifizierungscode"));
+                .orElseThrow(
+                        () -> new VerificationException("Invalid verification code", "Ungültiger Verifizierungscode")
+                );
     }
 
     public boolean verifyCode(VerificationCode code, VerificationReq req) {

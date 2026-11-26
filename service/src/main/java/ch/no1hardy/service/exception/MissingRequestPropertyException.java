@@ -14,6 +14,9 @@ public class MissingRequestPropertyException extends ApiException {
     private final HttpStatus status = HttpStatus.BAD_REQUEST;
 
     public MissingRequestPropertyException(String property, String type) {
-        super("Request body is missing property '" + property + "' of type '" + type + "'", "Die Anfrage benötigt das Property '" + property + "'");
+        super(
+                "Request body is missing property '" + property + "' of type '" + type + "'",
+                "Die Anfrage benötigt das Property '" + property + "'"
+        );
     }
 }

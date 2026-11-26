@@ -136,13 +136,15 @@ public class NotificationService {
                 game.getTeamHome().getName()
         );
 
-        repository.save(Notification.builder()
-                .type(NotificationType.NEW_GAME)
-                .title("Neues Spiel!")
-                .content(content)
-                .route("/bets/" + game.getGroup().getId() + "/" + game.getId())
-                .user(user)
-                .build());
+        repository.save(
+                Notification.builder()
+                        .type(NotificationType.NEW_GAME)
+                        .title("Neues Spiel!")
+                        .content(content)
+                        .route("/bets/" + game.getGroup().getId() + "/" + game.getId())
+                        .user(user)
+                        .build()
+        );
     }
 
     /**
@@ -162,13 +164,15 @@ public class NotificationService {
                 game.getTeamGuest().getName()
         );
 
-        repository.save(Notification.builder()
-                .type(NotificationType.NEW_RESULT)
-                .title("Resultat verfügbar")
-                .content(content)
-                .route("/bets/" + game.getGroup().getId() + "/" + game.getId())
-                .user(user)
-                .build());
+        repository.save(
+                Notification.builder()
+                        .type(NotificationType.NEW_RESULT)
+                        .title("Resultat verfügbar")
+                        .content(content)
+                        .route("/bets/" + game.getGroup().getId() + "/" + game.getId())
+                        .user(user)
+                        .build()
+        );
     }
 
     /**
@@ -196,13 +200,15 @@ public class NotificationService {
         else content.append("abgestiegen");
         content.append(".");
 
-        repository.save(Notification.builder()
-                .type(NotificationType.RANKING_UPDATE)
-                .title(movement > 0 ? "Aufstieg!" : "Abstieg!")
-                .content(content.toString())
-                .route("/leaderboard")
-                .user(user)
-                .build());
+        repository.save(
+                Notification.builder()
+                        .type(NotificationType.RANKING_UPDATE)
+                        .title(movement > 0 ? "Aufstieg!" : "Abstieg!")
+                        .content(content.toString())
+                        .route("/leaderboard")
+                        .user(user)
+                        .build()
+        );
     }
 
     /**
@@ -213,13 +219,15 @@ public class NotificationService {
      * @param user the user to notify
      */
     public void createApprovalNotification(@NotNull User user) {
-        repository.save(Notification.builder()
-                .type(NotificationType.APPROVAL)
-                .title("Anfrage genehmigt")
-                .content("Dein Account wurde freigeschaltet. Du bist nun auch in der Rangliste.")
-                .route("/leaderboard")
-                .user(user)
-                .build());
+        repository.save(
+                Notification.builder()
+                        .type(NotificationType.APPROVAL)
+                        .title("Anfrage genehmigt")
+                        .content("Dein Account wurde freigeschaltet. Du bist nun auch in der Rangliste.")
+                        .route("/leaderboard")
+                        .user(user)
+                        .build()
+        );
     }
 
     /**
@@ -230,12 +238,16 @@ public class NotificationService {
      * @param user the user to notify
      */
     public void createRejectionNotification(@NotNull User user) {
-        repository.save(Notification.builder()
-                .type(NotificationType.REJECTION)
-                .title("Anfrage abgelehnt")
-                .content("Dein Account wurde abgelehnt. Sollte dies ein Fehler sein, kontaktiere bitte einen Admin oder lies dir die Teilnahmebedingungen erneut durch.")
-                .route("/leaderboard")
-                .user(user)
-                .build());
+        repository.save(
+                Notification.builder()
+                        .type(NotificationType.REJECTION)
+                        .title("Anfrage abgelehnt")
+                        .content(
+                                "Dein Account wurde abgelehnt. Sollte dies ein Fehler sein, kontaktiere bitte einen Admin oder lies dir die Teilnahmebedingungen erneut durch."
+                        )
+                        .route("/leaderboard")
+                        .user(user)
+                        .build()
+        );
     }
 }

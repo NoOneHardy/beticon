@@ -19,7 +19,7 @@ public class GameTest {
     }
 
     @Test
-    void  shouldReturnWhetherIsInKnockoutGroup() {
+    void shouldReturnWhetherIsInKnockoutGroup() {
         Group group = new Group();
         group.setIsKnockout(true);
         game.setGroup(group);

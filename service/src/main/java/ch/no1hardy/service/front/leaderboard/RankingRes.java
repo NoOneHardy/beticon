@@ -1,6 +1,5 @@
 package ch.no1hardy.service.front.leaderboard;
 
-
 public record RankingRes(
         String id,
         String username,

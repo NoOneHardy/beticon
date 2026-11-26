@@ -17,7 +17,9 @@ public abstract class TestUtils {
         }
     }
 
-    public static <T> void checkTime(Supplier<T> callBack, Function<T, LocalDateTime> checkDate, boolean expectedResult, int offsetMinutes) {
+    public static <T> void checkTime(
+            Supplier<T> callBack, Function<T, LocalDateTime> checkDate, boolean expectedResult, int offsetMinutes
+    ) {
         LocalDateTime before = LocalDateTime.now();
         T result = callBack.get();
         LocalDateTime after = LocalDateTime.now();
@@ -38,7 +40,9 @@ public abstract class TestUtils {
      * @param expectedResult the expected result of the check
      * @return the time before and after the callback execution
      */
-    public static CheckTimeResult checkTime(Runnable callBack, Supplier<LocalDateTime> checkDate, boolean expectedResult) {
+    public static CheckTimeResult checkTime(
+            Runnable callBack, Supplier<LocalDateTime> checkDate, boolean expectedResult
+    ) {
         return checkTime(callBack, checkDate, expectedResult, 0);
     }
 
@@ -51,7 +55,9 @@ public abstract class TestUtils {
      * @param offsetMinutes  offset in minutes to adjust the check range
      * @return the time before and after the callback execution
      */
-    public static CheckTimeResult checkTime(Runnable callBack, Supplier<LocalDateTime> checkDate, boolean expectedResult, int offsetMinutes) {
+    public static CheckTimeResult checkTime(
+            Runnable callBack, Supplier<LocalDateTime> checkDate, boolean expectedResult, int offsetMinutes
+    ) {
         LocalDateTime before = LocalDateTime.now();
         callBack.run();
         LocalDateTime after = LocalDateTime.now();
@@ -69,12 +75,16 @@ public abstract class TestUtils {
         checkTimeByResult(date, result, expectedResult, 0);
     }
 
-    public static void checkTimeByResult(LocalDateTime date, CheckTimeResult result, boolean expectedResult, int offsetMinutes) {
-        assertEquals(expectedResult, DateHelper.isBetween(
-                date,
-                result.before().plusMinutes(offsetMinutes),
-                result.after().plusMinutes(offsetMinutes)
-        ));
+    public static void checkTimeByResult(
+            LocalDateTime date, CheckTimeResult result, boolean expectedResult, int offsetMinutes
+    ) {
+        assertEquals(
+                expectedResult, DateHelper.isBetween(
+                        date,
+                        result.before().plusMinutes(offsetMinutes),
+                        result.after().plusMinutes(offsetMinutes)
+                )
+        );
     }
 
     public record CheckTimeResult(LocalDateTime before, LocalDateTime after) {

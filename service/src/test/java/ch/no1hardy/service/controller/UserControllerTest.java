@@ -37,7 +37,8 @@ public class UserControllerTest extends ApiTestBase {
                 "SilasUpdated",
                 "HardyUpdated",
                 null,
-                null);
+                null
+        );
 
         UserRes res = new UserRes(
                 "user-id-123",
@@ -51,13 +52,16 @@ public class UserControllerTest extends ApiTestBase {
                 null,
                 null,
                 null,
-                null);
+                null
+        );
 
         when(userService.update(ArgumentMatchers.any(UserReq.class))).thenReturn(res);
 
-        mockMvc.perform(put("/user/me")
+        mockMvc.perform(
+                put("/user/me")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                        .content(objectMapper.writeValueAsString(dto))
+        )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value("user-id-123"))
                 .andExpect(jsonPath("$.data.username").value("No1HardyUpdated"))
@@ -78,9 +82,11 @@ public class UserControllerTest extends ApiTestBase {
     void shouldRejectWhenNotAuthenticated() throws Exception {
         UserReq dto = new UserReq("No1HardyUpdated", null, null, null, null, null, null);
 
-        mockMvc.perform(put("/user/me")
+        mockMvc.perform(
+                put("/user/me")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+                        .content(objectMapper.writeValueAsString(dto))
+        )
                 .andExpect(status().is4xxClientError());
 
         Mockito.verify(userService, Mockito.never()).update(ArgumentMatchers.any(UserReq.class));
@@ -89,7 +95,8 @@ public class UserControllerTest extends ApiTestBase {
     @Test
     @DisplayName("POST /signup - parses the sign-up request")
     void parsesSignupRequest() throws Exception {
-        mockMvc.perform(post("/signup")
+        mockMvc.perform(
+                post("/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -99,7 +106,8 @@ public class UserControllerTest extends ApiTestBase {
                                   "lastname": "Tester",
                                   "password": "secret-password"
                                 }
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<UserReq> captor = ArgumentCaptor.forClass(UserReq.class);
@@ -119,11 +127,13 @@ public class UserControllerTest extends ApiTestBase {
         when(userService.login(any(LoginReq.class))).thenReturn(user);
         when(jwtService.generateJwtCookie(anyString())).thenReturn(new Cookie("jwt", "token"));
 
-        mockMvc.perform(post("/login")
+        mockMvc.perform(
+                post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"username": "no1hardy", "password": "secret-password"}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<LoginReq> captor = ArgumentCaptor.forClass(LoginReq.class);
@@ -136,7 +146,8 @@ public class UserControllerTest extends ApiTestBase {
     @WithMockUser
     @DisplayName("PUT /user/me - parses the update request sent by the profile page, ignoring its id")
     void parsesProfileUpdateRequest() throws Exception {
-        mockMvc.perform(put("/user/me")
+        mockMvc.perform(
+                put("/user/me")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -145,7 +156,8 @@ public class UserControllerTest extends ApiTestBase {
                                   "email": "hardy@example.com",
                                   "passwordChange": {"password": "new-password", "currentPassword": "old-password"}
                                 }
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<UserReq> captor = ArgumentCaptor.forClass(UserReq.class);
@@ -160,11 +172,13 @@ public class UserControllerTest extends ApiTestBase {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("PUT /user/{id} - parses the admin update request")
     void parsesAdminUpdateRequest() throws Exception {
-        mockMvc.perform(put("/user/user-1")
+        mockMvc.perform(
+                put("/user/user-1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"username": "no1hardy", "firstname": "Hardy", "lastname": "Tester"}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<UserReq> captor = ArgumentCaptor.forClass(UserReq.class);
@@ -178,11 +192,13 @@ public class UserControllerTest extends ApiTestBase {
     @Test
     @DisplayName("POST /user/confirm - parses the email verification request")
     void parsesVerifyEmailRequest() throws Exception {
-        mockMvc.perform(post("/user/confirm")
+        mockMvc.perform(
+                post("/user/confirm")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"code": "verify-code"}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         verify(userService).verifyEmail(new VerifyEmailReq("verify-code"));
@@ -191,11 +207,13 @@ public class UserControllerTest extends ApiTestBase {
     @Test
     @DisplayName("PUT /user/password-reset - parses the password reset request")
     void parsesResetPasswordRequest() throws Exception {
-        mockMvc.perform(put("/user/password-reset")
+        mockMvc.perform(
+                put("/user/password-reset")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"newPassword": "new-password", "code": "reset-code"}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         verify(userService).resetPassword(new ResetPasswordReq("reset-code", "new-password"));

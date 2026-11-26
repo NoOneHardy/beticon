@@ -252,9 +252,10 @@ public class ResultEntryTest {
         // The old loop stopped at the first Bet updated after the Result's creation time,
         // so a late Bet sitting first in the Game's Bets left every Bet's Points in the totals on removal.
         Bet lateBet = firstBetOfGame();
-        LocalDateTime resultCreatedAt = transaction.execute(status ->
-                gameRepository.findById(game.getId()).orElseThrow().getResult().getCreatedAt());
-        jdbcTemplate.update("update bet set updated_at = ? where id = ?", resultCreatedAt.plusMinutes(1), lateBet.getId());
+        LocalDateTime resultCreatedAt = transaction
+                .execute(status -> gameRepository.findById(game.getId()).orElseThrow().getResult().getCreatedAt());
+        jdbcTemplate
+                .update("update bet set updated_at = ? where id = ?", resultCreatedAt.plusMinutes(1), lateBet.getId());
         assertTrue(betRepository.findById(lateBet.getId()).orElseThrow().getUpdatedAt().isAfter(resultCreatedAt));
         assertEquals(lateBet.getId(), firstBetOfGame().getId());
 

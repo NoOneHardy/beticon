@@ -32,6 +32,7 @@ public interface ScoreReq {
         if (isNull()) return null;
         return new Scoreline(
                 scoreTeamHome() == null ? 0 : scoreTeamHome(),
-                scoreTeamGuest() == null ? 0 : scoreTeamGuest());
+                scoreTeamGuest() == null ? 0 : scoreTeamGuest()
+        );
     }
 }

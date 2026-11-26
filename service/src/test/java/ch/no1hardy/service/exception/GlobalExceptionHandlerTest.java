@@ -33,7 +33,9 @@ public class GlobalExceptionHandlerTest {
     @Test
     @DisplayName("should return storage exception with custom status as api error response")
     public void storageException02() {
-        StorageException exception = new StorageException("Storage exception", "display message", HttpStatus.BAD_REQUEST);
+        StorageException exception = new StorageException(
+                "Storage exception", "display message", HttpStatus.BAD_REQUEST
+        );
 
         ResponseEntity<ApiError> response500 = handler.handleApiException(exception);
         ApiError body = response500.getBody();

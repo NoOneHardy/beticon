@@ -66,13 +66,13 @@ public class PreferencesService {
     public List<NotificationPreference> ensureNotificationPrefs(@NotNull User user) {
         List<NotificationPreferenceKey> keys = preferenceKeyProvider.getNotificationPreferenceKeys();
 
-        List<NotificationPreference> existingPrefs = keys.stream().map(key -> notificationPreferenceRepository
-                .findByUserAndChannelAndType(user, key.channel(), key.type())
+        List<NotificationPreference> existingPrefs = keys.stream().map(
+                key -> notificationPreferenceRepository
+                        .findByUserAndChannelAndType(user, key.channel(), key.type())
         ).filter(Optional::isPresent).map(Optional::get).toList();
         List<NotificationPreference> prefs = new ArrayList<>(existingPrefs);
 
         if (prefs.size() == keys.size()) return prefs;
-
 
         Set<NotificationPreferenceKey> existingKeys = prefs.stream()
                 .map(p -> new NotificationPreferenceKey(p.getChannel(), p.getType()))
@@ -99,7 +99,9 @@ public class PreferencesService {
      * @param type    the notification type
      * @return true if the notification is disabled, false otherwise
      */
-    public boolean hasDisabledNotification(@NotNull User user, @NotNull Channel channel, @NotNull NotificationType type) {
+    public boolean hasDisabledNotification(
+            @NotNull User user, @NotNull Channel channel, @NotNull NotificationType type
+    ) {
         return getNotificationPrefsRaw(user).stream()
                 .filter(pref -> pref.getChannel().equals(channel) && pref.getType().equals(type))
                 .findFirst()
@@ -114,13 +116,16 @@ public class PreferencesService {
      * @return the updated list of notification preference DTOs wrapped in an Optional
      */
     public Optional<List<NotificationPreferenceRes>> updateNotificationPrefs(List<NotificationPreferenceReq> prefs) {
-        getNotificationPrefsRaw().ifPresent(existingPrefs ->
-                prefs.forEach(req -> existingPrefs.stream()    // loop over incoming prefs
-                        .filter(ep -> ep.compareToReq(req)).findFirst() // find matching existing pref
-                        .ifPresent(ep -> {                        // update and save
-                            ep.setSelected(req.selected());
-                            notificationPreferenceRepository.save(ep);
-                        })));
+        getNotificationPrefsRaw().ifPresent(
+                existingPrefs -> prefs.forEach(
+                        req -> existingPrefs.stream() // loop over incoming prefs
+                                .filter(ep -> ep.compareToReq(req)).findFirst() // find matching existing pref
+                                .ifPresent(ep -> { // update and save
+                                    ep.setSelected(req.selected());
+                                    notificationPreferenceRepository.save(ep);
+                                })
+                )
+        );
         return getNotificationPrefs();
     }
 }

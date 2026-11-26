@@ -29,13 +29,15 @@ public class LeaderboardService {
         List<Integer> previous = calculateLeaderboard(User::getLastReviewedPoints);
 
         return userService.listConfirmedRaw().stream()
-                .map(user -> new RankingRes(
-                        user.getId(),
-                        user.getUsername(),
-                        user.getAvatarUrl(),
-                        user.getPoints(),
-                        previous.indexOf(user.getLastReviewedPoints()) + 1,
-                        current.indexOf(user.getPoints()) + 1)
+                .map(
+                        user -> new RankingRes(
+                                user.getId(),
+                                user.getUsername(),
+                                user.getAvatarUrl(),
+                                user.getPoints(),
+                                previous.indexOf(user.getLastReviewedPoints()) + 1,
+                                current.indexOf(user.getPoints()) + 1
+                        )
                 ).sorted(Comparator.comparingInt(RankingRes::ranking)).toList();
     }
 

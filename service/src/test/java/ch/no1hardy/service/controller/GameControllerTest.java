@@ -23,7 +23,8 @@ public class GameControllerTest extends ApiTestBase {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("POST /game - parses the create game request sent by the admin frontend")
     void parsesCreateGameRequest() throws Exception {
-        mockMvc.perform(post("/game")
+        mockMvc.perform(
+                post("/game")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -32,7 +33,8 @@ public class GameControllerTest extends ApiTestBase {
                                   "teamHome": "team-sui",
                                   "teamGuest": "team-ger"
                                 }
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<GameReq> captor = ArgumentCaptor.forClass(GameReq.class);
@@ -48,11 +50,13 @@ public class GameControllerTest extends ApiTestBase {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("PUT /game/{id}/result - parses the result request")
     void parsesResultRequest() throws Exception {
-        mockMvc.perform(put("/game/game-1/result")
+        mockMvc.perform(
+                put("/game/game-1/result")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"game": "game-1", "scoreTeamHome": 2, "scoreTeamGuest": 1}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<ResultReq> captor = ArgumentCaptor.forClass(ResultReq.class);
@@ -67,11 +71,13 @@ public class GameControllerTest extends ApiTestBase {
     @WithMockUser
     @DisplayName("PUT /game/{id}/bet - parses the bet request")
     void parsesBetRequest() throws Exception {
-        mockMvc.perform(put("/game/game-1/bet")
+        mockMvc.perform(
+                put("/game/game-1/bet")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"game": "game-1", "scoreTeamHome": 0, "scoreTeamGuest": 3, "joker": 2}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<BetReq> captor = ArgumentCaptor.forClass(BetReq.class);

@@ -30,16 +30,19 @@ public class GroupControllerTest extends ApiTestBase {
     @DisplayName("GET /group/{id} - sends the joker quota under the glossary property names")
     void sendsJokerQuotaPropertyNames() throws Exception {
         JokerQuota jokerQuota = new JokerQuota(2, 1, 10, 6);
-        when(groupService.getGroup("group-a")).thenReturn(new GroupRes(
-                "group-a",
-                null,
-                null,
-                null,
-                null,
-                null,
-                jokerQuota,
-                null,
-                null));
+        when(groupService.getGroup("group-a")).thenReturn(
+                new GroupRes(
+                        "group-a",
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        jokerQuota,
+                        null,
+                        null
+                )
+        );
 
         mockMvc.perform(get("/group/group-a"))
                 .andExpect(status().isOk())
@@ -54,11 +57,13 @@ public class GroupControllerTest extends ApiTestBase {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("POST /group - parses the create group request sent by the admin frontend")
     void parsesCreateGroupRequest() throws Exception {
-        mockMvc.perform(post("/group")
+        mockMvc.perform(
+                post("/group")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name": "Gruppe A", "isKnockout": true, "order": 3, "thumbnail": null}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<GroupReq> captor = ArgumentCaptor.forClass(GroupReq.class);
@@ -74,14 +79,16 @@ public class GroupControllerTest extends ApiTestBase {
     @WithMockUser
     @DisplayName("PUT /group/{id}/bets - parses the list of bets sent by the group view")
     void parsesBetListRequest() throws Exception {
-        mockMvc.perform(put("/group/group-a/bets")
+        mockMvc.perform(
+                put("/group/group-a/bets")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 [
                                   {"game": "game-1", "scoreTeamHome": 1, "scoreTeamGuest": 1, "joker": 3},
                                   {"game": "game-2", "scoreTeamHome": null, "scoreTeamGuest": null, "joker": 1}
                                 ]
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         @SuppressWarnings("unchecked")
@@ -103,11 +110,13 @@ public class GroupControllerTest extends ApiTestBase {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("PUT /group/{id}/results - parses the list of results sent by the group view")
     void parsesResultListRequest() throws Exception {
-        mockMvc.perform(put("/group/group-a/results")
+        mockMvc.perform(
+                put("/group/group-a/results")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 [{"game": "game-1", "scoreTeamHome": 4, "scoreTeamGuest": 2}]
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         @SuppressWarnings("unchecked")

@@ -24,7 +24,8 @@ public class ScorelinePersistenceTest {
     /** Saves the Result and returns the property paths the persistence layer rejected it for. */
     private Set<String> rejectedPaths(Score result) {
         Throwable cause = assertThrows(RuntimeException.class, () -> repository.save(result));
-        while (cause != null && !(cause instanceof ConstraintViolationException)) cause = cause.getCause();
+        while (cause != null && !(cause instanceof ConstraintViolationException))
+            cause = cause.getCause();
         assertNotNull(cause, "expected the save to be rejected by bean validation");
 
         return ((ConstraintViolationException) cause).getConstraintViolations().stream()

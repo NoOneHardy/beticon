@@ -56,7 +56,10 @@ public class ResultEntryService {
         if (!dto.isValid()) return new ResultEntry(game, mapper.toDto(game), false);
 
         if (!dto.isNull() && game.getGroup().getIsKnockout() && dto.isTie()) {
-            throw new KnockoutTieException("Game " + id + " is in a knockout group and cannot end in a tie", "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden");
+            throw new KnockoutTieException(
+                    "Game " + id + " is in a knockout group and cannot end in a tie",
+                    "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden"
+            );
         }
 
         removeExistingResult(game);

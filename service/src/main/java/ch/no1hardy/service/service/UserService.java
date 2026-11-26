@@ -55,7 +55,8 @@ public class UserService {
             null,
             null,
             null,
-            null);
+            null
+    );
 
     @Value("${beticon.verification.email.validity}")
     private Integer emailConfirmationValidity;
@@ -172,7 +173,9 @@ public class UserService {
      * @return CheckRes containing availability status of username and email.
      */
     public CheckRes check(@Nullable String username, @Nullable String email) {
-        return new CheckRes(username == null || isUsernameAvailable(username), email == null || isEmailAvailable(email));
+        return new CheckRes(
+                username == null || isUsernameAvailable(username), email == null || isEmailAvailable(email)
+        );
     }
 
     /**
@@ -203,10 +206,14 @@ public class UserService {
      */
     private void checkAvailableDtoValues(@NotNull UserReq dto) throws UserValidationException {
         if (!isEmailAvailable(dto.email()))
-            throw new UserValidationException("Email " + dto.email() + " is already taken", "Email ist bereits vergeben");
+            throw new UserValidationException(
+                    "Email " + dto.email() + " is already taken", "Email ist bereits vergeben"
+            );
 
         if (!isUsernameAvailable(dto.username()))
-            throw new UserValidationException("Username " + dto.username() + " is already taken", "Username ist bereits vergeben");
+            throw new UserValidationException(
+                    "Username " + dto.username() + " is already taken", "Username ist bereits vergeben"
+            );
     }
 
     /**
@@ -237,7 +244,8 @@ public class UserService {
      * @throws UserNotFoundException   if the user with the given ID does not exist.
      * @throws UserValidationException if the dto is invalid
      */
-    public UserRes update(@NotNull String id, @NotNull UserReq dto) throws UserNotFoundException, UserValidationException {
+    public UserRes update(@NotNull String id, @NotNull UserReq dto)
+            throws UserNotFoundException, UserValidationException {
         checkAvailableDtoValues(dto);
         dto.validate();
 
@@ -343,7 +351,9 @@ public class UserService {
                     verificationService.deleteVerificationCode(verifyEmailReq.code());
                     return mapper.toDto(user);
                 })
-                .orElseThrow(() -> new VerificationException("Invalid verification code", "Ungültiger Verifizierungscode"));
+                .orElseThrow(
+                        () -> new VerificationException("Invalid verification code", "Ungültiger Verifizierungscode")
+                );
     }
 
     /**
@@ -367,7 +377,8 @@ public class UserService {
     public boolean sendEmailVerificationMail() {
         User user = authService.getLoggedInUser().orElseThrow(NotLoggedInException::new);
         if (user.isEmailConfirmed()) {
-            this.logger.info("Not sending verification email to {} because email is already verified", user.getUsername());
+            this.logger
+                    .info("Not sending verification email to {} because email is already verified", user.getUsername());
             return false;
         }
 
@@ -376,7 +387,8 @@ public class UserService {
 
     public boolean sendPasswordResetMail(@NotNull String email) {
         User user = getRawByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
-        VerificationCode code = user.createVerificationCode(VerificationCodeType.PASSWORD_RESET, this.passwordResetValidity);
+        VerificationCode code = user
+                .createVerificationCode(VerificationCodeType.PASSWORD_RESET, this.passwordResetValidity);
         verificationService.saveVerificationCode(code);
 
         return mailService.sendPasswordResetMail(user, code);
@@ -391,7 +403,9 @@ public class UserService {
                     repository.save(user);
                     verificationService.deleteVerificationCode(resetPasswordReq.code());
                 }, () -> {
-                    throw new VerificationException("Invalid password reset code", "Ungültiger Passwort-Zurücksetzungs-Code");
+                    throw new VerificationException(
+                            "Invalid password reset code", "Ungültiger Passwort-Zurücksetzungs-Code"
+                    );
                 });
         return true;
     }

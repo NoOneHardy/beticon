@@ -61,13 +61,15 @@ public class GroupService {
     public List<GroupOptionRes> listOptions() {
         return listRaw().stream()
                 .sorted(Comparator.comparing(Group::getOrder).thenComparing(Group::getName))
-                .map(group -> new GroupOptionRes(
-                        group.getId(),
-                        group.getName(),
-                        group.getIsKnockout(),
-                        group.getOrder(),
-                        group.getThumbnail()
-                ))
+                .map(
+                        group -> new GroupOptionRes(
+                                group.getId(),
+                                group.getName(),
+                                group.getIsKnockout(),
+                                group.getOrder(),
+                                group.getThumbnail()
+                        )
+                )
                 .toList();
     }
 
@@ -90,7 +92,9 @@ public class GroupService {
                 } catch (BetPlaceException e) {
                     throw new BetPlaceException(e.getMessage(), "Eines der Spiele hat bereits begonnen.");
                 } catch (KnockoutTieException e) {
-                    throw new KnockoutTieException(e.getMessage(), "Diese Gruppe ist eine K.O.-Phase. Spiele können nicht unentschieden enden.");
+                    throw new KnockoutTieException(
+                            e.getMessage(), "Diese Gruppe ist eine K.O.-Phase. Spiele können nicht unentschieden enden."
+                    );
                 }
             }
         }
@@ -98,22 +102,28 @@ public class GroupService {
     }
 
     public GroupRes updateResults(String id, List<ResultReq> results) {
-        Group group = repository.findById(id).orElseThrow(() -> new NotFoundException("Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden"));
+        Group group = repository.findById(id).orElseThrow(
+                () -> new NotFoundException("Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden")
+        );
 
         for (ResultReq result : results.stream().filter(ScoreReq::isValid).toList()) {
-            Optional<Game> gameOptional = group.getGames().stream().filter(g -> g.isActive() && g.getId().equals(result.game())).findFirst();
+            Optional<Game> gameOptional = group.getGames().stream()
+                    .filter(g -> g.isActive() && g.getId().equals(result.game())).findFirst();
             if (gameOptional.isEmpty()) continue;
 
             Game game = gameOptional.get();
             if (game.getResult() != null && game.getResult().isActive()) {
                 if (Objects.equals(game.getResult().getScoreTeamGuest(), result.scoreTeamGuest())
-                        && Objects.equals(game.getResult().getScoreTeamHome(), result.scoreTeamHome())) continue;
+                        && Objects.equals(game.getResult().getScoreTeamHome(), result.scoreTeamHome()))
+                    continue;
             }
 
             try {
                 gameService.uploadResult(result.game(), result);
             } catch (KnockoutTieException e) {
-                throw new KnockoutTieException(e.getMessage(), "Diese Gruppe ist eine K.O.-Phase. Spiele können nicht unentschieden enden.");
+                throw new KnockoutTieException(
+                        e.getMessage(), "Diese Gruppe ist eine K.O.-Phase. Spiele können nicht unentschieden enden."
+                );
             }
         }
         return mapper.toDto(group);

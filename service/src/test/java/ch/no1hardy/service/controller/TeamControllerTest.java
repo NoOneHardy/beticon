@@ -17,11 +17,13 @@ public class TeamControllerTest extends ApiTestBase {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("POST /team - parses the create team request sent by the admin frontend")
     void parsesCreateTeamRequest() throws Exception {
-        mockMvc.perform(post("/team")
+        mockMvc.perform(
+                post("/team")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"name": "Schweiz", "shortName": "SUI", "flag": "flags/sui.png"}
-                                """))
+                                """)
+        )
                 .andExpect(status().isOk());
 
         ArgumentCaptor<TeamReq> captor = ArgumentCaptor.forClass(TeamReq.class);

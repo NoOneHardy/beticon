@@ -18,9 +18,11 @@ public class MalformedRequestTest extends ApiTestBase {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("a request body that is not valid JSON is rejected as a bad request")
     void rejectsInvalidJson() throws Exception {
-        mockMvc.perform(post("/team")
+        mockMvc.perform(
+                post("/team")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\": \"Schweiz\","))
+                        .content("{\"name\": \"Schweiz\",")
+        )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Malformed request body"))
                 .andExpect(jsonPath("$.displayMessage").value("Ungültige Anfrage"))
@@ -33,11 +35,13 @@ public class MalformedRequestTest extends ApiTestBase {
     @WithMockUser
     @DisplayName("a request body with a value of the wrong type is rejected as a bad request")
     void rejectsTypeMismatch() throws Exception {
-        mockMvc.perform(put("/game/game-1/bet")
+        mockMvc.perform(
+                put("/game/game-1/bet")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {"game": "game-1", "scoreTeamHome": "two", "scoreTeamGuest": 1, "joker": 1}
-                                """))
+                                """)
+        )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Malformed request body"))
                 .andExpect(jsonPath("$.status").value(400));

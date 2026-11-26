@@ -42,7 +42,8 @@ public class DashboardService {
                 getStatistics(),
                 getGlobalStatistics(),
                 gameService.getUpcomingGames(),
-                gameService.getRecentResults());
+                gameService.getRecentResults()
+        );
     }
 
     /**
@@ -54,7 +55,8 @@ public class DashboardService {
         return new GlobalStatistics(
                 users.stream().mapToInt(User::getPoints).sum(),
                 users.stream().mapToInt(this::getExactBets).sum(),
-                users.stream().mapToInt(this::getWastedJokers).sum());
+                users.stream().mapToInt(this::getWastedJokers).sum()
+        );
     }
 
     /**
@@ -66,19 +68,23 @@ public class DashboardService {
         User user = authService.getLoggedInUser().orElseThrow(NotLoggedInException::new);
 
         Boolean isConfirmed;
-        if (user.getUserApplicationStatus() == UserApplicationStatus.ACCEPTED && user.getApplicationReviewedAt() != null)
+        if (user.getUserApplicationStatus() == UserApplicationStatus.ACCEPTED
+                && user.getApplicationReviewedAt() != null)
             isConfirmed = true;
-        else if (user.getUserApplicationStatus() == UserApplicationStatus.DENIED && user.getApplicationReviewedAt() != null)
-            isConfirmed = false;
         else
-            isConfirmed = null;
+            if (user.getUserApplicationStatus() == UserApplicationStatus.DENIED
+                    && user.getApplicationReviewedAt() != null)
+                isConfirmed = false;
+            else
+                isConfirmed = null;
 
         List<RankingRes> userLeaderboard = leaderboardService.getUserLeaderboard(user);
         return new UserSummary(
                 user.getPoints(),
                 userLeaderboard.size() == 3 ? userLeaderboard.get(1).ranking() : null,
                 groupService.getOverallPercentage(user),
-                isConfirmed);
+                isConfirmed
+        );
     }
 
     /**

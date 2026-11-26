@@ -267,7 +267,7 @@ public class UserTest {
             assertNotNull(code);
             assertFalse(code.isExpired());
             return code;
-        }, VerificationCode::getExpiresAt, true,15);
+        }, VerificationCode::getExpiresAt, true, 15);
     }
 
     @Test

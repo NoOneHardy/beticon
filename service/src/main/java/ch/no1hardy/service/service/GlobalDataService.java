@@ -27,11 +27,13 @@ public class GlobalDataService {
      */
     private GlobalData createGlobalData() {
         List<Notification> notifications = authService.getLoggedInUser()
-                .map(user -> userService.getNotifications(user)
-                        .stream()
-                        .sorted(Comparator.comparing(Notification::getCreatedAt).reversed())
-                        .limit(5)
-                        .toList())
+                .map(
+                        user -> userService.getNotifications(user)
+                                .stream()
+                                .sorted(Comparator.comparing(Notification::getCreatedAt).reversed())
+                                .limit(5)
+                                .toList()
+                )
                 .orElseGet(List::of);
 
         return new GlobalData(UUID.randomUUID().toString(), notificationMapper.toDto(notifications));

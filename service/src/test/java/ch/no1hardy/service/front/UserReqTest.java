@@ -60,7 +60,8 @@ public class UserReqTest {
                 FIRSTNAME,
                 LASTNAME,
                 null,
-                null);
+                null
+        );
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("username can only contain 25 characters", e.getMessage());
@@ -94,7 +95,8 @@ public class UserReqTest {
                 "aVeryVeryVeryLongFirstnameThatWillFailValidation",
                 LASTNAME,
                 null,
-                null);
+                null
+        );
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("firstname can only contain 25 characters", e.getMessage());
@@ -128,7 +130,8 @@ public class UserReqTest {
                 FIRSTNAME,
                 "aVeryVeryVeryLongLastnameThatWillFailValidation",
                 null,
-                null);
+                null
+        );
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("lastname can only contain 25 characters", e.getMessage());
@@ -162,7 +165,8 @@ public class UserReqTest {
                 FIRSTNAME,
                 LASTNAME,
                 null,
-                null);
+                null
+        );
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("email can only contain 50 characters", e.getMessage());
@@ -196,7 +200,8 @@ public class UserReqTest {
                 FIRSTNAME,
                 LASTNAME,
                 null,
-                null);
+                null
+        );
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("password can only contain 50 characters", e.getMessage());

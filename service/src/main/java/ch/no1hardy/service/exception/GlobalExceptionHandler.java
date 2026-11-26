@@ -29,24 +29,39 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiError> handleAccessDeniedException() {
         return ResponseEntity.status(403)
-                .body(new ApiError("Not authorized to access this method", "Fehlende Berechtigungen", 403, LocalDateTime.now()));
+                .body(
+                        new ApiError(
+                                "Not authorized to access this method", "Fehlende Berechtigungen", 403,
+                                LocalDateTime.now()
+                        )
+                );
     }
 
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<ApiError> handleDisabledException() {
         return ResponseEntity.status(403)
-                .body(new ApiError("This account has been disabled", "Dieser Account ist deaktiviert", 403, LocalDateTime.now()));
+                .body(
+                        new ApiError(
+                                "This account has been disabled", "Dieser Account ist deaktiviert", 403,
+                                LocalDateTime.now()
+                        )
+                );
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<ApiError> handleExpiredEntity(ExpiredJwtException ex) {
-        return ResponseEntity.status(403).body(new ApiError(ex.getMessage(), "Die Session ist abgelaufen",403, LocalDateTime.now()));
+        return ResponseEntity.status(403)
+                .body(new ApiError(ex.getMessage(), "Die Session ist abgelaufen", 403, LocalDateTime.now()));
     }
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ApiError> handleApiException(ApiException ex) {
         return ResponseEntity.status(ex.getStatus())
-                .body(new ApiError(ex.getMessage(), ex.getDisplayMessage(), ex.getStatus().value(), LocalDateTime.now()));
+                .body(
+                        new ApiError(
+                                ex.getMessage(), ex.getDisplayMessage(), ex.getStatus().value(), LocalDateTime.now()
+                        )
+                );
     }
 
     /**
@@ -62,6 +77,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGenericException(Exception ex) {
         return ResponseEntity.status(500)
-                .body(new ApiError(ex.getMessage(), "Ein unerwarteter Fehler ist aufgetreten", 500, LocalDateTime.now()));
+                .body(
+                        new ApiError(
+                                ex.getMessage(), "Ein unerwarteter Fehler ist aufgetreten", 500, LocalDateTime.now()
+                        )
+                );
     }
 }

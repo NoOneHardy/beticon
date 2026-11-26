@@ -91,16 +91,20 @@ public class GameServiceTest {
         when(authService.getLoggedInUser()).thenReturn(Optional.of(user));
         Game game1 = new Game();
         game1.setId("game-1");
-        game1.setBets(List.of(
-                createBetForUser(otherUser, game1)
-        ));
+        game1.setBets(
+                List.of(
+                        createBetForUser(otherUser, game1)
+                )
+        );
         game1.setTimestamp(LocalDateTime.now().plusDays(2));
         Game game2 = new Game();
         game2.setId("game-2");
-        game2.setBets(List.of(
-                createBetForUser(user, game2),
-                createBetForUser(otherUser, game2)
-        ));
+        game2.setBets(
+                List.of(
+                        createBetForUser(user, game2),
+                        createBetForUser(otherUser, game2)
+                )
+        );
         game2.setTimestamp(LocalDateTime.now().plusDays(3));
         when(repository.findAll()).thenReturn(List.of(game1, game2));
 

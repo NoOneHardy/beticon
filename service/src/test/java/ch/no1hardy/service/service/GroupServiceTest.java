@@ -55,14 +55,17 @@ public class GroupServiceTest {
         mockGroup.setGames(List.of(game));
 
         when(repository.findAll()).thenReturn(List.of(mockGroup));
-        when(mapper.toCard(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(new CardGroupRes(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null));
+        when(mapper.toCard(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(
+                new CardGroupRes(
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                )
+        );
     }
 
     @Test
@@ -153,12 +156,14 @@ public class GroupServiceTest {
         user.setBets(List.of());
 
         Group group = new Group();
-        group.setGames(List.of(
-                new Game(),
-                new Game(),
-                new Game(),
-                new Game()
-        ));
+        group.setGames(
+                List.of(
+                        new Game(),
+                        new Game(),
+                        new Game(),
+                        new Game()
+                )
+        );
         when(repository.findAll()).thenReturn(List.of(group));
 
         assertEquals(0.0, service.getOverallPercentage(user));
@@ -169,19 +174,23 @@ public class GroupServiceTest {
     void shouldReturnCorrectPercentage() {
         User user = new User();
         user.setId("user-1");
-        user.setBets(List.of(
-                new Bet(),
-                new Bet(),
-                new Bet()
-        ));
+        user.setBets(
+                List.of(
+                        new Bet(),
+                        new Bet(),
+                        new Bet()
+                )
+        );
 
         Group group = new Group();
-        group.setGames(List.of(
-                new Game(),
-                new Game(),
-                new Game(),
-                new Game()
-        ));
+        group.setGames(
+                List.of(
+                        new Game(),
+                        new Game(),
+                        new Game(),
+                        new Game()
+                )
+        );
         when(repository.findAll()).thenReturn(List.of(group));
 
         Double percentage = service.getOverallPercentage(user);
@@ -300,10 +309,14 @@ public class GroupServiceTest {
         when(repository.findById("group-1")).thenReturn(Optional.of(group));
         doThrow(new KnockoutTieException("tie", "original")).when(gameService).uploadResult(any(), any());
 
-        KnockoutTieException ex = assertThrows(KnockoutTieException.class,
-                () -> service.updateResults("group-1", List.of(resultReq("game-1", 1, 1))));
+        KnockoutTieException ex = assertThrows(
+                KnockoutTieException.class,
+                () -> service.updateResults("group-1", List.of(resultReq("game-1", 1, 1)))
+        );
 
-        assertEquals("Diese Gruppe ist eine K.O.-Phase. Spiele können nicht unentschieden enden.", ex.getDisplayMessage());
+        assertEquals(
+                "Diese Gruppe ist eine K.O.-Phase. Spiele können nicht unentschieden enden.", ex.getDisplayMessage()
+        );
     }
 
     @Test

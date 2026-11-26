@@ -11,7 +11,6 @@ import ch.no1hardy.service.front.user.UserReq;
 import ch.no1hardy.service.front.user.UserRes;
 import ch.no1hardy.service.front.verification.ResetPasswordReq;
 import ch.no1hardy.service.front.verification.VerifyEmailReq;
-import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.group.GroupRepository;
 import ch.no1hardy.service.model.user.User;
 import ch.no1hardy.service.model.user.UserRepository;
@@ -251,7 +250,9 @@ public class UserServiceTest {
         UserRes response = service.create(dto);
         assertNotNull(response);
         Mockito.verify(mailService, Mockito.times(1))
-                .sendEmailVerificationMail(ArgumentMatchers.any(User.class), ArgumentMatchers.any(VerificationCode.class));
+                .sendEmailVerificationMail(
+                        ArgumentMatchers.any(User.class), ArgumentMatchers.any(VerificationCode.class)
+                );
     }
 
     @Test
@@ -264,7 +265,8 @@ public class UserServiceTest {
                 "SilasUpdated",
                 "HardyUpdated",
                 null,
-                null);
+                null
+        );
 
         User existingUser = new User();
         existingUser.setId("user-id-123");
@@ -296,7 +298,8 @@ public class UserServiceTest {
                 null,
                 null,
                 null,
-                new UserReq.PasswordChange("newsecurepassword", "oldpassword"));
+                new UserReq.PasswordChange("newsecurepassword", "oldpassword")
+        );
 
         User existingUser = new User();
         existingUser.setId("user-id-123");
@@ -346,7 +349,8 @@ public class UserServiceTest {
                 "SilasUpdated",
                 "HardyUpdated",
                 null,
-                null);
+                null
+        );
 
         User loggedInUser = new User();
         loggedInUser.setId("user-id-123");
@@ -405,7 +409,8 @@ public class UserServiceTest {
         SecurityHelper.mockUserLogin(authService, loggedInUser);
         Mockito.doReturn(Optional.of(loggedInUser)).when(repository).findById("user-self");
         Mockito.doReturn(Optional.of(otherUser)).when(repository).findById("user-other");
-        Mockito.doAnswer(invocation -> invocation.getArgument(0)).when(repository).save(ArgumentMatchers.any(User.class));
+        Mockito.doAnswer(invocation -> invocation.getArgument(0)).when(repository)
+                .save(ArgumentMatchers.any(User.class));
 
         UserReq dto = new UserReq("HackedName", null, null, "Hacked", "Hacker", null, null);
 
@@ -526,7 +531,8 @@ public class UserServiceTest {
 
         Mockito.doReturn(Optional.of(user)).when(repository).findByEmail("silas@test.ch");
         Mockito.doReturn(code).when(verificationCodeRepository).save(Mockito.any());
-        Mockito.doReturn(true).when(mailService).sendPasswordResetMail(ArgumentMatchers.eq(user), ArgumentMatchers.any(VerificationCode.class));
+        Mockito.doReturn(true).when(mailService)
+                .sendPasswordResetMail(ArgumentMatchers.eq(user), ArgumentMatchers.any(VerificationCode.class));
 
         boolean result = service.sendPasswordResetMail("silas@test.ch");
         assertTrue(result);
@@ -541,7 +547,9 @@ public class UserServiceTest {
     void sendPasswordResetMail02() {
         Mockito.doReturn(Optional.empty()).when(repository).findByEmail("silas@test.ch");
 
-        UserNotFoundException e = assertThrows(UserNotFoundException.class, () -> service.sendPasswordResetMail("silas@test.ch"));
+        UserNotFoundException e = assertThrows(
+                UserNotFoundException.class, () -> service.sendPasswordResetMail("silas@test.ch")
+        );
         assertEquals("User ('silas@test.ch') not found.", e.getMessage());
     }
 
@@ -607,8 +615,10 @@ public class UserServiceTest {
 
         LoginReq req = new LoginReq("  No1Hardy  ", "password");
 
-        assertThrows(org.springframework.security.authentication.BadCredentialsException.class,
-                () -> service.login(req));
+        assertThrows(
+                org.springframework.security.authentication.BadCredentialsException.class,
+                () -> service.login(req)
+        );
     }
 
     @Test
@@ -626,7 +636,10 @@ public class UserServiceTest {
         Mockito.doReturn(Optional.of(code)).when(verificationCodeRepository).findByCode(code.getCode());
         Mockito.doNothing().when(verificationCodeRepository).delete(code);
 
-        VerificationException e = assertThrows(VerificationException.class, () -> service.resetPassword(new ResetPasswordReq("ABCDEF", "newsecurepassword")));
+        VerificationException e = assertThrows(
+                VerificationException.class,
+                () -> service.resetPassword(new ResetPasswordReq("ABCDEF", "newsecurepassword"))
+        );
 
         assertEquals("Invalid password reset code", e.getMessage());
         Mockito.verify(repository, Mockito.times(0)).save(ArgumentMatchers.any());

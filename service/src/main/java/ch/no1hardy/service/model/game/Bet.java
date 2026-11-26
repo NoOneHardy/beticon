@@ -53,7 +53,6 @@ public class Bet extends BaseEntity {
         return scoreline == null ? null : scoreline.guest();
     }
 
-
     public boolean equals(BetReq bet) {
         return Objects.equals(this.getScoreTeamGuest(), bet.scoreTeamGuest())
                 && Objects.equals(this.getScoreTeamHome(), bet.scoreTeamHome())

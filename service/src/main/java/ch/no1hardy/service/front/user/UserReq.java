@@ -2,7 +2,6 @@ package ch.no1hardy.service.front.user;
 
 import ch.no1hardy.service.exception.user.UserValidationException;
 
-
 import java.util.regex.Pattern;
 
 public record UserReq(
@@ -14,7 +13,8 @@ public record UserReq(
         String avatar,
         PasswordChange passwordChange
 ) {
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9-._]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9-]{2,}$");
+    private static final Pattern EMAIL_PATTERN = Pattern
+            .compile("^[A-Za-z0-9-._]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9-]{2,}$");
 
     /**
      * Complete validation of the user request.
@@ -51,15 +51,17 @@ public record UserReq(
     }
 
     private void validateLength(int min, int max, String value, String name, String displayName) {
-        if (value.length() < min) throw new UserValidationException(
-                name + " must be at least " + min + " characters long",
-                displayName + " muss mindestens " + min + " Zeichen lang sein."
-        );
+        if (value.length() < min)
+            throw new UserValidationException(
+                    name + " must be at least " + min + " characters long",
+                    displayName + " muss mindestens " + min + " Zeichen lang sein."
+            );
 
-        if (value.length() > max) throw new UserValidationException(
-                name + " can only contain " + max + " characters",
-                displayName + " darf maximal " + max + " Zeichen enthalten."
-        );
+        if (value.length() > max)
+            throw new UserValidationException(
+                    name + " can only contain " + max + " characters",
+                    displayName + " darf maximal " + max + " Zeichen enthalten."
+            );
     }
 
     /**

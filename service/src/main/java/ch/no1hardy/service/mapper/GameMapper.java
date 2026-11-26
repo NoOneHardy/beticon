@@ -16,7 +16,8 @@ import org.mapstruct.*;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-        uses = {TeamRepository.class, GroupRepository.class, TeamMapper.class, UserHelper.class, GameRepository.class, UserRepository.class}
+        uses = {TeamRepository.class, GroupRepository.class, TeamMapper.class, UserHelper.class, GameRepository.class,
+                UserRepository.class}
 )
 public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
     @Mapping(target = "gameId", source = "game", qualifiedByName = "getGameId")
