@@ -63,6 +63,7 @@ module.exports = tseslint.config(
       '@angular-eslint/prefer-host-metadata-property': 'error',
       '@angular-eslint/inject-at-top': 'error',
       '@angular-eslint/no-uncalled-signals': 'error',
+      '@angular-eslint/prefer-signal-model': 'error',
       '@typescript-eslint/no-extraneous-class': [
         'error',
         {allowWithDecorator: true}
