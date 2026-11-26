@@ -80,6 +80,7 @@ module.exports = tseslint.config(
         'error',
         {allowBindToStyle: 'dynamic'}
       ],
+      '@angular-eslint/template/prefer-template-literal': 'error',
     },
   }
 );
