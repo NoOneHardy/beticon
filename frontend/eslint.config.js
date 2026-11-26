@@ -45,6 +45,7 @@ module.exports = tseslint.config(
       'no-console': 'error',
       'complexity': ['error', 10],
       '@angular-eslint/prefer-signals': 'error',
+      '@angular-eslint/prefer-output-emitter-ref': 'error',
       'no-restricted-syntax': [
         'error',
         {
