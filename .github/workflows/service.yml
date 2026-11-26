@@ -2,6 +2,24 @@ name: Service
 on:
   push:
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Install Java'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: '25'
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            service
+            gradle
+      - name: 'Set up gradle'
+        uses: gradle/actions/setup-gradle@v4
+      - name: 'Linting'
+        run: ./gradlew :service:lint
   test:
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +54,7 @@ jobs:
       - name: 'Testing'
         run: ./gradlew :service:test
   build:
-    needs: [ test ]
+    needs: [ lint, test ]
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
