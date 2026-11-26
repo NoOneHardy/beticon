@@ -1,13 +1,8 @@
 package ch.no1hardy.service.front.game;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class ResultReq extends ScoreReq {
+public record ResultReq(
+        String game,
+        Integer scoreTeamHome,
+        Integer scoreTeamGuest
+) implements ScoreReq {
 }
-
-

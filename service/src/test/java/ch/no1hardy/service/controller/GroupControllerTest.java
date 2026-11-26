@@ -62,10 +62,10 @@ public class GroupControllerTest extends ApiTestBase {
         ArgumentCaptor<GroupReq> captor = ArgumentCaptor.forClass(GroupReq.class);
         verify(groupService).create(captor.capture());
         GroupReq forwarded = captor.getValue();
-        assertEquals("Gruppe A", forwarded.getName());
-        assertEquals(true, forwarded.getIsKnockout());
-        assertEquals(3, forwarded.getOrder());
-        assertNull(forwarded.getThumbnail());
+        assertEquals("Gruppe A", forwarded.name());
+        assertEquals(true, forwarded.isKnockout());
+        assertEquals(3, forwarded.order());
+        assertNull(forwarded.thumbnail());
     }
 
     @Test
@@ -87,14 +87,14 @@ public class GroupControllerTest extends ApiTestBase {
         verify(groupService).updateBets(eq("group-a"), captor.capture());
         List<BetReq> forwarded = captor.getValue();
         assertEquals(2, forwarded.size());
-        assertEquals("game-1", forwarded.get(0).getGame());
-        assertEquals(1, forwarded.get(0).getScoreTeamHome());
-        assertEquals(1, forwarded.get(0).getScoreTeamGuest());
-        assertEquals(3, forwarded.get(0).getJoker());
-        assertEquals("game-2", forwarded.get(1).getGame());
-        assertNull(forwarded.get(1).getScoreTeamHome());
-        assertNull(forwarded.get(1).getScoreTeamGuest());
-        assertEquals(1, forwarded.get(1).getJoker());
+        assertEquals("game-1", forwarded.get(0).game());
+        assertEquals(1, forwarded.get(0).scoreTeamHome());
+        assertEquals(1, forwarded.get(0).scoreTeamGuest());
+        assertEquals(3, forwarded.get(0).joker());
+        assertEquals("game-2", forwarded.get(1).game());
+        assertNull(forwarded.get(1).scoreTeamHome());
+        assertNull(forwarded.get(1).scoreTeamGuest());
+        assertEquals(1, forwarded.get(1).joker());
     }
 
     @Test
@@ -113,8 +113,8 @@ public class GroupControllerTest extends ApiTestBase {
         verify(groupService).updateResults(eq("group-a"), captor.capture());
         List<ResultReq> forwarded = captor.getValue();
         assertEquals(1, forwarded.size());
-        assertEquals("game-1", forwarded.getFirst().getGame());
-        assertEquals(4, forwarded.getFirst().getScoreTeamHome());
-        assertEquals(2, forwarded.getFirst().getScoreTeamGuest());
+        assertEquals("game-1", forwarded.getFirst().game());
+        assertEquals(4, forwarded.getFirst().scoreTeamHome());
+        assertEquals(2, forwarded.getFirst().scoreTeamGuest());
     }
 }

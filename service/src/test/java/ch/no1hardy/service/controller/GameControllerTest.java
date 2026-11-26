@@ -38,10 +38,10 @@ public class GameControllerTest extends ApiTestBase {
         ArgumentCaptor<GameReq> captor = ArgumentCaptor.forClass(GameReq.class);
         verify(gameService).create(captor.capture());
         GameReq forwarded = captor.getValue();
-        assertEquals(LocalDateTime.of(2026, 6, 11, 16, 0), forwarded.getTimestamp());
-        assertEquals("group-a", forwarded.getGroup());
-        assertEquals("team-sui", forwarded.getTeamHome());
-        assertEquals("team-ger", forwarded.getTeamGuest());
+        assertEquals(LocalDateTime.of(2026, 6, 11, 16, 0), forwarded.timestamp());
+        assertEquals("group-a", forwarded.group());
+        assertEquals("team-sui", forwarded.teamHome());
+        assertEquals("team-ger", forwarded.teamGuest());
     }
 
     @Test
@@ -58,9 +58,9 @@ public class GameControllerTest extends ApiTestBase {
         ArgumentCaptor<ResultReq> captor = ArgumentCaptor.forClass(ResultReq.class);
         verify(gameService).uploadResult(eq("game-1"), captor.capture());
         ResultReq forwarded = captor.getValue();
-        assertEquals("game-1", forwarded.getGame());
-        assertEquals(2, forwarded.getScoreTeamHome());
-        assertEquals(1, forwarded.getScoreTeamGuest());
+        assertEquals("game-1", forwarded.game());
+        assertEquals(2, forwarded.scoreTeamHome());
+        assertEquals(1, forwarded.scoreTeamGuest());
     }
 
     @Test
@@ -77,9 +77,9 @@ public class GameControllerTest extends ApiTestBase {
         ArgumentCaptor<BetReq> captor = ArgumentCaptor.forClass(BetReq.class);
         verify(gameService).uploadBet(eq("game-1"), captor.capture());
         BetReq forwarded = captor.getValue();
-        assertEquals("game-1", forwarded.getGame());
-        assertEquals(0, forwarded.getScoreTeamHome());
-        assertEquals(3, forwarded.getScoreTeamGuest());
-        assertEquals(2, forwarded.getJoker());
+        assertEquals("game-1", forwarded.game());
+        assertEquals(0, forwarded.scoreTeamHome());
+        assertEquals(3, forwarded.scoreTeamGuest());
+        assertEquals(2, forwarded.joker());
     }
 }

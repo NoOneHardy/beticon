@@ -86,9 +86,7 @@ public class RescoreEverythingTest {
 
         when(authService.getLoggedInUser()).thenReturn(Optional.of(driftedUser));
 
-        ResultReq result = new ResultReq();
-        result.setScoreTeamHome(2);
-        result.setScoreTeamGuest(1);
+        ResultReq result = new ResultReq(null, 2, 1);
         gameService.uploadResult(scoredGame.getId(), result);
     }
 

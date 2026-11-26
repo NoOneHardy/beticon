@@ -100,13 +100,13 @@ public class GameService {
             return mapper.toDto(game);
         }
 
-        dto.clamp();
         removeExistingBet(game, user);
         if (dto.isNull()) return mapper.toDto(game);
 
-        dto.setGame(id);
-        dto.setUser(user.getId());
-        Bet bet = betRepository.save(mapper.toEntity(dto));
+        Bet bet = mapper.toEntity(dto);
+        bet.setGame(game);
+        bet.setUser(user);
+        bet = betRepository.save(bet);
         game.setBets(ListHelper.add(game.getBets(), bet));
         user.setBets(ListHelper.add(user.getBets(), bet));
 

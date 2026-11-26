@@ -1,11 +1,14 @@
 package ch.no1hardy.service.service;
 
 import ch.no1hardy.service.GameHelper;
+import ch.no1hardy.service.exception.KnockoutTieException;
 import ch.no1hardy.service.front.game.BetGameRes;
+import ch.no1hardy.service.front.game.BetReq;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.Game;
 import ch.no1hardy.service.model.game.GameRepository;
 import ch.no1hardy.service.model.game.Score;
+import ch.no1hardy.service.model.group.Group;
 import ch.no1hardy.service.model.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -50,6 +54,22 @@ public class GameServiceTest {
         bet.setUser(user);
         bet.setGame(game);
         return bet;
+    }
+
+    @Test
+    @DisplayName("uploadBet() - should reject a knockout Bet whose missing score makes it a tie")
+    void shouldRejectKnockoutBetThatIsATieOnceClamped() {
+        Group knockout = new Group();
+        knockout.setIsKnockout(true);
+        Game game = new Game();
+        game.setId("game-1");
+        game.setGroup(knockout);
+        game.setTimestamp(LocalDateTime.now().plusDays(1));
+
+        when(authService.getLoggedInUser()).thenReturn(Optional.of(user));
+        when(repository.findById("game-1")).thenReturn(Optional.of(game));
+
+        assertThrows(KnockoutTieException.class, () -> service.uploadBet("game-1", new BetReq("game-1", null, 0, 1)));
     }
 
     @Test

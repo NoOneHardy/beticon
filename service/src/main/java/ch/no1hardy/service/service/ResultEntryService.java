@@ -54,7 +54,6 @@ public class ResultEntryService {
         if (game == null) throw new NotFoundException("Game " + id + " not found", "Spiel '" + id + "' nicht gefunden");
 
         if (!dto.isValid()) return new ResultEntry(game, mapper.toDto(game), false);
-        dto.clamp();
 
         if (!dto.isNull() && game.getGroup().getIsKnockout() && dto.isTie()) {
             throw new KnockoutTieException("Game " + id + " is in a knockout group and cannot end in a tie", "Spiel '" + id + "' ist in einer K.O.-Gruppe und kann nicht unentschieden enden");
@@ -64,8 +63,9 @@ public class ResultEntryService {
         if (dto.isNull()) return new ResultEntry(game, mapper.toDto(repository.save(game)), false);
 
         pointsService.snapshotLastReviewedPoints();
-        dto.setGame(id);
-        Score result = scoreRepository.save(mapper.toEntity(dto));
+        Score result = mapper.toEntity(dto);
+        result.setGame(game);
+        result = scoreRepository.save(result);
         game.setResult(result);
         pointsService.rescoreBetsAndTotals(game.getBets());
 

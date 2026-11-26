@@ -143,9 +143,7 @@ public class ResultEntryTest {
     }
 
     private void enterResult(Game target, Integer home, Integer guest) {
-        ResultReq req = new ResultReq();
-        req.setScoreTeamHome(home);
-        req.setScoreTeamGuest(guest);
+        ResultReq req = new ResultReq(null, home, guest);
         service.uploadResult(target.getId(), req);
     }
 
@@ -211,9 +209,7 @@ public class ResultEntryTest {
         otherBet.setJoker(1);
         betRepository.save(otherBet);
 
-        ResultReq otherResult = new ResultReq();
-        otherResult.setScoreTeamHome(1);
-        otherResult.setScoreTeamGuest(1);
+        ResultReq otherResult = new ResultReq(null, 1, 1);
         service.uploadResult(other.getId(), otherResult);
         enterResult(2, 1);
 

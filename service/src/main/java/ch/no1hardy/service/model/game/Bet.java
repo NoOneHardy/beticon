@@ -64,9 +64,9 @@ public class Bet extends BaseEntity {
     }
 
     public boolean equals(BetReq bet) {
-        return Objects.equals(this.getScoreTeamGuest(), bet.getScoreTeamGuest())
-                && Objects.equals(this.getScoreTeamHome(), bet.getScoreTeamHome())
-                && Objects.equals(this.getJoker(), bet.getJoker());
+        return Objects.equals(this.getScoreTeamGuest(), bet.scoreTeamGuest())
+                && Objects.equals(this.getScoreTeamHome(), bet.scoreTeamHome())
+                && Objects.equals(this.getJoker(), bet.joker());
     }
 
     @Override

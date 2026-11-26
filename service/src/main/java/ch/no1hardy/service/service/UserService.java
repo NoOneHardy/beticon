@@ -190,11 +190,11 @@ public class UserService {
      * @throws UserValidationException if the dto is invalid
      */
     private void checkAvailableDtoValues(@NotNull UserReq dto) throws UserValidationException {
-        if (!isEmailAvailable(dto.getEmail()))
-            throw new UserValidationException("Email " + dto.getEmail() + " is already taken", "Email ist bereits vergeben");
+        if (!isEmailAvailable(dto.email()))
+            throw new UserValidationException("Email " + dto.email() + " is already taken", "Email ist bereits vergeben");
 
-        if (!isUsernameAvailable(dto.getUsername()))
-            throw new UserValidationException("Username " + dto.getUsername() + " is already taken", "Username ist bereits vergeben");
+        if (!isUsernameAvailable(dto.username()))
+            throw new UserValidationException("Username " + dto.username() + " is already taken", "Username ist bereits vergeben");
     }
 
     /**
@@ -207,8 +207,8 @@ public class UserService {
     public UserRes create(@NotNull UserReq dto) throws UserValidationException {
         checkAvailableDtoValues(dto);
         dto.validateAll();
-        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         User entity = mapper.toEntity(dto);
+        entity.setPassword(passwordEncoder.encode(dto.password()));
         repository.save(entity);
 
         sendEmailVerificationMail(entity);
@@ -227,23 +227,20 @@ public class UserService {
      */
     public UserRes update(@NotNull String id, @NotNull UserReq dto) throws UserNotFoundException, UserValidationException {
         checkAvailableDtoValues(dto);
+        dto.validate();
 
         User user = getRaw(id);
-        if (dto.getPasswordChange() != null) {
-            String oldPassword = dto.getPasswordChange().currentPassword();
+        if (dto.passwordChange() != null) {
+            String oldPassword = dto.passwordChange().currentPassword();
             if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
                 throw new UserValidationException("Current password is incorrect", "Aktuelles Passwort ist falsch");
             }
-
-            dto.setPassword(passwordEncoder.encode(dto.getPasswordChange().password()));
         }
 
-        // temporarily disable email change because it requires re-verification
+        // the mapper leaves the email untouched: an email change requires re-verification
         // TODO: implement email change with re-verification
-        dto.setEmail(user.getEmail());
-
-        dto.validate();
         mapper.update(dto, user);
+        if (dto.passwordChange() != null) user.setPassword(passwordEncoder.encode(dto.passwordChange().password()));
         return mapper.toDto(repository.save(user));
     }
 
@@ -281,12 +278,12 @@ public class UserService {
      */
     public UserRes login(@NotNull LoginReq dto) throws AuthenticationException, UserNotFoundException {
         verificationService.clearExpiredCodes();
-        return repository.findByUsername(dto.getUsername().trim())
+        return repository.findByUsername(dto.username().trim())
                 .map(user -> {
                     authenticationManager.authenticate(
                             new UsernamePasswordAuthenticationToken(
                                     user.getId(),
-                                    dto.getPassword().trim()
+                                    dto.password().trim()
                             )
                     );
                     return mapper.toDto(user);

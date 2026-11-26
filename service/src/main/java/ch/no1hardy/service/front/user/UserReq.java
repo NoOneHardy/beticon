@@ -1,20 +1,21 @@
 package ch.no1hardy.service.front.user;
 
 import ch.no1hardy.service.exception.user.UserValidationException;
-import lombok.Data;
+
+import lombok.Builder;
 
 import java.util.regex.Pattern;
 
-@Data
-public class UserReq {
-    private String username;
-    private String password;
-    private String email;
-    private String firstname;
-    private String lastname;
-    private String avatar;
-    private PasswordChange passwordChange;
-
+@Builder(toBuilder = true)
+public record UserReq(
+        String username,
+        String password,
+        String email,
+        String firstname,
+        String lastname,
+        String avatar,
+        PasswordChange passwordChange
+) {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9-._]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9-]{2,}$");
 
     /**
@@ -34,21 +35,21 @@ public class UserReq {
      * @throws UserValidationException if the validation fails
      */
     public void validate() throws UserValidationException {
-        if (getUsername() != null) validateLength(5, 25, getUsername(), "username", "Benutzername");
+        if (username() != null) validateLength(5, 25, username(), "username", "Benutzername");
 
-        if (getFirstname() != null) validateLength(2, 25, getFirstname(), "firstname", "Vorname");
+        if (firstname() != null) validateLength(2, 25, firstname(), "firstname", "Vorname");
 
-        if (getLastname() != null) validateLength(2, 25, getLastname(), "lastname", "Nachname");
+        if (lastname() != null) validateLength(2, 25, lastname(), "lastname", "Nachname");
 
-        if (getEmail() != null) {
-            validateLength(5, 50, getEmail(), "email", "Email");
+        if (email() != null) {
+            validateLength(5, 50, email(), "email", "Email");
 
-            if (!EMAIL_PATTERN.matcher(getEmail()).matches()) {
+            if (!EMAIL_PATTERN.matcher(email()).matches()) {
                 throw new UserValidationException("Invalid email format", "Ungültiges Email-Format");
             }
         }
 
-        if (getPassword() != null) validateLength(8, 50, getPassword(), "password", "Passwort");
+        if (password() != null) validateLength(8, 50, password(), "password", "Passwort");
     }
 
     private void validateLength(int min, int max, String value, String name, String displayName) {
@@ -70,19 +71,19 @@ public class UserReq {
      * @throws UserValidationException if any required field is missing
      */
     public void validateRequired() throws UserValidationException {
-        if (getUsername() == null || getUsername().isEmpty())
+        if (username() == null || username().isEmpty())
             throw new UserValidationException("username");
 
-        if (getEmail() == null || getEmail().isEmpty())
+        if (email() == null || email().isEmpty())
             throw new UserValidationException("email");
 
-        if (getPassword() == null || getPassword().isEmpty())
+        if (password() == null || password().isEmpty())
             throw new UserValidationException("password");
 
-        if (getFirstname() == null || getFirstname().isEmpty())
+        if (firstname() == null || firstname().isEmpty())
             throw new UserValidationException("firstname");
 
-        if (getLastname() == null || getLastname().isEmpty())
+        if (lastname() == null || lastname().isEmpty())
             throw new UserValidationException("lastname");
     }
 

@@ -1,36 +1,41 @@
 package ch.no1hardy.service.front.game;
 
 import ch.no1hardy.service.model.game.Scoreline;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-public abstract class ScoreReq {
-    private String game;
-    private Integer scoreTeamHome;
-    private Integer scoreTeamGuest;
+/**
+ * The goals of a Bet or Result as sent by the client. A missing score counts as 0 once the other one is set.
+ */
+public interface ScoreReq {
+    String game();
 
-    public boolean isValid() {
-        return (getScoreTeamHome() == null || getScoreTeamHome() >= 0) &&
-                (getScoreTeamGuest() == null || getScoreTeamGuest() >= 0);
+    Integer scoreTeamHome();
+
+    Integer scoreTeamGuest();
+
+    default boolean isValid() {
+        return (scoreTeamHome() == null || scoreTeamHome() >= 0) &&
+                (scoreTeamGuest() == null || scoreTeamGuest() >= 0);
     }
 
-    public boolean isTie() {
-        return getScoreTeamHome() != null && getScoreTeamGuest() != null &&
-                new Scoreline(getScoreTeamHome(), getScoreTeamGuest()).isTie();
+    default boolean isNull() {
+        return scoreTeamHome() == null && scoreTeamGuest() == null;
     }
 
-    public boolean isNull() {
-        return getScoreTeamHome() == null && getScoreTeamGuest() == null;
+    default boolean isTie() {
+        return !isNull() && new Scoreline(clampedScoreTeamHome(), clampedScoreTeamGuest()).isTie();
     }
 
-    public void clamp() {
-        if (getScoreTeamHome() == null && getScoreTeamGuest() != null) {
-            setScoreTeamHome(0);
-        }
-        if (getScoreTeamGuest() == null && getScoreTeamHome() != null) {
-            setScoreTeamGuest(0);
-        }
+    /**
+     * @return the home score, 0 when only the guest score is set
+     */
+    default Integer clampedScoreTeamHome() {
+        return scoreTeamHome() == null && scoreTeamGuest() != null ? Integer.valueOf(0) : scoreTeamHome();
+    }
+
+    /**
+     * @return the guest score, 0 when only the home score is set
+     */
+    default Integer clampedScoreTeamGuest() {
+        return scoreTeamGuest() == null && scoreTeamHome() != null ? Integer.valueOf(0) : scoreTeamGuest();
     }
 }

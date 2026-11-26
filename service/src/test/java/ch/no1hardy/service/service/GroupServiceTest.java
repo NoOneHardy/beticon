@@ -337,10 +337,11 @@ public class GroupServiceTest {
     }
 
     private ResultReq resultReq(String gameId, int home, int guest) {
-        ResultReq req = new ResultReq();
-        req.setGame(gameId);
-        req.setScoreTeamHome(home);
-        req.setScoreTeamGuest(guest);
+        ResultReq req = new ResultReq(
+                gameId,
+                home,
+                guest
+        );
         return req;
     }
 

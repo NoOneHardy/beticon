@@ -27,6 +27,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
@@ -43,6 +44,9 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
     @Autowired
     private UserService service;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @MockitoSpyBean
     private UserRepository repository;
@@ -206,12 +210,13 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes create(UserReq) - should create new user")
     void create01() {
-        UserReq dto = new UserReq();
-        dto.setUsername("No1Hardy");
-        dto.setEmail("no1hardy@test.ch");
-        dto.setFirstname("Silas");
-        dto.setLastname("Hardy");
-        dto.setPassword("securepassword");
+        UserReq dto = UserReq.builder()
+                .username("No1Hardy")
+                .email("no1hardy@test.ch")
+                .firstname("Silas")
+                .lastname("Hardy")
+                .password("securepassword")
+                .build();
 
         UserRes response = service.create(dto);
         assertNotNull(response);
@@ -227,12 +232,13 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes create(UserReq) - should hash password")
     void create02() {
-        UserReq dto = new UserReq();
-        dto.setUsername("No1Hardy");
-        dto.setEmail("no1hardy@test.ch");
-        dto.setFirstname("Silas");
-        dto.setLastname("Hardy");
-        dto.setPassword("securepassword");
+        UserReq dto = UserReq.builder()
+                .username("No1Hardy")
+                .email("no1hardy@test.ch")
+                .firstname("Silas")
+                .lastname("Hardy")
+                .password("securepassword")
+                .build();
 
         UserRes response = service.create(dto);
         assertNotNull(response);
@@ -252,12 +258,13 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes create(UserReq) - should send verification email")
     void create03() {
-        UserReq dto = new UserReq();
-        dto.setUsername("No1Hardy");
-        dto.setEmail("silas@test.ch");
-        dto.setFirstname("Silas");
-        dto.setLastname("Hardy");
-        dto.setPassword("securepassword");
+        UserReq dto = UserReq.builder()
+                .username("No1Hardy")
+                .email("silas@test.ch")
+                .firstname("Silas")
+                .lastname("Hardy")
+                .password("securepassword")
+                .build();
 
         UserRes response = service.create(dto);
         assertNotNull(response);
@@ -268,12 +275,13 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes update(String, UserReq) - should update user information")
     void update01() {
-        UserReq dto = new UserReq();
-        dto.setUsername("No1HardyUpdated");
-        dto.setEmail("silas@test-update.ch");
-        dto.setFirstname("SilasUpdated");
-        dto.setLastname("HardyUpdated");
-        dto.setPassword("newsecurepassword");
+        UserReq dto = UserReq.builder()
+                .username("No1HardyUpdated")
+                .email("silas@test-update.ch")
+                .firstname("SilasUpdated")
+                .lastname("HardyUpdated")
+                .password("newsecurepassword")
+                .build();
 
         User existingUser = new User();
         existingUser.setId("user-id-123");
@@ -288,18 +296,39 @@ public class UserServiceTest {
         service.update("user-id-123", dto);
 
         assertEquals("No1HardyUpdated", existingUser.getUsername());
-        // TODO: Re-enable email update test after implementing email change verification
-        // assertEquals("silas@test-update.ch", existingUser.getEmail());
+        // TODO: Expect "silas@test-update.ch" after implementing email change verification
+        assertEquals("silas@test.ch", existingUser.getEmail());
         assertEquals("SilasUpdated", existingUser.getFirstname());
         assertEquals("HardyUpdated", existingUser.getLastname());
         assertNotEquals("oldhashedpassword", existingUser.getPassword());
     }
 
     @Test
+    @DisplayName("UserRes update(String, UserReq) - should store the hashed new password of a password change")
+    void updatePasswordChange() {
+        UserReq dto = UserReq.builder()
+                .passwordChange(new UserReq.PasswordChange("newsecurepassword", "oldpassword"))
+                .build();
+
+        User existingUser = new User();
+        existingUser.setId("user-id-123");
+        existingUser.setEmail("silas@test.ch");
+        existingUser.setPassword(passwordEncoder.encode("oldpassword"));
+
+        Mockito.doReturn(existingUser).when(repository).save(ArgumentMatchers.any());
+        Mockito.doReturn(Optional.of(existingUser)).when(repository).findById("user-id-123");
+
+        service.update("user-id-123", dto);
+
+        assertTrue(passwordEncoder.matches("newsecurepassword", existingUser.getPassword()));
+    }
+
+    @Test
     @DisplayName("UserRes update(String, UserReq) - should ignore ommitted properties")
     void update02() {
-        UserReq dto = new UserReq();
-        dto.setUsername("No1HardyUpdated");
+        UserReq dto = UserReq.builder()
+                .username("No1HardyUpdated")
+                .build();
 
         User existingUser = new User();
         existingUser.setId("user-id-123");
@@ -324,12 +353,13 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes update(UserReq) - should update the currently logged-in user")
     void update03() {
-        UserReq dto = new UserReq();
-        dto.setUsername("No1HardyUpdated");
-        dto.setEmail("silas@test-update.ch");
-        dto.setFirstname("SilasUpdated");
-        dto.setLastname("HardyUpdated");
-        dto.setPassword("newsecurepassword");
+        UserReq dto = UserReq.builder()
+                .username("No1HardyUpdated")
+                .email("silas@test-update.ch")
+                .firstname("SilasUpdated")
+                .lastname("HardyUpdated")
+                .password("newsecurepassword")
+                .build();
 
         User loggedInUser = new User();
         loggedInUser.setId("user-id-123");
@@ -360,8 +390,9 @@ public class UserServiceTest {
     void update04() {
         SecurityHelper.mockNoLogin(authService);
 
-        UserReq dto = new UserReq();
-        dto.setUsername("No1HardyUpdated");
+        UserReq dto = UserReq.builder()
+                .username("No1HardyUpdated")
+                .build();
 
         assertThrows(NotLoggedInException.class, () -> service.update(dto));
         Mockito.verify(repository, Mockito.never()).save(ArgumentMatchers.any());
@@ -391,10 +422,11 @@ public class UserServiceTest {
         Mockito.doReturn(Optional.of(otherUser)).when(repository).findById("user-other");
         Mockito.doAnswer(invocation -> invocation.getArgument(0)).when(repository).save(ArgumentMatchers.any(User.class));
 
-        UserReq dto = new UserReq();
-        dto.setUsername("HackedName");
-        dto.setFirstname("Hacked");
-        dto.setLastname("Hacker");
+        UserReq dto = UserReq.builder()
+                .username("HackedName")
+                .firstname("Hacked")
+                .lastname("Hacker")
+                .build();
 
         UserRes res = service.update(dto);
 
@@ -563,9 +595,7 @@ public class UserServiceTest {
         user.setId("user-1");
         when(repository.findByUsername("No1Hardy")).thenReturn(Optional.of(user));
 
-        LoginReq req = new LoginReq();
-        req.setUsername("  No1Hardy  ");
-        req.setPassword("password");
+        LoginReq req = new LoginReq("  No1Hardy  ", "password");
 
         service.login(req);
 
@@ -580,9 +610,7 @@ public class UserServiceTest {
         user.setId("user-1");
         when(repository.findByUsername("No1Hardy")).thenReturn(Optional.of(user));
 
-        LoginReq req = new LoginReq();
-        req.setUsername("No1Hardy");
-        req.setPassword("  password  ");
+        LoginReq req = new LoginReq("No1Hardy", "  password  ");
 
         service.login(req);
 
@@ -596,9 +624,7 @@ public class UserServiceTest {
     void login_shouldThrowWhenTrimmedUsernameNotFound() {
         when(repository.findByUsername("No1Hardy")).thenReturn(Optional.empty());
 
-        LoginReq req = new LoginReq();
-        req.setUsername("  No1Hardy  ");
-        req.setPassword("password");
+        LoginReq req = new LoginReq("  No1Hardy  ", "password");
 
         assertThrows(org.springframework.security.authentication.BadCredentialsException.class,
                 () -> service.login(req));

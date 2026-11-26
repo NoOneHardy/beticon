@@ -27,8 +27,8 @@ public class TeamControllerTest extends ApiTestBase {
         ArgumentCaptor<TeamReq> captor = ArgumentCaptor.forClass(TeamReq.class);
         verify(teamService).create(captor.capture());
         TeamReq forwarded = captor.getValue();
-        assertEquals("Schweiz", forwarded.getName());
-        assertEquals("SUI", forwarded.getShortName());
-        assertEquals("flags/sui.png", forwarded.getFlag());
+        assertEquals("Schweiz", forwarded.name());
+        assertEquals("SUI", forwarded.shortName());
+        assertEquals("flags/sui.png", forwarded.flag());
     }
 }
