@@ -75,6 +75,7 @@ module.exports = tseslint.config(
       '@angular-eslint/template/prefer-at-empty': 'error',
       '@angular-eslint/template/prefer-at-else': 'error',
       '@angular-eslint/template/prefer-contextual-for-variables': 'error',
+      '@angular-eslint/template/prefer-self-closing-tags': 'error',
     },
   }
 );
