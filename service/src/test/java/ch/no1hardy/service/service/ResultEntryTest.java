@@ -1,6 +1,7 @@
 package ch.no1hardy.service.service;
 
 import ch.no1hardy.service.front.game.ResultReq;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.BetRepository;
 import ch.no1hardy.service.model.game.Game;
@@ -132,8 +133,7 @@ public class ResultEntryTest {
         Bet bet = new Bet();
         bet.setUser(user);
         bet.setGame(game);
-        bet.setScoreTeamHome(home);
-        bet.setScoreTeamGuest(guest);
+        bet.setScoreline(new Scoreline(home, guest));
         bet.setJoker(joker);
         return betRepository.save(bet);
     }
@@ -143,9 +143,7 @@ public class ResultEntryTest {
     }
 
     private void enterResult(Game target, Integer home, Integer guest) {
-        ResultReq req = new ResultReq();
-        req.setScoreTeamHome(home);
-        req.setScoreTeamGuest(guest);
+        ResultReq req = new ResultReq(null, home, guest);
         service.uploadResult(target.getId(), req);
     }
 
@@ -178,8 +176,7 @@ public class ResultEntryTest {
         Bet otherBet = new Bet();
         otherBet.setUser(exactUser);
         otherBet.setGame(other);
-        otherBet.setScoreTeamHome(3);
-        otherBet.setScoreTeamGuest(0);
+        otherBet.setScoreline(new Scoreline(3, 0));
         otherBet.setJoker(1);
         betRepository.save(otherBet);
         enterResult(other, 3, 0);
@@ -206,14 +203,11 @@ public class ResultEntryTest {
         Bet otherBet = new Bet();
         otherBet.setUser(exactUser);
         otherBet.setGame(other);
-        otherBet.setScoreTeamHome(1);
-        otherBet.setScoreTeamGuest(1);
+        otherBet.setScoreline(new Scoreline(1, 1));
         otherBet.setJoker(1);
         betRepository.save(otherBet);
 
-        ResultReq otherResult = new ResultReq();
-        otherResult.setScoreTeamHome(1);
-        otherResult.setScoreTeamGuest(1);
+        ResultReq otherResult = new ResultReq(null, 1, 1);
         service.uploadResult(other.getId(), otherResult);
         enterResult(2, 1);
 

@@ -1,12 +1,9 @@
 package ch.no1hardy.service.front.dashboard;
 
-import lombok.Builder;
-import lombok.Data;
 
-@Data
-@Builder
-public class Statistics {
-    private Integer totalGoalsBet;
-    private Integer exactBets;
-    private Integer wastedJokers;
+public record Statistics(
+        Integer totalGoalsBet,
+        Integer exactBets,
+        Integer wastedJokers
+) {
 }

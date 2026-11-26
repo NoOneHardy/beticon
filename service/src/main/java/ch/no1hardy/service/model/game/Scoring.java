@@ -18,8 +18,8 @@ public final class Scoring {
 
         return new PointsBreakdown(
                 correctWinner ? WINNER_POINTS : 0,
-                bet.getHome().equals(result.getHome()) ? GOALS_POINTS : 0,
-                bet.getGuest().equals(result.getGuest()) ? GOALS_POINTS : 0,
+                bet.home().equals(result.home()) ? GOALS_POINTS : 0,
+                bet.guest().equals(result.guest()) ? GOALS_POINTS : 0,
                 bet.total() == result.total() ? TOTAL_POINTS : 0,
                 joker
         );

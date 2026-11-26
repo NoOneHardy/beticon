@@ -17,7 +17,7 @@ import org.mapstruct.*;
         uses = {TeamRepository.class}
 )
 public interface TeamMapper extends EntityMapper<Team, TeamReq, TeamRes> {
-    @Mapping(target = "previousGames", source = "previousGames")
+    @Mapping(target = "team", source = ".")
     ExtendedTeamRes toExtendedDto(Team entity);
 
     @Mapping(target = "group", source = "group.name")

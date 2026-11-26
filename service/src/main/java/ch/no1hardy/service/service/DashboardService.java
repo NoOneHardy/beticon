@@ -36,14 +36,13 @@ public class DashboardService {
      * @throws NotLoggedInException if the user is not logged in
      */
     public DashboardData getDashboard() throws NotLoggedInException {
-        return DashboardData.builder()
-                .leaderboardPreview(leaderboardService.getUserLeaderboard())
-                .userSummary(getUserSummary())
-                .upcomingGames(gameService.getUpcomingGames())
-                .stats(getStatistics())
-                .globalStats(getGlobalStatistics())
-                .recentResults(gameService.getRecentResults())
-                .build();
+        return new DashboardData(
+                leaderboardService.getUserLeaderboard(),
+                getUserSummary(),
+                getStatistics(),
+                getGlobalStatistics(),
+                gameService.getUpcomingGames(),
+                gameService.getRecentResults());
     }
 
     /**
@@ -52,11 +51,10 @@ public class DashboardService {
      */
     public GlobalStatistics getGlobalStatistics() {
         List<User> users = userService.listRaw();
-        return GlobalStatistics.builder()
-                .totalPoints(users.stream().mapToInt(User::getPoints).sum())
-                .exactBets(users.stream().mapToInt(this::getExactBets).sum())
-                .wastedJokers(users.stream().mapToInt(this::getWastedJokers).sum())
-                .build();
+        return new GlobalStatistics(
+                users.stream().mapToInt(User::getPoints).sum(),
+                users.stream().mapToInt(this::getExactBets).sum(),
+                users.stream().mapToInt(this::getWastedJokers).sum());
     }
 
     /**
@@ -76,12 +74,11 @@ public class DashboardService {
             isConfirmed = null;
 
         List<RankingRes> userLeaderboard = leaderboardService.getUserLeaderboard(user);
-        return UserSummary.builder()
-                .points(user.getPoints())
-                .percentage(groupService.getOverallPercentage(user))
-                .isConfirmed(isConfirmed)
-                .ranking(userLeaderboard.size() == 3 ? userLeaderboard.get(1).getRanking() : null)
-                .build();
+        return new UserSummary(
+                user.getPoints(),
+                userLeaderboard.size() == 3 ? userLeaderboard.get(1).ranking() : null,
+                groupService.getOverallPercentage(user),
+                isConfirmed);
     }
 
     /**
@@ -100,11 +97,7 @@ public class DashboardService {
      * @return statistics for the specified user
      */
     public Statistics getStatistics(@NotNull User user) {
-        return Statistics.builder()
-                .totalGoalsBet(getTotalGoalsBet(user))
-                .exactBets(getExactBets(user))
-                .wastedJokers(getWastedJokers(user))
-                .build();
+        return new Statistics(getTotalGoalsBet(user), getExactBets(user), getWastedJokers(user));
     }
 
     /**

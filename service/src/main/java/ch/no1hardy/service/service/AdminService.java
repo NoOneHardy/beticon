@@ -81,7 +81,7 @@ public class AdminService {
                 .map(user -> pointsChangeMapper.toPointsChange(user, oldTotals.get(user.getId())))
                 .toList();
         changes.forEach(change -> log.info("Re-scored user {}: {} -> {} Points",
-                change.getUsername(), change.getOldPoints(), change.getNewPoints()));
+                change.username(), change.oldPoints(), change.newPoints()));
         log.info("Re-scored everything: {} of {} user totals changed", changes.size(), users.size());
         return changes;
     }

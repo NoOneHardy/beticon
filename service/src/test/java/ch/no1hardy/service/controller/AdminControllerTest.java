@@ -57,8 +57,7 @@ public class AdminControllerTest {
     @WithMockUser(roles = "ADMIN")
     @DisplayName("POST /admin/rescore - should return the changed totals for an admin")
     void shouldRescoreForAdmin() throws Exception {
-        PointsChangeRes change = PointsChangeRes.builder()
-                .userId("u1").username("hardy").oldPoints(3).newPoints(8).build();
+        PointsChangeRes change = new PointsChangeRes("u1", "hardy", 3, 8);
         when(adminService.rescoreEverything()).thenReturn(List.of(change));
 
         mockMvc.perform(post("/admin/rescore"))

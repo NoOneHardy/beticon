@@ -1,15 +1,15 @@
 package ch.no1hardy.service.front.team;
 
 import ch.no1hardy.service.front.game.PreviousGameRes;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class ExtendedTeamRes extends TeamRes {
-    private List<PreviousGameRes> previousGames;
+/**
+ * A Team with its previous Games. The Team's fields are serialized next to the previous Games, not nested.
+ */
+public record ExtendedTeamRes(
+        @JsonUnwrapped TeamRes team,
+        List<PreviousGameRes> previousGames
+) {
 }

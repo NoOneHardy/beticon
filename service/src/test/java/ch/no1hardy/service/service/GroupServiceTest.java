@@ -1,6 +1,7 @@
 package ch.no1hardy.service.service;
 
 import ch.no1hardy.service.exception.KnockoutTieException;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.exception.NotFoundException;
 import ch.no1hardy.service.front.game.ResultReq;
 import ch.no1hardy.service.front.group.CardGroupRes;
@@ -54,7 +55,14 @@ public class GroupServiceTest {
         mockGroup.setGames(List.of(game));
 
         when(repository.findAll()).thenReturn(List.of(mockGroup));
-        when(mapper.toCard(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(CardGroupRes.builder().build());
+        when(mapper.toCard(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(new CardGroupRes(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null));
     }
 
     @Test
@@ -115,9 +123,9 @@ public class GroupServiceTest {
 
         List<GroupOptionRes> options = service.listOptions();
         assertEquals(2, options.size());
-        assertEquals("group-1", options.getFirst().getId());
-        assertEquals("group-2", options.get(1).getId());
-        assertEquals("/cdn/knockout.png", options.get(1).getThumbnail());
+        assertEquals("group-1", options.getFirst().id());
+        assertEquals("group-2", options.get(1).id());
+        assertEquals("/cdn/knockout.png", options.get(1).thumbnail());
     }
 
     @Test
@@ -308,7 +316,7 @@ public class GroupServiceTest {
         Group group = groupWith("group-1", List.of(game1, game2));
         when(repository.findById("group-1")).thenReturn(Optional.of(group));
 
-        GroupRes expected = GroupRes.builder().id("group-1").build();
+        GroupRes expected = new GroupRes("group-1", null, null, null, null, null, null, null, null);
         when(mapper.toDto(group)).thenReturn(expected);
 
         ResultReq result1 = resultReq("game-1", 2, 0);
@@ -331,16 +339,16 @@ public class GroupServiceTest {
 
     private Score activeScore(int home, int guest) {
         Score score = new Score();
-        score.setScoreTeamHome(home);
-        score.setScoreTeamGuest(guest);
+        score.setScoreline(new Scoreline(home, guest));
         return score;
     }
 
     private ResultReq resultReq(String gameId, int home, int guest) {
-        ResultReq req = new ResultReq();
-        req.setGame(gameId);
-        req.setScoreTeamHome(home);
-        req.setScoreTeamGuest(guest);
+        ResultReq req = new ResultReq(
+                gameId,
+                home,
+                guest
+        );
         return req;
     }
 

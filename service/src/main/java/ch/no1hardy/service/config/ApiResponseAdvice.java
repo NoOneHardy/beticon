@@ -46,10 +46,7 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
 
         GlobalData globalData = (GlobalData) ((ServletServerHttpRequest) request).getServletRequest()
                 .getAttribute(GlobalKey.GLOBAL_DATA.getKey());
-        BaseResponse<?> baseResponse = BaseResponse.builder()
-                .data(body)
-                .globalData(globalData)
-                .build();
+        BaseResponse<?> baseResponse = new BaseResponse<>(body, globalData);
 
         if (StringHttpMessageConverter.class.isAssignableFrom(selectedConverterType)) {
             response.getHeaders().setContentType(MediaType.APPLICATION_JSON);

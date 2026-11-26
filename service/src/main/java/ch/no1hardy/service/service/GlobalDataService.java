@@ -34,10 +34,7 @@ public class GlobalDataService {
                         .toList())
                 .orElseGet(List::of);
 
-        return GlobalData.builder()
-                .id(UUID.randomUUID().toString())
-                .notifications(notificationMapper.toDto(notifications))
-                .build();
+        return new GlobalData(UUID.randomUUID().toString(), notificationMapper.toDto(notifications));
     }
 
     /**

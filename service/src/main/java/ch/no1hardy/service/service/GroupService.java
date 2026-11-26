@@ -39,9 +39,9 @@ public class GroupService {
 
     public GroupRes create(GroupReq dto) {
         if (dto == null) throw new MissingRequestBodyException();
-        if (dto.getName() == null) throw new MissingRequestPropertyException("name", "string");
-        if (dto.getIsKnockout() == null) throw new MissingRequestPropertyException("isKnockout", "boolean");
-        if (dto.getOrder() == null) throw new MissingRequestPropertyException("order", "number");
+        if (dto.name() == null) throw new MissingRequestPropertyException("name", "string");
+        if (dto.isKnockout() == null) throw new MissingRequestPropertyException("isKnockout", "boolean");
+        if (dto.order() == null) throw new MissingRequestPropertyException("order", "number");
 
         Group group = repository.save(mapper.toEntity(dto));
         return mapper.toDto(group);
@@ -84,9 +84,9 @@ public class GroupService {
             throw new NotFoundException("Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden");
 
         for (BetReq bet : bets.stream().filter(BetReq::isValid).toList()) {
-            if (group.getGames().stream().filter(Game::isActive).map(Game::getId).toList().contains(bet.getGame())) {
+            if (group.getGames().stream().filter(Game::isActive).map(Game::getId).toList().contains(bet.game())) {
                 try {
-                    gameService.uploadBet(bet.getGame(), bet);
+                    gameService.uploadBet(bet.game(), bet);
                 } catch (BetPlaceException e) {
                     throw new BetPlaceException(e.getMessage(), "Eines der Spiele hat bereits begonnen.");
                 } catch (KnockoutTieException e) {
@@ -101,17 +101,17 @@ public class GroupService {
         Group group = repository.findById(id).orElseThrow(() -> new NotFoundException("Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden"));
 
         for (ResultReq result : results.stream().filter(ScoreReq::isValid).toList()) {
-            Optional<Game> gameOptional = group.getGames().stream().filter(g -> g.isActive() && g.getId().equals(result.getGame())).findFirst();
+            Optional<Game> gameOptional = group.getGames().stream().filter(g -> g.isActive() && g.getId().equals(result.game())).findFirst();
             if (gameOptional.isEmpty()) continue;
 
             Game game = gameOptional.get();
             if (game.getResult() != null && game.getResult().isActive()) {
-                if (Objects.equals(game.getResult().getScoreTeamGuest(), result.getScoreTeamGuest())
-                        && Objects.equals(game.getResult().getScoreTeamHome(), result.getScoreTeamHome())) continue;
+                if (Objects.equals(game.getResult().getScoreTeamGuest(), result.scoreTeamGuest())
+                        && Objects.equals(game.getResult().getScoreTeamHome(), result.scoreTeamHome())) continue;
             }
 
             try {
-                gameService.uploadResult(result.getGame(), result);
+                gameService.uploadResult(result.game(), result);
             } catch (KnockoutTieException e) {
                 throw new KnockoutTieException(e.getMessage(), "Diese Gruppe ist eine K.O.-Phase. Spiele können nicht unentschieden enden.");
             }

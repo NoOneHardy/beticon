@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-Subproject specifics live in `frontend/CLAUDE.md` and `service/CLAUDE.md`.
+Subproject specifics live in `frontend/CLAUDE.md` and `service/CLAUDE.md`; the rules code reviews check against live in `CODING_STANDARDS.md`.
 
 ## Project Overview
 

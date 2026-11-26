@@ -1,6 +1,7 @@
 package ch.no1hardy.service.model;
 
 import ch.no1hardy.service.model.game.Score;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.model.game.ScoreRepository;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
@@ -35,8 +36,7 @@ public class ScorelinePersistenceTest {
     @DisplayName("save() - should reject a Result without guest goals")
     void shouldRejectResultWithoutGuestGoals() {
         Score result = new Score();
-        result.setScoreTeamHome(2);
-        result.setScoreTeamGuest(null);
+        result.setScoreline(new Scoreline(2, null));
 
         assertTrue(rejectedPaths(result).contains("scoreline.guest"));
     }

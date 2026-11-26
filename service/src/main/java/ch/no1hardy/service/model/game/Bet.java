@@ -46,27 +46,18 @@ public class Bet extends BaseEntity {
     private Integer points;
 
     public Integer getScoreTeamHome() {
-        return scoreline == null ? null : scoreline.getHome();
+        return scoreline == null ? null : scoreline.home();
     }
 
     public Integer getScoreTeamGuest() {
-        return scoreline == null ? null : scoreline.getGuest();
+        return scoreline == null ? null : scoreline.guest();
     }
 
-    public void setScoreTeamHome(Integer home) {
-        if (scoreline == null) scoreline = new Scoreline();
-        scoreline.setHome(home);
-    }
-
-    public void setScoreTeamGuest(Integer guest) {
-        if (scoreline == null) scoreline = new Scoreline();
-        scoreline.setGuest(guest);
-    }
 
     public boolean equals(BetReq bet) {
-        return Objects.equals(this.getScoreTeamGuest(), bet.getScoreTeamGuest())
-                && Objects.equals(this.getScoreTeamHome(), bet.getScoreTeamHome())
-                && Objects.equals(this.getJoker(), bet.getJoker());
+        return Objects.equals(this.getScoreTeamGuest(), bet.scoreTeamGuest())
+                && Objects.equals(this.getScoreTeamHome(), bet.scoreTeamHome())
+                && Objects.equals(this.getJoker(), bet.joker());
     }
 
     @Override

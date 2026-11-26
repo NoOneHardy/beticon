@@ -33,20 +33,11 @@ public class Score extends BaseEntity {
     private Scoreline scoreline;
 
     public Integer getScoreTeamHome() {
-        return scoreline == null ? null : scoreline.getHome();
+        return scoreline == null ? null : scoreline.home();
     }
 
     public Integer getScoreTeamGuest() {
-        return scoreline == null ? null : scoreline.getGuest();
+        return scoreline == null ? null : scoreline.guest();
     }
 
-    public void setScoreTeamHome(Integer home) {
-        if (scoreline == null) scoreline = new Scoreline();
-        scoreline.setHome(home);
-    }
-
-    public void setScoreTeamGuest(Integer guest) {
-        if (scoreline == null) scoreline = new Scoreline();
-        scoreline.setGuest(guest);
-    }
 }

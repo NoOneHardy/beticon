@@ -31,8 +31,20 @@ public interface GameMapper extends EntityMapper<Game, GameReq, BetGameRes> {
     @Mapping(target = "gameId", source = "game", qualifiedByName = "getGameId")
     ScoreRes toDto(Score entity);
 
+    /**
+     * The Game is not looked up from the request: the caller sets the Game the Result was entered for.
+     */
+    @Mapping(target = "game", ignore = true)
+    @Mapping(target = "scoreline", expression = "java(dto.scoreline())")
     Score toEntity(ResultReq dto);
 
+    /**
+     * The Game and User are not looked up from the request: the caller sets the Game bet on and the logged-in User.
+     */
+    @Mapping(target = "game", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "scoreline", expression = "java(dto.scoreline())")
+    @Mapping(target = "joker", expression = "java(dto.normalizedJoker())")
     Bet toEntity(BetReq dto);
 
     @Mapping(target = "correctWinner", source = "correctWinner", qualifiedByName = "nullIfZero")

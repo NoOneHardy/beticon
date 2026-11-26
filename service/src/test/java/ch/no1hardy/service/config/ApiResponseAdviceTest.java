@@ -32,10 +32,7 @@ public class ApiResponseAdviceTest {
         MethodParameter returnType = new MethodParameter(method, -1);
 
         MockHttpServletRequest servletRequest = new MockHttpServletRequest();
-        servletRequest.setAttribute(GlobalKey.GLOBAL_DATA.getKey(), GlobalData.builder()
-                .id("admin-1")
-                .notifications(List.of())
-                .build());
+        servletRequest.setAttribute(GlobalKey.GLOBAL_DATA.getKey(), new GlobalData("admin-1", List.of()));
 
         MockHttpServletResponse servletResponse = new MockHttpServletResponse();
         ServletServerHttpResponse response = new ServletServerHttpResponse(servletResponse);

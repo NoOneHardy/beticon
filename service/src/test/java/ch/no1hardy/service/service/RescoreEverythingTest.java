@@ -1,6 +1,7 @@
 package ch.no1hardy.service.service;
 
 import ch.no1hardy.service.front.admin.PointsChangeRes;
+import ch.no1hardy.service.model.game.Scoreline;
 import ch.no1hardy.service.front.game.ResultReq;
 import ch.no1hardy.service.model.game.Bet;
 import ch.no1hardy.service.model.game.BetRepository;
@@ -86,9 +87,7 @@ public class RescoreEverythingTest {
 
         when(authService.getLoggedInUser()).thenReturn(Optional.of(driftedUser));
 
-        ResultReq result = new ResultReq();
-        result.setScoreTeamHome(2);
-        result.setScoreTeamGuest(1);
+        ResultReq result = new ResultReq(null, 2, 1);
         gameService.uploadResult(scoredGame.getId(), result);
     }
 
@@ -124,8 +123,7 @@ public class RescoreEverythingTest {
         Bet bet = new Bet();
         bet.setUser(user);
         bet.setGame(game);
-        bet.setScoreTeamHome(home);
-        bet.setScoreTeamGuest(guest);
+        bet.setScoreline(new Scoreline(home, guest));
         bet.setJoker(joker);
         return betRepository.save(bet);
     }
@@ -160,7 +158,7 @@ public class RescoreEverythingTest {
     }
 
     private PointsChangeRes changeOf(List<PointsChangeRes> changes, User user) {
-        return changes.stream().filter(c -> c.getUserId().equals(user.getId())).findFirst().orElse(null);
+        return changes.stream().filter(c -> c.userId().equals(user.getId())).findFirst().orElse(null);
     }
 
     @Test
@@ -186,12 +184,12 @@ public class RescoreEverythingTest {
         List<PointsChangeRes> changes = adminService.rescoreEverything();
 
         PointsChangeRes drifted = changeOf(changes, driftedUser);
-        assertEquals(driftedUser.getUsername(), drifted.getUsername());
-        assertEquals(123, drifted.getOldPoints());
-        assertEquals(10, drifted.getNewPoints());
+        assertEquals(driftedUser.getUsername(), drifted.username());
+        assertEquals(123, drifted.oldPoints());
+        assertEquals(10, drifted.newPoints());
         PointsChangeRes idle = changeOf(changes, idleUser);
-        assertEquals(5, idle.getOldPoints());
-        assertEquals(0, idle.getNewPoints());
+        assertEquals(5, idle.oldPoints());
+        assertEquals(0, idle.newPoints());
         assertNull(changeOf(changes, untouchedUser));
     }
 
