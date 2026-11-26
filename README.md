@@ -93,7 +93,7 @@ Beticon runs as five containers: the Angular **frontend**, the Spring Boot **ser
    | File           | What goes in                                                                                                                                                                                                |
    |----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
    | `mysql/.env`   | `MYSQL_ROOT_PASSWORD`, `MYSQL_USER`, `MYSQL_PASSWORD`                                                                                                                                                       |
-   | `service/.env` | Copy [`service/.env.example`](service/.env.example). Use `DATABASE_HOST=beticon-mysql` and the MySQL user from above, add SMTP credentials for the verification emails, and set `BASE_URL` to your public URL |
+   | `service/.env` | Copy [`service/.env.example`](service/.env.example). Use `DATABASE_HOST=beticon-mysql` and the MySQL user from above, generate a random `SECRET_KEY`, add SMTP credentials for the verification emails, and add `BASE_URL=<your public URL>` |
    | `proxy/.env`   | `BACKEND_HOST=http://beticon-service:26001`, `FRONTEND_HOST=http://beticon-frontend`, `CDN_HOST=http://beticon-cdn`                                                                                           |
 
 4. **Start it:**
@@ -104,7 +104,7 @@ Beticon runs as five containers: the Angular **frontend**, the Spring Boot **ser
 
    Beticon is now served on port `26000`. Put a reverse proxy with TLS in front of it before you invite anyone.
 
-5. **Make yourself admin.** Register, verify your email, then promote your account to `ADMIN` in the `beticon-user` table. From then on you can approve the other players from the admin panel.
+5. **Make yourself admin.** Register, verify your email, then set your account's `role` to `1` (`ADMIN`) in the `beticon-user` table. Roles are stored as numbers, so `USER` is `0`. From then on you can approve the other players from the admin panel.
 
 </details>
 
