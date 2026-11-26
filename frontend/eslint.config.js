@@ -67,6 +67,7 @@ module.exports = tseslint.config(
       '@angular-eslint/no-implicit-take-until-destroyed': 'error',
       '@angular-eslint/computed-must-return': 'error',
       '@angular-eslint/reactive-context-must-read-signal': 'error',
+      '@angular-eslint/consistent-component-styles': 'error',
       '@typescript-eslint/no-extraneous-class': [
         'error',
         {allowWithDecorator: true}
