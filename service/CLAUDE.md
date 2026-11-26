@@ -8,6 +8,7 @@ Run from the repo root:
 
 ```bash
 ./gradlew :service:build
+./gradlew :service:lint      # Spotless with the Eclipse formatter (config/eclipse-formatter.xml); fix with :service:spotlessApply
 ./gradlew :service:test      # JUnit 5; @SpringBootTest + embedded H2 for integration tests, @WebMvcTest slice (controller/ApiTestBase) for API tests
 ./gradlew :service:bootRun   # http://localhost:8080
 ```
