@@ -2,7 +2,7 @@ import {ComponentFixture} from '@angular/core/testing'
 
 import {FormFieldComponent} from './form-field.component'
 import {configureTestHost, TestHostComponent} from '../test-host/test-host.component'
-import {queryElement} from '../../helper/test.helper'
+import {findElement, queryElement} from '../../helper/test.helper'
 
 describe('FormFieldComponent', () => {
   let component: TestHostComponent
@@ -30,7 +30,7 @@ describe('FormFieldComponent', () => {
       template: '<bet-form-field><input type="password"></bet-form-field>'
     })
 
-    expect((fixture.nativeElement as HTMLElement).querySelector('button.show-password-icon')).toBeTruthy()
+    expect(findElement(fixture, 'button.show-password-icon')).toBeTruthy()
   })
 
   it('should toggle password visibility', async () => {
@@ -39,7 +39,7 @@ describe('FormFieldComponent', () => {
       template: '<bet-form-field><input type="password"></bet-form-field>'
     })
 
-    expect((fixture.nativeElement as HTMLElement).querySelector('button.show-password-icon')).toBeTruthy()
+    expect(findElement(fixture, 'button.show-password-icon')).toBeTruthy()
     queryElement(fixture, 'button.show-password-icon', HTMLElement).click()
     fixture.detectChanges()
     expect(queryElement(fixture, 'input', HTMLInputElement).type).toBe('text')

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { GamePreviewComponent } from './game-preview.component'
 import {BetGame} from '../../../../model/game/bet-game'
 import {Bet} from '../../../../model/game/bet'
+import {findElement} from '../../../helper/test.helper'
 
 describe('GamePreviewComponent', () => {
   let component: GamePreviewComponent
@@ -72,7 +73,7 @@ describe('GamePreviewComponent', () => {
     })
     fixture.detectChanges()
 
-    const points = (fixture.nativeElement as HTMLElement).querySelector('.bet-points')
+    const points = findElement(fixture, '.bet-points')
     expect(points?.textContent.trim()).toBe('+30')
   })
 
@@ -83,7 +84,7 @@ describe('GamePreviewComponent', () => {
     })
     fixture.detectChanges()
 
-    const points = (fixture.nativeElement as HTMLElement).querySelector('.bet-points')
+    const points = findElement(fixture, '.bet-points')
     expect(points?.textContent.trim()).toBe('+0')
   })
 })

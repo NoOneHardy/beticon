@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {PointTableComponent} from './point-table.component'
 import {PointsBreakdown} from '../../../../model/game/points-breakdown'
+import {findElement} from '../../../helper/test.helper'
 
 describe('PointTableComponent', () => {
   let fixture: ComponentFixture<PointTableComponent>
@@ -38,7 +39,7 @@ describe('PointTableComponent', () => {
       'Joker', 'x2',
       'Total', '+ 20'
     ])
-    expect((fixture.nativeElement as HTMLElement).querySelector('.separator')).not.toBeNull()
+    expect(findElement(fixture, '.separator')).not.toBeNull()
   })
 
   it('should skip items that are null', () => {
@@ -92,6 +93,6 @@ describe('PointTableComponent', () => {
     }, true)
 
     expect(texts).toEqual(['Total', '+ 5'])
-    expect((fixture.nativeElement as HTMLElement).querySelector('.separator')).toBeNull()
+    expect(findElement(fixture, '.separator')).toBeNull()
   })
 })

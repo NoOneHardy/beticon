@@ -10,6 +10,7 @@ import {Role} from '../../../model/user/role'
 import {UserApplicationStatus} from '../../../model/user/user-application-status'
 import {logout} from '../../../user-management/store/user.actions'
 import {ViewportService} from '../../services/viewport/viewport.service'
+import {findElement} from '../../helper/test.helper'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -116,7 +117,7 @@ describe('HeaderComponent', () => {
     viewportService.viewportWidth.set(480)
     fixture.detectChanges()
 
-    expect((fixture.nativeElement as HTMLElement).querySelector('.menu-button')).toBeTruthy()
+    expect(findElement(fixture, '.menu-button')).toBeTruthy()
   })
 
   it('should render guest navigation and auth links in the mobile menu', () => {
@@ -124,7 +125,7 @@ describe('HeaderComponent', () => {
     component.isExpanded.set(true)
     fixture.detectChanges()
 
-    const mobileMenu = (fixture.nativeElement as HTMLElement).querySelector('#mobile-menu')
+    const mobileMenu = findElement(fixture, '#mobile-menu')
     expect(mobileMenu?.textContent).toContain('Home')
     expect(mobileMenu?.textContent).toContain('Rangliste')
     expect(mobileMenu?.textContent).toContain('Anmelden')
@@ -137,7 +138,7 @@ describe('HeaderComponent', () => {
     viewportService.viewportWidth.set(480)
     fixture.detectChanges()
 
-    expect((fixture.nativeElement as HTMLElement).querySelector('.menu-button')).toBeTruthy()
+    expect(findElement(fixture, '.menu-button')).toBeTruthy()
   })
 
   it('should render admin actions in the mobile menu', () => {
@@ -148,7 +149,7 @@ describe('HeaderComponent', () => {
     component.isExpanded.set(true)
     fixture.detectChanges()
 
-    const mobileMenu = (fixture.nativeElement as HTMLElement).querySelector('#mobile-menu')
+    const mobileMenu = findElement(fixture, '#mobile-menu')
     expect(mobileMenu).toBeTruthy()
     expect(mobileMenu?.textContent).toContain('Teams')
     expect(mobileMenu?.textContent).toContain('Gruppen')

@@ -5,6 +5,7 @@ import {User} from '../../../../../model/user/user'
 import {MockStore, provideMockStore} from '@ngrx/store/testing'
 import {mockUser1} from '../../../../../model/mock/user.mock'
 import {selectNotifications} from '../../../../../user-management/store/user.feature'
+import {findElement} from '../../../../helper/test.helper'
 
 describe('UserMenuComponent', () => {
   let component: UserMenuComponent
@@ -39,12 +40,12 @@ describe('UserMenuComponent', () => {
   })
 
   it('should not display anything if user is null', () => {
-    expect((fixture.nativeElement as HTMLElement).querySelector('*')).toBeNull()
+    expect(findElement(fixture, '*')).toBeNull()
   })
 
   it('should display user name if user is not null', () => {
     fixture.componentRef.setInput('user', user)
     fixture.detectChanges()
-    expect((fixture.nativeElement as HTMLElement).querySelector('bet-user-button')?.textContent).toContain('User1')
+    expect(findElement(fixture, 'bet-user-button')?.textContent).toContain('User1')
   })
 })

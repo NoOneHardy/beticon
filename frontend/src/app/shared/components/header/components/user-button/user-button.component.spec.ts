@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {UserButtonComponent} from './user-button.component'
 import {provideRouter} from '@angular/router'
-import {queryElement} from '../../../../helper/test.helper'
+import {findElement, queryElement} from '../../../../helper/test.helper'
 
 describe('UserButtonComponent', () => {
   let component: UserButtonComponent
@@ -41,11 +41,11 @@ describe('UserButtonComponent', () => {
   it('should be a link if a route is given', () => {
     fixture.componentRef.setInput('route', '/')
     fixture.detectChanges()
-    expect((fixture.nativeElement as HTMLElement).querySelector('.button')).toBeInstanceOf(HTMLAnchorElement)
+    expect(findElement(fixture, '.button')).toBeInstanceOf(HTMLAnchorElement)
   })
 
   it('should be a button if no route is given', () => {
-    expect((fixture.nativeElement as HTMLElement).querySelector('.button')).toBeInstanceOf(HTMLButtonElement)
+    expect(findElement(fixture, '.button')).toBeInstanceOf(HTMLButtonElement)
   })
 
   it('should set innerHTML via content input', () => {

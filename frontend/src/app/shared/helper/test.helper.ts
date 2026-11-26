@@ -37,8 +37,12 @@ export function flushApiErrorResponse(req: TestRequest, error?: ApiErrorResponse
   })
 }
 
+export function findElement(fixture: ComponentFixture<unknown>, selector: string): Element | null {
+  return (fixture.nativeElement as HTMLElement).querySelector(selector)
+}
+
 export function queryElement<T extends Element>(fixture: ComponentFixture<unknown>, selector: string, type: new () => T): T {
-  const element = (fixture.nativeElement as HTMLElement).querySelector(selector)
+  const element = findElement(fixture, selector)
   if (!(element instanceof type)) throw new Error(`No ${type.name} matches '${selector}'`)
   return element
 }

@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {NavItemComponent} from './nav-item.component'
 import {provideRouter, RouterLinkActive} from '@angular/router'
+import {findElement} from '../../../../helper/test.helper'
 
 describe('NavItemComponent', () => {
   let component: NavItemComponent
@@ -35,8 +36,7 @@ describe('NavItemComponent', () => {
   })
 
   it('should display green bar on active link', () => {
-    const compiled = fixture.nativeElement as HTMLElement
-    const item = compiled.querySelector('.nav-item')
+    const item = findElement(fixture, '.nav-item')
     expect(item).toBeTruthy()
     if (!item) return
     item.classList.add('active')
@@ -48,9 +48,8 @@ describe('NavItemComponent', () => {
     fixture.componentRef.setInput('icon', 'home')
     fixture.detectChanges()
 
-    const compiled = fixture.nativeElement as HTMLElement
-    const item = compiled.querySelector('.nav-item')
-    const icon = compiled.querySelector('.icon')
+    const item = findElement(fixture, '.nav-item')
+    const icon = findElement(fixture, '.icon')
     expect(item).toBeTruthy()
     expect(icon).toBeTruthy()
     if (!item || !icon) return
@@ -71,8 +70,7 @@ describe('NavItemComponent', () => {
     fixture.componentRef.setInput('route', null)
     fixture.detectChanges()
 
-    const compiled = fixture.nativeElement as HTMLElement
-    expect(compiled.querySelector('button.nav-item')).toBeTruthy()
-    expect(compiled.querySelector('a.nav-item')).toBeNull()
+    expect(findElement(fixture, 'button.nav-item')).toBeTruthy()
+    expect(findElement(fixture, 'a.nav-item')).toBeNull()
   })
 })
