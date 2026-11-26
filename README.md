@@ -15,7 +15,7 @@ A prediction game for football tournaments: bet on every scoreline, collect Poin
 ![Java](https://img.shields.io/badge/Java-25-ED8B00?logo=openjdk&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
 
-[How you score](#-how-you-score) · [Host your own game](#%EF%B8%8F-host-your-own-game) · [Development](#%EF%B8%8F-development) · [Contributing](#-contributing)
+[How you score](#-how-you-score) · [Host your own tournament](#%EF%B8%8F-host-your-own-tournament) · [Development](#%EF%B8%8F-development) · [Contributing](#-contributing)
 
 </div>
 
@@ -33,7 +33,7 @@ Before every Game, each player places a **Bet**: the scoreline they think the Ga
 - 🛠️ **Run the tournament** from the admin panel: teams, groups, Games, Results and players
 
 > [!NOTE]
-> 💰 **About money.** Beticon itself never handles money. A group can play for stakes, but for legal reasons that happens outside the app: the **Host** (the person who runs the game) collects the stakes and pays out the winners. Stakes are completely optional; bragging rights work just as well.
+> 💰 **About money.** Beticon itself never handles money. A group can play for stakes, but for legal reasons that happens outside the app: the **Host** (the person who runs the tournament) collects the stakes and pays out the winners. Stakes are completely optional; bragging rights work just as well.
 
 ## 🎯 How you score
 
@@ -65,11 +65,11 @@ The Result is **Switzerland 2 : 1 Brazil**.
 
 </details>
 
-The full vocabulary of the game lives in [`GLOSSARY.md`](GLOSSARY.md).
+Beticon's full vocabulary lives in [`GLOSSARY.md`](GLOSSARY.md).
 
-## 🏟️ Host your own game
+## 🏟️ Host your own tournament
 
-Right now, hosting your own instance is the way to play Beticon. The [public instance](https://beticon-dev.no1hardy.ch) is a development preview, not a playable game.
+Right now, hosting your own instance is the way to play Beticon. The [public instance](https://beticon-dev.no1hardy.ch) is a development preview, so you can't play a tournament on it.
 
 Beticon runs as five containers: the Angular **frontend**, the Spring Boot **service**, **MySQL**, a small nginx **CDN** for uploaded images, and an nginx **proxy** that serves everything on port `26000`.
 
@@ -108,7 +108,7 @@ Beticon runs as five containers: the Angular **frontend**, the Spring Boot **ser
 
 </details>
 
-**Tune the game** with the service's environment: `JOKER_DOUBLE` and `JOKER_TRIPLE` set the Joker limits (defaults 10 and 6). The participation fee behind the dashboard's jackpot is set in [`application.yml`](service/src/main/resources/application.yml).
+**Tune the tournament** with the service's environment: `JOKER_DOUBLE` and `JOKER_TRIPLE` set the Joker limits (defaults 10 and 6). The participation fee behind the dashboard's jackpot is set in [`application.yml`](service/src/main/resources/application.yml).
 
 ## 🛠️ Development
 
