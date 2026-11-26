@@ -15,7 +15,6 @@ import {adminFeature} from './admin/store/admin.feature'
 import {homeFeature} from './home/store/home.feature'
 import {HomeEffects} from './home/store/home.effects'
 import {MAT_DATE_LOCALE} from '@angular/material/core'
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field'
 import {registerLocaleData} from '@angular/common'
 import {provideDateFnsAdapter} from '@angular/material-date-fns-adapter'
@@ -37,7 +36,6 @@ export const appConfig: ApplicationConfig = {
     provideState(adminFeature),
     provideDateFnsAdapter(),
     provideEffects(UserEffects, TournamentEffects, HomeEffects, AdminEffects),
-    provideAnimationsAsync(),
     {
       provide: LOCALE_ID,
       useValue: 'de-CH',

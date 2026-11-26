@@ -3,7 +3,6 @@ import {ComponentFixture, TestBed} from '@angular/core/testing'
 import {LoginComponent} from './login.component'
 import {provideMockStore} from '@ngrx/store/testing'
 import {provideRouter} from '@angular/router'
-import {provideAnimations} from '@angular/platform-browser/animations'
 import {queryElement} from '../../shared/helper/test.helper'
 
 describe('LoginComponent', () => {
@@ -13,7 +12,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LoginComponent],
-      providers: [provideMockStore(), provideRouter([]), provideAnimations()]
+      providers: [provideMockStore(), provideRouter([])]
     }).compileComponents()
 
     fixture = TestBed.createComponent(LoginComponent)

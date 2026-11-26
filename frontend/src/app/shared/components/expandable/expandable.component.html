@@ -1,12 +1,15 @@
-<div class="heading" (pointerup)="expanded = !expanded">
+<div class="heading" (pointerup)="toggle()">
   <span class="name">{{ name() }}</span>
-  <button type="button" [class.-expanded]="expanded">
+  <button type="button" [class.-expanded]="expanded()">
     <span class="material-symbols-rounded">keyboard_arrow_down</span>
   </button>
 </div>
-<div class="content" [class.-expanded]="expanded" [@expandable]="expanded ? 'expanded' : 'collapsed'">
-  <ng-content select="[bet-content]"/>
-</div>
-<div class="preview" [class.-expanded]="expanded" [@expandable]="expanded ? 'collapsed' : 'expanded'">
-  <ng-content select="[bet-preview]"/>
-</div>
+@if (expanded()) {
+  <div class="content" (animate.enter)="expand($event)" (animate.leave)="collapse($event)">
+    <ng-content select="[bet-content]"/>
+  </div>
+} @else {
+  <div class="preview" (animate.enter)="expand($event)" (animate.leave)="collapse($event)">
+    <ng-content select="[bet-preview]"/>
+  </div>
+}

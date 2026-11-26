@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing'
 
 import {ExpandableComponent} from './expandable.component'
-import {provideAnimations} from '@angular/platform-browser/animations'
 
 describe('ExpandableComponent', () => {
   let component: ExpandableComponent
@@ -9,8 +8,7 @@ describe('ExpandableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ExpandableComponent],
-      providers: [provideAnimations()]
+      imports: [ExpandableComponent]
     }).compileComponents()
 
     fixture = TestBed.createComponent(ExpandableComponent)

@@ -1,5 +1,7 @@
-import {Component, input} from '@angular/core'
-import {animate, state, style, transition, trigger} from '@angular/animations'
+import {AnimationCallbackEvent, Component, input, signal} from '@angular/core'
+import {animateClose, animateOpen} from '../../helper/height-animation'
+
+const COLLAPSED: Keyframe = {height: '0px', paddingTop: '0px'}
 
 @Component({
   selector: 'bet-expandable',
@@ -8,22 +10,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations'
   styleUrl: './expandable.component.scss',
   host: {
     '[class.-large]': 'large()'
-  },
-  animations: [
-    trigger('expandable', [
-      state('collapsed', style({
-        'height': '0px',
-        'padding-top': '0px'
-      })),
-      state('expanded', style({
-        'height': '*',
-        'padding-top': '*'
-      })),
-      transition('collapsed <=> expanded', [
-        animate(200)
-      ])
-    ])
-  ]
+  }
 })
 export class ExpandableComponent {
   readonly name = input.required<string>()
@@ -31,5 +18,24 @@ export class ExpandableComponent {
     transform: (v) => v === '' || v
   })
 
-  expanded = false
+  readonly expanded = signal(false)
+  private toggled = false
+
+  toggle(): void {
+    this.toggled = true
+    this.expanded.update(expanded => !expanded)
+  }
+
+  expand(event: AnimationCallbackEvent): void {
+    // The preview is rendered on load and must not animate in then.
+    if (this.toggled) {
+      animateOpen(event, COLLAPSED)
+    } else {
+      event.animationComplete()
+    }
+  }
+
+  collapse(event: AnimationCallbackEvent): void {
+    animateClose(event, COLLAPSED)
+  }
 }

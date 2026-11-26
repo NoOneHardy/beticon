@@ -56,54 +56,53 @@
         class="menu-backdrop"
         aria-label="Navigation schliessen"
       (click)="closeMenu()"></button>
-    }
-    <nav id="mobile-menu"
-      class="nav-bottom"
-      [class.-expanded]="isExpanded()"
-      [@expandable]="isExpanded() ? 'expanded' : 'collapsed'"
-      [attr.aria-hidden]="!isExpanded()">
-      <div class="menu-section">
-        <p class="section-title">Navigation</p>
-        @if (user()) {
-          <bet-nav-item displayName="Dashboard" icon="home" route="/" exact/>
-          <bet-nav-item displayName="Mein Tippschein" icon="ballot" route="/bets"/>
-          <bet-nav-item displayName="Rangliste" icon="bookmark_star" route="/leaderboard"/>
+      <nav id="mobile-menu"
+        class="nav-bottom"
+        (animate.enter)="expand($event)"
+        (animate.leave)="collapse($event)">
+        <div class="menu-section">
+          <p class="section-title">Navigation</p>
+          @if (user()) {
+            <bet-nav-item displayName="Dashboard" icon="home" route="/" exact/>
+            <bet-nav-item displayName="Mein Tippschein" icon="ballot" route="/bets"/>
+            <bet-nav-item displayName="Rangliste" icon="bookmark_star" route="/leaderboard"/>
+          } @else {
+            <bet-nav-item displayName="Home" icon="home" route="/" exact/>
+            <bet-nav-item displayName="Rangliste" icon="bookmark_star" route="/leaderboard"/>
+          }
+        </div>
+        @if (user(); as user) {
+          <div class="menu-section">
+            <p class="section-title">Konto</p>
+            <p class="user-name">{{ user.username }}</p>
+            <bet-nav-item displayName="Einstellungen" icon="manage_accounts" route="/settings"/>
+          </div>
         } @else {
-          <bet-nav-item displayName="Home" icon="home" route="/" exact/>
-          <bet-nav-item displayName="Rangliste" icon="bookmark_star" route="/leaderboard"/>
+          <div class="menu-section">
+            <p class="section-title">Zugang</p>
+            <bet-nav-item displayName="Anmelden" icon="login" route="/login"/>
+            <bet-nav-item gradient displayName="Registrieren" icon="person_add" route="/signup"/>
+          </div>
         }
-      </div>
-      @if (user(); as user) {
-        <div class="menu-section">
-          <p class="section-title">Konto</p>
-          <p class="user-name">{{ user.username }}</p>
-          <bet-nav-item displayName="Einstellungen" icon="manage_accounts" route="/settings"/>
-        </div>
-      } @else {
-        <div class="menu-section">
-          <p class="section-title">Zugang</p>
-          <bet-nav-item displayName="Anmelden" icon="login" route="/login"/>
-          <bet-nav-item gradient displayName="Registrieren" icon="person_add" route="/signup"/>
-        </div>
-      }
-      @if (isAdmin()) {
-        <div class="menu-section">
-          <p class="section-title">Verwaltung</p>
-          <bet-nav-item displayName="Teams" icon="flag" route="/admin/teams"/>
-          <bet-nav-item displayName="Gruppen" icon="stacks" route="/admin/groups"/>
-          <bet-nav-item displayName="Spiele" icon="sports_soccer" route="/admin/games"/>
-          <bet-nav-item displayName="Resultate" icon="scoreboard" route="/admin/results"/>
-          <bet-nav-item displayName="Teilnehmer" icon="person" route="/admin/users"/>
-          <bet-nav-item displayName="Punkte" icon="calculate" route="/admin/rescore"/>
-        </div>
-      }
-      @if (user()) {
-        <div class="menu-section user-actions">
-          <p class="section-title">Aktionen</p>
-          <bet-nav-item displayName="Abmelden" icon="logout" [route]="null" (clickEvent)="logout()"/>
-        </div>
-      }
-    </nav>
+        @if (isAdmin()) {
+          <div class="menu-section">
+            <p class="section-title">Verwaltung</p>
+            <bet-nav-item displayName="Teams" icon="flag" route="/admin/teams"/>
+            <bet-nav-item displayName="Gruppen" icon="stacks" route="/admin/groups"/>
+            <bet-nav-item displayName="Spiele" icon="sports_soccer" route="/admin/games"/>
+            <bet-nav-item displayName="Resultate" icon="scoreboard" route="/admin/results"/>
+            <bet-nav-item displayName="Teilnehmer" icon="person" route="/admin/users"/>
+            <bet-nav-item displayName="Punkte" icon="calculate" route="/admin/rescore"/>
+          </div>
+        }
+        @if (user()) {
+          <div class="menu-section user-actions">
+            <p class="section-title">Aktionen</p>
+            <bet-nav-item displayName="Abmelden" icon="logout" [route]="null" (clickEvent)="logout()"/>
+          </div>
+        }
+      </nav>
+    }
   </header>
 }
 

@@ -9,7 +9,6 @@ import {selectIsAdmin, selectNotifications, selectUser} from '../../../user-mana
 import {Role} from '../../../model/user/role'
 import {UserApplicationStatus} from '../../../model/user/user-application-status'
 import {logout} from '../../../user-management/store/user.actions'
-import {provideAnimations} from '@angular/platform-browser/animations'
 import {ViewportService} from '../../services/viewport/viewport.service'
 
 describe('HeaderComponent', () => {
@@ -33,7 +32,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HeaderComponent, NavItemComponent, UserMenuComponent, UserButtonComponent],
-      providers: [provideRouter([]), provideMockStore(), provideAnimations()]
+      providers: [provideRouter([]), provideMockStore()]
     }).compileComponents()
 
     store = TestBed.inject<MockStore>(MockStore)

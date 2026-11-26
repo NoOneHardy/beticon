@@ -44,27 +44,16 @@
 
 .preview, .content {
   box-sizing: border-box;
+  width: 100%;
   overflow: hidden;
 }
 
 .content {
-  width: 0;
-  padding: 0;
-
-  &.-expanded {
-    width: 100%;
-    padding: var(--beticon-spacer-1) .25em;
-  }
+  padding: var(--beticon-spacer-1) .25em;
 }
 
 .preview {
-  width: 100%;
   padding: 0 .25em;
-
-  &.-expanded {
-    width: 0;
-    padding: 0;
-  }
 }
 
 @media screen and (max-width: 768px) {

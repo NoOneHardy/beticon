@@ -1,4 +1,4 @@
-import {Component, computed, ElementRef, inject, OnInit, signal} from '@angular/core'
+import {AnimationCallbackEvent, Component, computed, ElementRef, inject, OnInit, signal} from '@angular/core'
 import {NavItemComponent} from './components/nav-item/nav-item.component'
 import {UserMenuComponent} from './components/user-menu/user-menu.component'
 import {EventType, Router, RouterLink} from '@angular/router'
@@ -8,8 +8,10 @@ import {selectIsAdmin, selectUser} from '../../../user-management/store/user.fea
 
 import {logout} from '../../../user-management/store/user.actions'
 import {ViewportService} from '../../services/viewport/viewport.service'
-import {animate, state, style, transition, trigger} from '@angular/animations'
 import {NotificationsComponent} from './components/notifications/notifications.component'
+import {animateClose, animateOpen} from '../../helper/height-animation'
+
+const MENU_COLLAPSED: Keyframe = {height: '0px', paddingTop: '0px', paddingBottom: '0px', opacity: 0}
 
 @Component({
   selector: 'bet-header',
@@ -25,26 +27,7 @@ import {NotificationsComponent} from './components/notifications/notifications.c
     NotificationsComponent
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
-  animations: [
-    trigger('expandable', [
-      state('collapsed', style({
-        'height': '0px',
-        'padding-top': '0px',
-        'padding-bottom': '0px',
-        'opacity': 0
-      })),
-      state('expanded', style({
-        'height': '*',
-        'padding-top': '*',
-        'padding-bottom': '*',
-        'opacity': 1
-      })),
-      transition('collapsed <=> expanded', [
-        animate(200)
-      ])
-    ])
-  ]
+  styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
   private store = inject(Store)
@@ -83,5 +66,13 @@ export class HeaderComponent implements OnInit {
 
   closeMenu(): void {
     this.isExpanded.set(false)
+  }
+
+  expand(event: AnimationCallbackEvent): void {
+    animateOpen(event, MENU_COLLAPSED)
+  }
+
+  collapse(event: AnimationCallbackEvent): void {
+    animateClose(event, MENU_COLLAPSED)
   }
 }

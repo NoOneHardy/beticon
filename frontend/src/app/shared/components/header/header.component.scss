@@ -127,16 +127,9 @@
     padding: var(--beticon-spacer-3) var(--beticon-spacer-3) var(--beticon-spacer-4);
     background-color: var(--beticon-color-white-600);
     overflow: auto;
-    border-top: 1px solid transparent;
-    box-shadow: none;
-    pointer-events: none;
+    border-top: 1px solid var(--beticon-color-neutral-200);
+    box-shadow: 0 1em 1.25em 0 #0000003D;
     z-index: 1;
-
-    &.-expanded {
-      border-top-color: var(--beticon-color-neutral-200);
-      box-shadow: 0 1em 1.25em 0 #0000003D;
-      pointer-events: auto;
-    }
 
     .menu-section {
       display: flex;

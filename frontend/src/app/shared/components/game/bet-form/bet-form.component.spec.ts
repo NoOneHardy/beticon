@@ -7,7 +7,6 @@ import {BetGame} from '../../../../model/game/bet-game'
 import {MockStore, provideMockStore} from '@ngrx/store/testing'
 import {selectJokerQuota} from '../../../store/tournament.feature'
 import {grantRemainingDoubleJoker, grantRemainingTripleJoker, revokeRemainingDoubleJoker, revokeRemainingTripleJoker} from '../../../store/tournament.actions'
-import {provideAnimations} from '@angular/platform-browser/animations'
 
 const future = new Date(
   new Date().getFullYear(),
@@ -24,7 +23,7 @@ describe('BetFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [BetFormComponent],
-      providers: [provideMockStore(), provideAnimations()]
+      providers: [provideMockStore()]
     }).compileComponents()
 
     mockStore = TestBed.inject<MockStore>(MockStore)
