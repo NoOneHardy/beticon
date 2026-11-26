@@ -75,15 +75,17 @@ public class GroupService {
 
     public GroupRes getGroup(String id) {
         Group group = repository.findById(id).orElse(null);
-        if (group == null)
-            throw new NotFoundException("Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden");
+        if (group == null) throw new NotFoundException(
+                "Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden"
+        );
         return mapper.toDto(group);
     }
 
     public GroupRes updateBets(String id, List<BetReq> bets) {
         Group group = repository.findById(id).orElse(null);
-        if (group == null)
-            throw new NotFoundException("Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden");
+        if (group == null) throw new NotFoundException(
+                "Group " + id + " not found", "Gruppe '" + id + "' nicht gefunden"
+        );
 
         for (BetReq bet : bets.stream().filter(BetReq::isValid).toList()) {
             if (group.getGames().stream().filter(Game::isActive).map(Game::getId).toList().contains(bet.game())) {
@@ -114,8 +116,7 @@ public class GroupService {
             Game game = gameOptional.get();
             if (game.getResult() != null && game.getResult().isActive()) {
                 if (Objects.equals(game.getResult().getScoreTeamGuest(), result.scoreTeamGuest())
-                        && Objects.equals(game.getResult().getScoreTeamHome(), result.scoreTeamHome()))
-                    continue;
+                        && Objects.equals(game.getResult().getScoreTeamHome(), result.scoreTeamHome())) continue;
             }
 
             try {

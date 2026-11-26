@@ -51,17 +51,15 @@ public record UserReq(
     }
 
     private void validateLength(int min, int max, String value, String name, String displayName) {
-        if (value.length() < min)
-            throw new UserValidationException(
-                    name + " must be at least " + min + " characters long",
-                    displayName + " muss mindestens " + min + " Zeichen lang sein."
-            );
+        if (value.length() < min) throw new UserValidationException(
+                name + " must be at least " + min + " characters long",
+                displayName + " muss mindestens " + min + " Zeichen lang sein."
+        );
 
-        if (value.length() > max)
-            throw new UserValidationException(
-                    name + " can only contain " + max + " characters",
-                    displayName + " darf maximal " + max + " Zeichen enthalten."
-            );
+        if (value.length() > max) throw new UserValidationException(
+                name + " can only contain " + max + " characters",
+                displayName + " darf maximal " + max + " Zeichen enthalten."
+        );
     }
 
     /**
@@ -71,20 +69,15 @@ public record UserReq(
      * @throws UserValidationException if any required field is missing
      */
     public void validateRequired() throws UserValidationException {
-        if (username() == null || username().isEmpty())
-            throw new UserValidationException("username");
+        if (username() == null || username().isEmpty()) throw new UserValidationException("username");
 
-        if (email() == null || email().isEmpty())
-            throw new UserValidationException("email");
+        if (email() == null || email().isEmpty()) throw new UserValidationException("email");
 
-        if (password() == null || password().isEmpty())
-            throw new UserValidationException("password");
+        if (password() == null || password().isEmpty()) throw new UserValidationException("password");
 
-        if (firstname() == null || firstname().isEmpty())
-            throw new UserValidationException("firstname");
+        if (firstname() == null || firstname().isEmpty()) throw new UserValidationException("firstname");
 
-        if (lastname() == null || lastname().isEmpty())
-            throw new UserValidationException("lastname");
+        if (lastname() == null || lastname().isEmpty()) throw new UserValidationException("lastname");
     }
 
     public record PasswordChange(String password, String currentPassword) {

@@ -50,19 +50,17 @@ public class FileService implements StorageService {
 
     public String store(MultipartFile file, @NotNull String subDirectory, String name) {
         try {
-            if (file.isEmpty() || file.getOriginalFilename() == null)
-                throw new StorageException(
-                        "File upload empty.", "Fehler beim Speichern der Datei.", HttpStatus.BAD_REQUEST
-                );
+            if (file.isEmpty() || file.getOriginalFilename() == null) throw new StorageException(
+                    "File upload empty.", "Fehler beim Speichern der Datei.", HttpStatus.BAD_REQUEST
+            );
 
             Path subDir = StorageUtils.initDirectory(root, subDirectory);
             String fileName = StorageUtils.renameFile(file, name);
             Path dest = StorageUtils.resolvePath(subDir, fileName);
 
-            if (!dest.getParent().equals(subDir))
-                throw new StorageException(
-                        "File upload outside directory.", "Fehler beim Speichern der Datei.", HttpStatus.BAD_REQUEST
-                );
+            if (!dest.getParent().equals(subDir)) throw new StorageException(
+                    "File upload outside directory.", "Fehler beim Speichern der Datei.", HttpStatus.BAD_REQUEST
+            );
 
             try (InputStream stream = file.getInputStream()) {
                 Files.copy(stream, dest, StandardCopyOption.REPLACE_EXISTING);

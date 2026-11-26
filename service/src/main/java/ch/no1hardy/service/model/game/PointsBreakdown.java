@@ -4,7 +4,11 @@ package ch.no1hardy.service.model.game;
  * The itemised Points of one Bet.
  */
 public record PointsBreakdown(
-        int correctWinner, int correctGoalsHome, int correctGoalsGuest, int correctGoalsTotal, int joker
+        int correctWinner,
+        int correctGoalsHome,
+        int correctGoalsGuest,
+        int correctGoalsTotal,
+        int joker
 ) {
     public int total() {
         return (correctWinner + correctGoalsHome + correctGoalsGuest + correctGoalsTotal) * joker;

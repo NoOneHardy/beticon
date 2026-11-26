@@ -190,17 +190,14 @@ public class NotificationService {
 
         StringBuilder content = new StringBuilder();
         if (movement > 0) content.append("Gratuliere");
-        else
-            content.append("Schade");
+        else content.append("Schade");
 
         content.append(", du bist in der Rangliste um ").append(Math.abs(movement));
         if (Math.abs(movement) == 1) content.append(" Platz ");
-        else
-            content.append(" Plätze ");
+        else content.append(" Plätze ");
 
         if (movement > 0) content.append("aufgestiegen");
-        else
-            content.append("abgestiegen");
+        else content.append("abgestiegen");
         content.append(".");
 
         repository.save(
