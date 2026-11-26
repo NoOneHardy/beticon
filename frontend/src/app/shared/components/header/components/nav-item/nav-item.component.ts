@@ -23,5 +23,5 @@ export class NavItemComponent {
   readonly gradient = input<boolean, boolean | ''>(false, {
     transform: v => v === '' || v
   })
-  clickEvent = output()
+  readonly clickEvent = output()
 }

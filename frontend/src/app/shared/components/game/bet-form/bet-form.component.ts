@@ -57,7 +57,7 @@ export class BetFormComponent implements ControlValueAccessor {
 
     return new Date(this.game().timestamp).valueOf() <= ect.valueOf()
   })
-  disabledChange = output<boolean>()
+  readonly disabledChange = output<boolean>()
 
   jokerQuota = this.store.selectSignal(selectJokerQuota)
 
