@@ -69,6 +69,7 @@ module.exports = tseslint.config(
       '@angular-eslint/reactive-context-must-read-signal': 'error',
       '@angular-eslint/consistent-component-styles': 'error',
       '@angular-eslint/no-global-document': 'error',
+      '@angular-eslint/use-injectable-provided-in': 'error',
       '@typescript-eslint/no-extraneous-class': [
         'error',
         {allowWithDecorator: true}
