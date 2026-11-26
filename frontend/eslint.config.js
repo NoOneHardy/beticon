@@ -70,7 +70,8 @@ module.exports = tseslint.config(
     ],
     rules: {
       '@angular-eslint/template/label-has-associated-control': 'off',
-      '@angular-eslint/template/no-autofocus': 'off'
+      '@angular-eslint/template/no-autofocus': 'off',
+      '@angular-eslint/template/button-has-type': 'error',
     },
   }
 );
