@@ -3,26 +3,20 @@ package ch.no1hardy.service.front;
 import ch.no1hardy.service.exception.user.UserValidationException;
 import ch.no1hardy.service.front.user.UserReq;
 import jakarta.validation.constraints.NotNull;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserReqTest {
-    @NotNull
-    UserReq req = UserReq.builder().build();
+    private static final String USERNAME = "No1Hardy";
+    private static final String PASSWORD = "test1234";
+    private static final String EMAIL = "test@no1hardy.ch";
+    private static final String FIRSTNAME = "Silas";
+    private static final String LASTNAME = "Hardegger";
 
-    @BeforeEach
-    void beforeEach() {
-        req = UserReq.builder()
-                .username("No1Hardy")
-                .password("test1234")
-                .email("test@no1hardy.ch")
-                .firstname("Silas")
-                .lastname("Hardegger")
-                .build();
-    }
+    @NotNull
+    UserReq req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
 
     @Test
     @DisplayName("validate() - should validate user request with valid data")
@@ -33,11 +27,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - should validate user request with null values")
     void shouldValidateUserRequestWithNullValues() {
-        req = req.toBuilder().username(null).build();
-        req = req.toBuilder().email(null).build();
-        req = req.toBuilder().firstname(null).build();
-        req = req.toBuilder().lastname(null).build();
-        req = req.toBuilder().password(null).build();
+        req = new UserReq(null, null, null, null, null, null, null);
 
         assertDoesNotThrow(req::validate);
     }
@@ -45,7 +35,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN an empty username | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateEmptyUsername() {
-        req = req.toBuilder().username("").build();
+        req = new UserReq("", PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("username must be at least 5 characters long", e.getMessage());
@@ -54,7 +44,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a short username | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateShortUsername() {
-        req = req.toBuilder().username("m").build();
+        req = new UserReq("m", PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("username must be at least 5 characters long", e.getMessage());
@@ -63,7 +53,14 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a long username | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateLongUsername() {
-        req = req.toBuilder().username("aVeryVeryVeryLongUsernameThatWillFailValidation").build();
+        req = new UserReq(
+                "aVeryVeryVeryLongUsernameThatWillFailValidation",
+                PASSWORD,
+                EMAIL,
+                FIRSTNAME,
+                LASTNAME,
+                null,
+                null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("username can only contain 25 characters", e.getMessage());
@@ -72,7 +69,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN an empty firstname | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateEmptyFirstname() {
-        req = req.toBuilder().firstname("").build();
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, "", LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("firstname must be at least 2 characters long", e.getMessage());
@@ -81,7 +78,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a short firstname | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateShortFirstname() {
-        req = req.toBuilder().firstname("m").build();
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, "m", LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("firstname must be at least 2 characters long", e.getMessage());
@@ -90,7 +87,14 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a long firstname | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateLongFirstname() {
-        req = req.toBuilder().firstname("aVeryVeryVeryLongFirstnameThatWillFailValidation").build();
+        req = new UserReq(
+                USERNAME,
+                PASSWORD,
+                EMAIL,
+                "aVeryVeryVeryLongFirstnameThatWillFailValidation",
+                LASTNAME,
+                null,
+                null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("firstname can only contain 25 characters", e.getMessage());
@@ -99,7 +103,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN an empty lastname | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateEmptyLastname() {
-        req = req.toBuilder().lastname("").build();
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, "", null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("lastname must be at least 2 characters long", e.getMessage());
@@ -108,7 +112,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a short lastname | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateShortLastname() {
-        req = req.toBuilder().lastname("m").build();
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, "m", null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("lastname must be at least 2 characters long", e.getMessage());
@@ -117,7 +121,14 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a long lastname | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateLongLastname() {
-        req = req.toBuilder().lastname("aVeryVeryVeryLongLastnameThatWillFailValidation").build();
+        req = new UserReq(
+                USERNAME,
+                PASSWORD,
+                EMAIL,
+                FIRSTNAME,
+                "aVeryVeryVeryLongLastnameThatWillFailValidation",
+                null,
+                null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("lastname can only contain 25 characters", e.getMessage());
@@ -126,7 +137,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN an empty email | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateEmptyEmail() {
-        req = req.toBuilder().email("").build();
+        req = new UserReq(USERNAME, PASSWORD, "", FIRSTNAME, LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("email must be at least 5 characters long", e.getMessage());
@@ -135,7 +146,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a short email | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateShortEmail() {
-        req = req.toBuilder().email("m").build();
+        req = new UserReq(USERNAME, PASSWORD, "m", FIRSTNAME, LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("email must be at least 5 characters long", e.getMessage());
@@ -144,7 +155,14 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a long email | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateLongEmail() {
-        req = req.toBuilder().email("aVeryVeryVeryLongEmailThatWillFailValidationButThisEmailIsEvenLongerBecauseItNeedsToBeLongerThan50Characters").build();
+        req = new UserReq(
+                USERNAME,
+                PASSWORD,
+                "aVeryVeryVeryLongEmailThatWillFailValidationButThisEmailIsEvenLongerBecauseItNeedsToBeLongerThan50Characters",
+                FIRSTNAME,
+                LASTNAME,
+                null,
+                null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("email can only contain 50 characters", e.getMessage());
@@ -153,7 +171,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN an empty password | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateEmptyPassword() {
-        req = req.toBuilder().password("").build();
+        req = new UserReq(USERNAME, "", EMAIL, FIRSTNAME, LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("password must be at least 8 characters long", e.getMessage());
@@ -162,7 +180,7 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a short password | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateShortPassword() {
-        req = req.toBuilder().password("m").build();
+        req = new UserReq(USERNAME, "m", EMAIL, FIRSTNAME, LASTNAME, null, null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("password must be at least 8 characters long", e.getMessage());
@@ -171,7 +189,14 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - GIVEN a long password | WHEN validating a dto | THEN a UserValidationException should be thrown")
     void validateLongPassword() {
-        req = req.toBuilder().password("aVeryVeryVeryLongPasswordThatWillFailValidationButThisPasswordIsEvenLongerBecauseItNeedsToBeLongerThan50Characters").build();
+        req = new UserReq(
+                USERNAME,
+                "aVeryVeryVeryLongPasswordThatWillFailValidationButThisPasswordIsEvenLongerBecauseItNeedsToBeLongerThan50Characters",
+                EMAIL,
+                FIRSTNAME,
+                LASTNAME,
+                null,
+                null);
 
         var e = assertThrows(UserValidationException.class, () -> req.validate());
         assertEquals("password can only contain 50 characters", e.getMessage());
@@ -180,28 +205,28 @@ public class UserReqTest {
     @Test
     @DisplayName("validate() - should validate email with invalid format")
     void shouldValidateEmailWithValidFormat() {
-        req = req.toBuilder().email("invalid-email-format").build();
+        req = new UserReq(USERNAME, PASSWORD, "invalid-email-format", FIRSTNAME, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validate);
 
-        req = req.toBuilder().email("test!@no1hardy-asdf1234.ch").build();
+        req = new UserReq(USERNAME, PASSWORD, "test!@no1hardy-asdf1234.ch", FIRSTNAME, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validate);
 
-        req = req.toBuilder().email("test123@no1hardy!.ch").build();
+        req = new UserReq(USERNAME, PASSWORD, "test123@no1hardy!.ch", FIRSTNAME, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validate);
 
-        req = req.toBuilder().email("test_123@no1hardy.ch").build();
+        req = new UserReq(USERNAME, PASSWORD, "test_123@no1hardy.ch", FIRSTNAME, LASTNAME, null, null);
         assertDoesNotThrow(req::validate);
 
-        req = req.toBuilder().email("test-123@no1hardy.ch").build();
+        req = new UserReq(USERNAME, PASSWORD, "test-123@no1hardy.ch", FIRSTNAME, LASTNAME, null, null);
         assertDoesNotThrow(req::validate);
 
-        req = req.toBuilder().email("test.123@no1hardy.ch").build();
+        req = new UserReq(USERNAME, PASSWORD, "test.123@no1hardy.ch", FIRSTNAME, LASTNAME, null, null);
         assertDoesNotThrow(req::validate);
 
-        req = req.toBuilder().email("test123@no1hardy.ch").build();
+        req = new UserReq(USERNAME, PASSWORD, "test123@no1hardy.ch", FIRSTNAME, LASTNAME, null, null);
         assertDoesNotThrow(req::validate);
 
-        req = req.toBuilder().email("test@no1hardy.c1h").build();
+        req = new UserReq(USERNAME, PASSWORD, "test@no1hardy.c1h", FIRSTNAME, LASTNAME, null, null);
         assertDoesNotThrow(req::validate);
     }
 
@@ -214,30 +239,30 @@ public class UserReqTest {
     @Test
     @DisplayName("validateAll() - should throw UserValidationException for missing fields")
     void shouldThrowUserValidationExceptionForMissingFields() {
-        req = req.toBuilder().username(null).build();
-        req = req.toBuilder().email(null).build();
-        req = req.toBuilder().password(null).build();
-        req = req.toBuilder().firstname(null).build();
-        req = req.toBuilder().lastname(null).build();
+        req = new UserReq(null, PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, null, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, null, EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, null, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, null, null, null);
         assertThrows(UserValidationException.class, req::validateAll);
     }
 
     @Test
     @DisplayName("validateAll() - should throw UserValidationException for empty fields")
     void shouldThrowUserValidationExceptionForEmptyFields() {
-        req = req.toBuilder().username("").build();
-        req = req.toBuilder().email("").build();
-        req = req.toBuilder().password("").build();
-        req = req.toBuilder().firstname("").build();
-        req = req.toBuilder().lastname("").build();
+        req = new UserReq("", PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, "", FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, "", EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, "", LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, "", null, null);
         assertThrows(UserValidationException.class, req::validateAll);
     }
 
     @Test
     @DisplayName("validateAll() - should throw UserValidationException for invalid fields")
     void shouldThrowUserValidationExceptionForInvalidFields() {
-        req = req.toBuilder().email("invalid-email-format").build();
-        req = req.toBuilder().password("1234").build();
+        req = new UserReq(USERNAME, PASSWORD, "invalid-email-format", FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, "1234", EMAIL, FIRSTNAME, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validateAll);
     }
 
@@ -250,48 +275,48 @@ public class UserReqTest {
     @Test
     @DisplayName("validateRequired() - should throw UserValidationException for missing required fields")
     void shouldThrowUserValidationExceptionForMissingRequiredFields() {
-        req = req.toBuilder().username(null).build();
-        req = req.toBuilder().email(null).build();
-        req = req.toBuilder().password(null).build();
-        req = req.toBuilder().firstname(null).build();
-        req = req.toBuilder().lastname(null).build();
+        req = new UserReq(null, PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, null, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, null, EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, null, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, null, null, null);
         assertThrows(UserValidationException.class, req::validateRequired);
     }
 
     @Test
     @DisplayName("validateRequired() - should throw UserValidationException for empty required fields")
     void shouldThrowUserValidationExceptionForEmptyRequiredFields() {
-        req = req.toBuilder().username("").build();
-        req = req.toBuilder().email("").build();
-        req = req.toBuilder().password("").build();
-        req = req.toBuilder().firstname("").build();
-        req = req.toBuilder().lastname("").build();
+        req = new UserReq("", PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, "", FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, "", EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, "", LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, "", null, null);
         assertThrows(UserValidationException.class, req::validateRequired);
     }
 
     @Test
     @DisplayName("validateRequired() - should throw UserValidationException if only one field is missing")
     void shouldThrowUserValidationExceptionIfOnlyOneFieldIsMissing() {
-        req = req.toBuilder().username(null).build();
+        req = new UserReq(null, PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validateRequired);
 
-        req = req.toBuilder().username("No1Hardy").build();
-        req = req.toBuilder().email(null).build();
+        req = new UserReq("No1Hardy", PASSWORD, EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, null, FIRSTNAME, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validateRequired);
 
-        req = req.toBuilder().email("test@no1hardy.ch").build();
-        req = req.toBuilder().password(null).build();
+        req = new UserReq(USERNAME, PASSWORD, "test@no1hardy.ch", FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, null, EMAIL, FIRSTNAME, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validateRequired);
 
-        req = req.toBuilder().password("test1234").build();
-        req = req.toBuilder().firstname(null).build();
+        req = new UserReq(USERNAME, "test1234", EMAIL, FIRSTNAME, LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, null, LASTNAME, null, null);
         assertThrows(UserValidationException.class, req::validateRequired);
 
-        req = req.toBuilder().firstname("Silas").build();
-        req = req.toBuilder().lastname(null).build();
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, "Silas", LASTNAME, null, null);
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, null, null, null);
         assertThrows(UserValidationException.class, req::validateRequired);
 
-        req = req.toBuilder().lastname("Hardegger").build();
+        req = new UserReq(USERNAME, PASSWORD, EMAIL, FIRSTNAME, "Hardegger", null, null);
         assertDoesNotThrow(req::validateRequired);
     }
 }

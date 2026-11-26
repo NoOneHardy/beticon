@@ -1,10 +1,8 @@
 package ch.no1hardy.service.front.group;
 
-import lombok.Builder;
 
 import java.util.List;
 
-@Builder
 public record CardGroupRes(
         String id,
         String name,

@@ -30,20 +30,28 @@ public class UserControllerTest extends ApiTestBase {
     @WithMockUser
     @DisplayName("PUT /user/me - should update current user when authenticated")
     void shouldUpdateCurrentUserWhenAuthenticated() throws Exception {
-        UserReq dto = UserReq.builder()
-                .username("No1HardyUpdated")
-                .email("silas@test.ch")
-                .firstname("SilasUpdated")
-                .lastname("HardyUpdated")
-                .password("newsecurepassword")
-                .build();
+        UserReq dto = new UserReq(
+                "No1HardyUpdated",
+                "newsecurepassword",
+                "silas@test.ch",
+                "SilasUpdated",
+                "HardyUpdated",
+                null,
+                null);
 
-        UserRes res = UserRes.builder()
-                .id("user-id-123")
-                .username("No1HardyUpdated")
-                .firstname("SilasUpdated")
-                .lastname("HardyUpdated")
-                .build();
+        UserRes res = new UserRes(
+                "user-id-123",
+                "No1HardyUpdated",
+                null,
+                "SilasUpdated",
+                "HardyUpdated",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
 
         when(userService.update(ArgumentMatchers.any(UserReq.class))).thenReturn(res);
 
@@ -68,9 +76,7 @@ public class UserControllerTest extends ApiTestBase {
     @Test
     @DisplayName("PUT /user/me - should reject the request when no user is authenticated")
     void shouldRejectWhenNotAuthenticated() throws Exception {
-        UserReq dto = UserReq.builder()
-                .username("No1HardyUpdated")
-                .build();
+        UserReq dto = new UserReq("No1HardyUpdated", null, null, null, null, null, null);
 
         mockMvc.perform(put("/user/me")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -109,9 +115,7 @@ public class UserControllerTest extends ApiTestBase {
     @Test
     @DisplayName("POST /login - parses the login request")
     void parsesLoginRequest() throws Exception {
-        UserRes user = UserRes.builder()
-                .id("user-1")
-                .build();
+        UserRes user = new UserRes("user-1", null, null, null, null, null, null, null, null, null, null, null);
         when(userService.login(any(LoginReq.class))).thenReturn(user);
         when(jwtService.generateJwtCookie(anyString())).thenReturn(new Cookie("jwt", "token"));
 

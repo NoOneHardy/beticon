@@ -42,6 +42,21 @@ import java.util.Optional;
 @EqualsAndHashCode(callSuper = false)
 @RequiredArgsConstructor
 public class UserService {
+    /** What getCurrentUser returns when nobody is logged in. */
+    private static final UserRes NO_USER = new UserRes(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null);
+
     @Value("${beticon.verification.email.validity}")
     private Integer emailConfirmationValidity;
     @Value("${beticon.verification.password_reset.validity}")
@@ -157,10 +172,7 @@ public class UserService {
      * @return CheckRes containing availability status of username and email.
      */
     public CheckRes check(@Nullable String username, @Nullable String email) {
-        return CheckRes.builder()
-                .isUsernameAvailable(username == null || isUsernameAvailable(username))
-                .isEmailAvailable(email == null || isEmailAvailable(email))
-                .build();
+        return new CheckRes(username == null || isUsernameAvailable(username), email == null || isEmailAvailable(email));
     }
 
     /**
@@ -296,7 +308,7 @@ public class UserService {
      * @return the current user as UserRes DTO, or an empty UserRes if not authenticated.
      */
     public UserRes getCurrentUser() {
-        return authService.getLoggedInUser().map(mapper::toDto).orElse(UserRes.builder().build());
+        return authService.getLoggedInUser().map(mapper::toDto).orElse(NO_USER);
     }
 
     /**

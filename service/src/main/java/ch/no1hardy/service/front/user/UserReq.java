@@ -2,11 +2,9 @@ package ch.no1hardy.service.front.user;
 
 import ch.no1hardy.service.exception.user.UserValidationException;
 
-import lombok.Builder;
 
 import java.util.regex.Pattern;
 
-@Builder(toBuilder = true)
 public record UserReq(
         String username,
         String password,

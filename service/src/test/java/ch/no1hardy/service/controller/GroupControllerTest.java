@@ -30,10 +30,16 @@ public class GroupControllerTest extends ApiTestBase {
     @DisplayName("GET /group/{id} - sends the joker quota under the glossary property names")
     void sendsJokerQuotaPropertyNames() throws Exception {
         JokerQuota jokerQuota = new JokerQuota(2, 1, 10, 6);
-        when(groupService.getGroup("group-a")).thenReturn(GroupRes.builder()
-                .id("group-a")
-                .jokerQuota(jokerQuota)
-                .build());
+        when(groupService.getGroup("group-a")).thenReturn(new GroupRes(
+                "group-a",
+                null,
+                null,
+                null,
+                null,
+                null,
+                jokerQuota,
+                null,
+                null));
 
         mockMvc.perform(get("/group/group-a"))
                 .andExpect(status().isOk())

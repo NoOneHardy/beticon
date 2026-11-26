@@ -210,13 +210,7 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes create(UserReq) - should create new user")
     void create01() {
-        UserReq dto = UserReq.builder()
-                .username("No1Hardy")
-                .email("no1hardy@test.ch")
-                .firstname("Silas")
-                .lastname("Hardy")
-                .password("securepassword")
-                .build();
+        UserReq dto = new UserReq("No1Hardy", "securepassword", "no1hardy@test.ch", "Silas", "Hardy", null, null);
 
         UserRes response = service.create(dto);
         assertNotNull(response);
@@ -232,13 +226,7 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes create(UserReq) - should hash password")
     void create02() {
-        UserReq dto = UserReq.builder()
-                .username("No1Hardy")
-                .email("no1hardy@test.ch")
-                .firstname("Silas")
-                .lastname("Hardy")
-                .password("securepassword")
-                .build();
+        UserReq dto = new UserReq("No1Hardy", "securepassword", "no1hardy@test.ch", "Silas", "Hardy", null, null);
 
         UserRes response = service.create(dto);
         assertNotNull(response);
@@ -258,13 +246,7 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes create(UserReq) - should send verification email")
     void create03() {
-        UserReq dto = UserReq.builder()
-                .username("No1Hardy")
-                .email("silas@test.ch")
-                .firstname("Silas")
-                .lastname("Hardy")
-                .password("securepassword")
-                .build();
+        UserReq dto = new UserReq("No1Hardy", "securepassword", "silas@test.ch", "Silas", "Hardy", null, null);
 
         UserRes response = service.create(dto);
         assertNotNull(response);
@@ -275,13 +257,14 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes update(String, UserReq) - should update user information")
     void update01() {
-        UserReq dto = UserReq.builder()
-                .username("No1HardyUpdated")
-                .email("silas@test-update.ch")
-                .firstname("SilasUpdated")
-                .lastname("HardyUpdated")
-                .password("newsecurepassword")
-                .build();
+        UserReq dto = new UserReq(
+                "No1HardyUpdated",
+                "newsecurepassword",
+                "silas@test-update.ch",
+                "SilasUpdated",
+                "HardyUpdated",
+                null,
+                null);
 
         User existingUser = new User();
         existingUser.setId("user-id-123");
@@ -306,9 +289,14 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes update(String, UserReq) - should store the hashed new password of a password change")
     void updatePasswordChange() {
-        UserReq dto = UserReq.builder()
-                .passwordChange(new UserReq.PasswordChange("newsecurepassword", "oldpassword"))
-                .build();
+        UserReq dto = new UserReq(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                new UserReq.PasswordChange("newsecurepassword", "oldpassword"));
 
         User existingUser = new User();
         existingUser.setId("user-id-123");
@@ -326,9 +314,7 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes update(String, UserReq) - should ignore ommitted properties")
     void update02() {
-        UserReq dto = UserReq.builder()
-                .username("No1HardyUpdated")
-                .build();
+        UserReq dto = new UserReq("No1HardyUpdated", null, null, null, null, null, null);
 
         User existingUser = new User();
         existingUser.setId("user-id-123");
@@ -353,13 +339,14 @@ public class UserServiceTest {
     @Test
     @DisplayName("UserRes update(UserReq) - should update the currently logged-in user")
     void update03() {
-        UserReq dto = UserReq.builder()
-                .username("No1HardyUpdated")
-                .email("silas@test-update.ch")
-                .firstname("SilasUpdated")
-                .lastname("HardyUpdated")
-                .password("newsecurepassword")
-                .build();
+        UserReq dto = new UserReq(
+                "No1HardyUpdated",
+                "newsecurepassword",
+                "silas@test-update.ch",
+                "SilasUpdated",
+                "HardyUpdated",
+                null,
+                null);
 
         User loggedInUser = new User();
         loggedInUser.setId("user-id-123");
@@ -390,9 +377,7 @@ public class UserServiceTest {
     void update04() {
         SecurityHelper.mockNoLogin(authService);
 
-        UserReq dto = UserReq.builder()
-                .username("No1HardyUpdated")
-                .build();
+        UserReq dto = new UserReq("No1HardyUpdated", null, null, null, null, null, null);
 
         assertThrows(NotLoggedInException.class, () -> service.update(dto));
         Mockito.verify(repository, Mockito.never()).save(ArgumentMatchers.any());
@@ -422,11 +407,7 @@ public class UserServiceTest {
         Mockito.doReturn(Optional.of(otherUser)).when(repository).findById("user-other");
         Mockito.doAnswer(invocation -> invocation.getArgument(0)).when(repository).save(ArgumentMatchers.any(User.class));
 
-        UserReq dto = UserReq.builder()
-                .username("HackedName")
-                .firstname("Hacked")
-                .lastname("Hacker")
-                .build();
+        UserReq dto = new UserReq("HackedName", null, null, "Hacked", "Hacker", null, null);
 
         UserRes res = service.update(dto);
 
