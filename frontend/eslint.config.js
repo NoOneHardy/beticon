@@ -59,6 +59,14 @@ module.exports = tseslint.config(
           message: 'Components keep the default OnPush change detection, so do not set changeDetection.',
         },
       ],
+      '@typescript-eslint/no-extraneous-class': [
+        'error',
+        {allowWithDecorator: true}
+      ],
+      '@typescript-eslint/dot-notation': [
+        'error',
+        {allowPrivateClassPropertyAccess: true, allowProtectedClassPropertyAccess: true}
+      ],
       '@typescript-eslint/unbound-method': 'off',
       '@typescript-eslint/no-deprecated': 'off'
     },
