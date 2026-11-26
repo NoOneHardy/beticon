@@ -1,20 +1,17 @@
 import {TestBed} from '@angular/core/testing'
-import {ActivatedRoute, GuardResult, provideRouter, Router} from '@angular/router'
+import {GuardResult, provideRouter, Router} from '@angular/router'
 
 import {isAdminGuard} from './is-admin.guard'
 import {MockStore, provideMockStore} from '@ngrx/store/testing'
 import {selectIsAdmin, selectIsUserLoading} from '../user-management/store/user.feature'
-import {Observable} from 'rxjs'
+import {runGuard} from '../shared/helper/test.helper'
 
 describe('isAdminGuard', () => {
   let store: MockStore
   let result: GuardResult | null
 
   const subscribeToGuard = () => {
-    const route = TestBed.inject(ActivatedRoute).snapshot
-    const state = TestBed.inject(Router).routerState.snapshot
-    const guard$: Observable<GuardResult> = TestBed.runInInjectionContext(() => isAdminGuard(route, state)) as Observable<GuardResult>
-    guard$.subscribe((guardResult) => {
+    runGuard(isAdminGuard).subscribe((guardResult) => {
       result = guardResult
     })
   }

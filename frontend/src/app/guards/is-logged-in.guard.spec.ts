@@ -1,10 +1,10 @@
 import {TestBed} from '@angular/core/testing'
-import {ActivatedRoute, GuardResult, provideRouter, Router} from '@angular/router'
+import {GuardResult, provideRouter, Router} from '@angular/router'
 
 import {isLoggedInGuard} from './is-logged-in.guard'
 import {MockStore, provideMockStore} from '@ngrx/store/testing'
 import {selectIsUserLoading, selectUser} from '../user-management/store/user.feature'
-import {Observable} from 'rxjs'
+import {runGuard} from '../shared/helper/test.helper'
 import {User} from '../model/user/user'
 import {mockUser1} from '../model/mock/user.mock'
 
@@ -14,10 +14,7 @@ describe('isLoggedInGuard', () => {
   let mockUser: User
 
   const subscribeToGuard = () => {
-    const route = TestBed.inject(ActivatedRoute).snapshot
-    const state = TestBed.inject(Router).routerState.snapshot
-    const guard$: Observable<GuardResult> = TestBed.runInInjectionContext(() => isLoggedInGuard(route, state)) as Observable<GuardResult>
-    guard$.subscribe((guardResult) => {
+    runGuard(isLoggedInGuard).subscribe((guardResult) => {
       result = guardResult
     })
   }

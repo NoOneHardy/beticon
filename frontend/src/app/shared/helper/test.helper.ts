@@ -1,7 +1,9 @@
 import {GlobalData} from '../services/base-http/global-data'
 import {ServiceError} from '../../model/error'
 import {TestRequest} from '@angular/common/http/testing'
-import {ComponentFixture} from '@angular/core/testing'
+import {ComponentFixture, TestBed} from '@angular/core/testing'
+import {ActivatedRoute, CanActivateFn, GuardResult, Router} from '@angular/router'
+import {Observable} from 'rxjs'
 
 export function flushApiResponse(req: TestRequest, data: unknown, globalData?: GlobalData): void {
   req.flush({
@@ -45,4 +47,10 @@ export function queryElement<T extends Element>(fixture: ComponentFixture<unknow
   const element = findElement(fixture, selector)
   if (!(element instanceof type)) throw new Error(`No ${type.name} matches '${selector}'`)
   return element
+}
+
+export function runGuard(guard: CanActivateFn): Observable<GuardResult> {
+  const route = TestBed.inject(ActivatedRoute).snapshot
+  const state = TestBed.inject(Router).routerState.snapshot
+  return TestBed.runInInjectionContext(() => guard(route, state)) as Observable<GuardResult>
 }
