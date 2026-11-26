@@ -95,7 +95,7 @@ export class BetFormComponent implements ControlValueAccessor {
         const bet = this.formGroup.getRawValue()
         const game = this.game()
 
-        if (this.value.joker != bet.joker) {
+        if (this.value.joker !== bet.joker) {
           if (this.value.joker === 2) this.store.dispatch(grantRemainingDoubleJoker())
           else if (this.value.joker === 3) this.store.dispatch(grantRemainingTripleJoker())
 

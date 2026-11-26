@@ -5,7 +5,7 @@ export function hasError(control?: AbstractControl | null, error?: string): bool
 
   if (error) {
     const index = Object.keys(control.errors).indexOf(error)
-    if (index != 0) return false
+    if (index !== 0) return false
   }
   return control.invalid
 }
