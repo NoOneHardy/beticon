@@ -19,16 +19,16 @@ export class ExpandableComponent {
   })
 
   readonly expanded = signal(false)
-  private toggled = false
+  private readonly toggled = signal(false)
 
   toggle(): void {
-    this.toggled = true
+    this.toggled.set(true)
     this.expanded.update(expanded => !expanded)
   }
 
   expand(event: AnimationCallbackEvent): void {
     // The preview is rendered on load and must not animate in then.
-    if (this.toggled) {
+    if (this.toggled()) {
       animateOpen(event, COLLAPSED)
     } else {
       event.animationComplete()
