@@ -8,7 +8,12 @@
   } @else {
     <p class="sub-heading">{{ subHeading }}</p>
     <div class="board">
-      @if (leaderboard().length === 0) {
+      @for (ranking of leaderboard(); track ranking.id) {
+        <bet-position
+          [ranking]="ranking"
+          [class.-sticky]="ranking.id === userPos()?.id"
+          [highlight]="ranking.id === userPos()?.id"/>
+      } @empty {
         <bet-position [ranking]="{
       ranking: 1,
       username: 'Es sind noch keine Spieler in der Rangliste',
@@ -17,12 +22,6 @@
       points: 0,
       id: ''
       }"/>
-      }
-      @for (ranking of leaderboard(); track ranking.id) {
-        <bet-position
-          [ranking]="ranking"
-          [class.-sticky]="ranking.id === userPos()?.id"
-          [highlight]="ranking.id === userPos()?.id"/>
       }
     </div>
   }

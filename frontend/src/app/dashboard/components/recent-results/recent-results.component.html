@@ -1,8 +1,7 @@
 <div class="recent-results">
   @for (game of games(); track game) {
     <bet-game-preview [game]="game"/>
-  }
-  @if (games().length === 0) {
+  } @empty {
     <div class="no-games">
       <p>Keine kürzlich gespielten Spiele gefunden.</p>
     </div>

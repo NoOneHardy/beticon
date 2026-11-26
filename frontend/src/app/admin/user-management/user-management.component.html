@@ -55,9 +55,7 @@
             </button>
           </div>
         </div>
-      }
-
-      @if (users().length === 0) {
+      } @empty {
         <p class="no-users">Keine Benutzeranfragen für die ausgewählten Filter gefunden.</p>
       }
     </div>

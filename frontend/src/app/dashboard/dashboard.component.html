@@ -47,8 +47,7 @@
             [ranking]="position"
             [class.-current]="position.id === user()?.id"
             [highlight]="position.id === user()?.id"/>
-        }
-        @if (leaderboardPreview().length === 0) {
+        } @empty {
           <p>Du wurdest noch nicht bestätigt.</p>
           <p>Kontaktiere einen Administrator um in das Ranking aufgenommen zu werden.</p>
         }

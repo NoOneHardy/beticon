@@ -60,8 +60,7 @@
               [displayWith]="groupDisplayFn.bind(this)">
               @for (group of filteredGroups(); track group.id) {
                 <mat-option [value]="group.id">{{ groupDisplayFn(group) }}</mat-option>
-              }
-              @if (!filteredGroups().length) {
+              } @empty {
                 <mat-option disabled>Keine Gruppen gefunden</mat-option>
               }
             </mat-autocomplete>
@@ -106,9 +105,7 @@
                     <span>{{ teamDisplayFn(team) }}</span>
                   </span>
                 </mat-option>
-              }
-
-              @if (!filteredHomeTeams().length) {
+              } @empty {
                 <mat-option disabled>Keine Teams gefunden</mat-option>
               }
             </mat-autocomplete>
@@ -164,9 +161,7 @@
                     <span>{{ teamDisplayFn(team) }}</span>
                   </span>
                 </mat-option>
-              }
-
-              @if (!filteredGuestTeams().length) {
+              } @empty {
                 <mat-option disabled>Keine Teams gefunden</mat-option>
               }
             </mat-autocomplete>
