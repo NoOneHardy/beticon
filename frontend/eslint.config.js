@@ -74,6 +74,7 @@ module.exports = tseslint.config(
       '@angular-eslint/template/button-has-type': 'error',
       '@angular-eslint/template/prefer-at-empty': 'error',
       '@angular-eslint/template/prefer-at-else': 'error',
+      '@angular-eslint/template/prefer-contextual-for-variables': 'error',
     },
   }
 );

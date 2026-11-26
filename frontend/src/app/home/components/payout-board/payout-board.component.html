@@ -1,7 +1,7 @@
-@for (position of positions; track $index; let i = $index) {
+@for (position of positions; track $index) {
   <div class="payout-row" [class]="position.class" [style.--share.%]="position.percentage">
     <div class="place-badge">
-      <span class="place">{{ i + 1 }}.</span>
+      <span class="place">{{ $index + 1 }}.</span>
       <span class="label">Platz</span>
     </div>
     <div class="share-bar">

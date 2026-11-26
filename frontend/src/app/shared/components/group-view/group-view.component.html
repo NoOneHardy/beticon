@@ -62,10 +62,10 @@
 
     <form [formGroup]="form">
       <div class="games" formArrayName="bets">
-        @for (control of form.controls.bets.controls; track $index; let i = $index) {
+        @for (control of form.controls.bets.controls; track $index) {
           @if (findGame(control.value.game); as game) {
             <bet-bet-form (disabledChange)="$event ? control.disable(): control.enable()" [game]="game"
-                         [formControlName]="i" [highlight]="highlight() === game.id"
+                         [formControlName]="$index" [highlight]="highlight() === game.id"
                          [knockout]="group.isKnockout" [admin]="mode() === 'admin'"/>
           }
         }
