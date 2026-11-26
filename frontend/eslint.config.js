@@ -59,6 +59,7 @@ module.exports = tseslint.config(
           message: 'Components keep the default OnPush change detection, so do not set changeDetection.',
         },
       ],
+      '@angular-eslint/prefer-output-readonly': 'error',
       '@typescript-eslint/no-extraneous-class': [
         'error',
         {allowWithDecorator: true}
