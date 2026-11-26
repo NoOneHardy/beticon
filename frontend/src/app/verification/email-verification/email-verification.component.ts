@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router'
     SpinnerComponent
   ],
   templateUrl: './email-verification.component.html',
-  styleUrl: './email-verification.component.css'
+  styleUrl: './email-verification.component.scss'
 })
 export default class EmailVerificationComponent implements OnInit {
   private store = inject(Store)

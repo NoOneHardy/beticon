@@ -16,7 +16,7 @@ import {NotificationType} from '../../../../../user-management/model/notificatio
     MatRipple
   ],
   templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.css'
+  styleUrl: './notifications.component.scss'
 })
 export class NotificationsComponent {
   private store = inject(Store)

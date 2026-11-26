@@ -47,7 +47,7 @@ import {ErrorStateMatcher} from '@angular/material/core'
     MatTimepicker
   ],
   templateUrl: './game-management.component.html',
-  styleUrl: './game-management.component.css'
+  styleUrl: './game-management.component.scss'
 })
 export class GameManagementComponent implements OnInit {
   private adminService = inject(AdminService)

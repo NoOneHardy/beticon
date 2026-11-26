@@ -9,7 +9,7 @@ import {MatRipple} from '@angular/material/core'
     MatRipple
   ],
   templateUrl: './user-button.component.html',
-  styleUrl: './user-button.component.css'
+  styleUrl: './user-button.component.scss'
 })
 export class UserButtonComponent {
   readonly secondary = input<boolean, boolean | ''>(false, {

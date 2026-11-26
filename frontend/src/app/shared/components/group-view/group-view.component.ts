@@ -32,7 +32,7 @@ import {RemainingJokerDisplayComponent} from '../remaining-joker-display/remaini
     RemainingJokerDisplayComponent
   ],
   templateUrl: './group-view.component.html',
-  styleUrl: './group-view.component.css'
+  styleUrl: './group-view.component.scss'
 })
 export class GroupViewComponent {
   private store = inject(Store)

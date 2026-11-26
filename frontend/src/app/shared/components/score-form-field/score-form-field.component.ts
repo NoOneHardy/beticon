@@ -16,7 +16,7 @@ import {FormFieldComponent} from '../form-field/form-field.component'
     multi: true
   }],
   templateUrl: './score-form-field.component.html',
-  styleUrl: './score-form-field.component.css'
+  styleUrl: './score-form-field.component.scss'
 })
 export class ScoreFormFieldComponent implements ControlValueAccessor {
   onChange: OnChangeFn<number | null> = EMPTY_METHOD

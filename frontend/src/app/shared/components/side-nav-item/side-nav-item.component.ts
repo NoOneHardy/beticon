@@ -8,7 +8,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router'
     RouterLinkActive
   ],
   templateUrl: './side-nav-item.component.html',
-  styleUrl: './side-nav-item.component.css'
+  styleUrl: './side-nav-item.component.scss'
 })
 export class SideNavItemComponent {
   readonly route = input<string | null>(null)

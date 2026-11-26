@@ -4,7 +4,7 @@ import { Component } from '@angular/core'
   selector: 'bet-side-nav',
   imports: [],
   templateUrl: './side-nav.component.html',
-  styleUrl: './side-nav.component.css'
+  styleUrl: './side-nav.component.scss'
 })
 export class SideNavComponent {
 

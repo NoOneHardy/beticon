@@ -30,7 +30,7 @@ import {MatFormField, MatInput, MatLabel, MatPrefix} from '@angular/material/inp
     MatPrefix
   ],
   templateUrl: './user-management.component.html',
-  styleUrl: './user-management.component.css'
+  styleUrl: './user-management.component.scss'
 })
 export class UserManagementComponent implements OnInit {
   private store = inject(Store)

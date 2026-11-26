@@ -53,7 +53,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  :host, :host.-large {
+  :is(:host, :host.-large) {
     span:nth-of-type(odd) {
       font: var(--beticon-font-small-text);
 

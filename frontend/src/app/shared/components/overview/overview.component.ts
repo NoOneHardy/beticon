@@ -23,7 +23,7 @@ import {CardGroup} from '../../../model/group/card-group'
     SpinnerComponent
   ],
   templateUrl: './overview.component.html',
-  styleUrl: './overview.component.css'
+  styleUrl: './overview.component.scss'
 })
 export class OverviewComponent implements OnInit {
   private store = inject(Store)

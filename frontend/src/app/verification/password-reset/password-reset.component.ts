@@ -26,7 +26,7 @@ import {PasswordIconDirective} from '../../shared/directives/password-icon.direc
     PasswordIconDirective
   ],
   templateUrl: './password-reset.component.html',
-  styleUrl: './password-reset.component.css'
+  styleUrl: './password-reset.component.scss'
 })
 export class PasswordResetComponent implements OnInit {
   private store = inject(Store)

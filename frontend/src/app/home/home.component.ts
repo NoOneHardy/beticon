@@ -16,7 +16,7 @@ import {SpinnerComponent} from '../shared/components/spinner/spinner.component'
     SpinnerComponent
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
   private store = inject(Store)

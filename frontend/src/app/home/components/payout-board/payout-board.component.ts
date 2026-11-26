@@ -4,7 +4,7 @@ import { Component } from '@angular/core'
   selector: 'bet-payout-board',
   imports: [],
   templateUrl: './payout-board.component.html',
-  styleUrl: './payout-board.component.css'
+  styleUrl: './payout-board.component.scss'
 })
 export class PayoutBoardComponent {
   positions: {

@@ -4,7 +4,7 @@ import {Component, input} from '@angular/core'
   selector: 'bet-info-card',
   imports: [],
   templateUrl: './info-card.component.html',
-  styleUrl: './info-card.component.css',
+  styleUrl: './info-card.component.scss',
   host: {
     '[class.-accent]': 'accent()'
   }

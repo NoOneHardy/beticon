@@ -26,7 +26,7 @@ enum STATE {
     MatInput
   ],
   templateUrl: './request-password-reset.component.html',
-  styleUrl: './request-password-reset.component.css'
+  styleUrl: './request-password-reset.component.scss'
 })
 export class RequestPasswordResetComponent {
   private store = inject(Store)

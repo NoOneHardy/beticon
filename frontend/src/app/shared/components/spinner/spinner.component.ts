@@ -4,7 +4,7 @@ import {Component} from '@angular/core'
   selector: 'bet-spinner',
   standalone: true,
   template: '',
-  styleUrl: './spinner.component.css'
+  styleUrl: './spinner.component.scss'
 })
 export class SpinnerComponent {
 

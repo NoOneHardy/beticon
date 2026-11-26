@@ -5,7 +5,7 @@ import {PointsBreakdown} from '../../../../model/game/points-breakdown'
   selector: 'bet-point-table',
   standalone: true,
   templateUrl: './point-table.component.html',
-  styleUrl: './point-table.component.css'
+  styleUrl: './point-table.component.scss'
 })
 export class PointTableComponent {
   readonly points = input.required<PointsBreakdown>()

@@ -20,7 +20,7 @@ import {ButtonComponent} from '../../shared/components/button/button.component'
     ButtonComponent
   ],
   templateUrl: './notification-settings.component.html',
-  styleUrl: './notification-settings.component.css'
+  styleUrl: './notification-settings.component.scss'
 })
 export default class NotificationSettingsComponent implements OnInit {
   private store = inject(Store)

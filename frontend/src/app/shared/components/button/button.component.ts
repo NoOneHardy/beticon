@@ -8,7 +8,7 @@ import {Component, input, output} from '@angular/core'
     '[style]': 'getWidth()'
   },
   templateUrl: './button.component.html',
-  styleUrl: './button.component.css'
+  styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
   readonly tabindex = input<number>(0)

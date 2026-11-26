@@ -27,7 +27,7 @@ import {TeamPreviousGamesComponent} from '../team-previous-games/team-previous-g
     TeamPreviousGamesComponent
   ],
   templateUrl: './bet-form.component.html',
-  styleUrl: './bet-form.component.css',
+  styleUrl: './bet-form.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

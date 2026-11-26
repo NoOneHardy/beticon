@@ -38,7 +38,7 @@ import {MatIcon} from '@angular/material/icon'
     MatIcon
   ],
   templateUrl: './account-settings.component.html',
-  styleUrl: './account-settings.component.css'
+  styleUrl: './account-settings.component.scss'
 })
 export default class AccountSettingsComponent {
   private store = inject(Store)

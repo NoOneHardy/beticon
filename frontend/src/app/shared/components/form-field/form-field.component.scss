@@ -7,7 +7,7 @@ bet-form-field {
   .form-field {
     position: relative;
 
-    &:has(input:not(:placeholder-shown)), &:focus-within {
+    &:is(:has(input:not(:placeholder-shown)), :focus-within) {
       label {
         top: .3em;
         left: 1.25em;

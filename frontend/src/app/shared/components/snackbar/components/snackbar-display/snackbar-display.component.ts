@@ -10,7 +10,7 @@ import {SnackbarService} from '../../../../services/snackbar/snackbar.service'
     SnackbarComponent
   ],
   templateUrl: './snackbar-display.component.html',
-  styleUrl: './snackbar-display.component.css'
+  styleUrl: './snackbar-display.component.scss'
 })
 export class SnackbarDisplayComponent {
   private service = inject(SnackbarService)

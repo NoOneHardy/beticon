@@ -23,7 +23,7 @@ import {MatInput} from '@angular/material/input'
     MatInput
   ],
   templateUrl: './team-management.component.html',
-  styleUrl: './team-management.component.css'
+  styleUrl: './team-management.component.scss'
 })
 export class TeamManagementComponent {
   private adminService = inject(AdminService)

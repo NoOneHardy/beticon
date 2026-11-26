@@ -11,7 +11,7 @@ import {RouterLink} from '@angular/router'
     RouterLink
   ],
   templateUrl: './recent-results.component.html',
-  styleUrl: './recent-results.component.css'
+  styleUrl: './recent-results.component.scss'
 })
 export class RecentResultsComponent {
   readonly games = input.required<BetGame[], BetGame[]>({

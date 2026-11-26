@@ -20,7 +20,7 @@ import {MatInput} from '@angular/material/input'
     MatInput,
   ],
   templateUrl: './group-management.component.html',
-  styleUrl: './group-management.component.css'
+  styleUrl: './group-management.component.scss'
 })
 export class GroupManagementComponent implements OnInit {
   private adminService = inject(AdminService)

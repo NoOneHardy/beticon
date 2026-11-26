@@ -11,7 +11,7 @@ import {StadiumComponent} from '../stadium/stadium.component'
     StadiumComponent
   ],
   templateUrl: './hero-section.component.html',
-  styleUrl: './hero-section.component.css'
+  styleUrl: './hero-section.component.scss'
 })
 export class HeroSectionComponent {
 

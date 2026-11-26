@@ -4,7 +4,7 @@ import {Component, input} from '@angular/core'
   selector: 'bet-remaining-joker-display',
   imports: [],
   templateUrl: './remaining-joker-display.component.html',
-  styleUrl: './remaining-joker-display.component.css'
+  styleUrl: './remaining-joker-display.component.scss'
 })
 export class RemainingJokerDisplayComponent {
   readonly remainingJokers = input.required<number>()

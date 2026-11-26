@@ -25,7 +25,7 @@ import {NotificationsComponent} from './components/notifications/notifications.c
     NotificationsComponent
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrl: './header.component.scss',
   animations: [
     trigger('expandable', [
       state('collapsed', style({

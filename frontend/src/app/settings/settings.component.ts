@@ -13,7 +13,7 @@ import {RouterOutlet} from '@angular/router'
     RouterOutlet
   ],
   templateUrl: './settings.component.html',
-  styleUrl: './settings.component.css'
+  styleUrl: './settings.component.scss'
 })
 export default class SettingsComponent {
   private store = inject(Store)

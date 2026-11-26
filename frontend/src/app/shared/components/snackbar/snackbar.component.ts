@@ -5,7 +5,7 @@ import {SnackbarMessage} from './model/snackbar-message'
   selector: 'bet-snackbar',
   imports: [],
   templateUrl: './snackbar.component.html',
-  styleUrl: './snackbar.component.css'
+  styleUrl: './snackbar.component.scss'
 })
 export class SnackbarComponent {
   readonly message = input.required<SnackbarMessage, SnackbarMessage>({

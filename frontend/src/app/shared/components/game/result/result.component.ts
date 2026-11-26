@@ -5,7 +5,7 @@ import {Score} from '../../../../model/game/score'
   selector: 'bet-result',
   standalone: true,
   templateUrl: './result.component.html',
-  styleUrl: './result.component.css'
+  styleUrl: './result.component.scss'
 })
 export class ResultComponent {
   readonly result = input<Score | null>(null)

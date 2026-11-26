@@ -5,7 +5,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations'
   selector: 'bet-expandable',
   standalone: true,
   templateUrl: './expandable.component.html',
-  styleUrl: './expandable.component.css',
+  styleUrl: './expandable.component.scss',
   animations: [
     trigger('expandable', [
       state('collapsed', style({

@@ -9,7 +9,7 @@ import {PointsChange} from '../model/points-change'
   selector: 'bet-rescore-management',
   imports: [ButtonComponent],
   templateUrl: './rescore-management.component.html',
-  styleUrl: './rescore-management.component.css'
+  styleUrl: './rescore-management.component.scss'
 })
 export class RescoreManagementComponent {
   private adminService = inject(AdminService)

@@ -26,7 +26,7 @@ import {MatFormFieldModule} from '@angular/material/form-field'
     PasswordIconDirective
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder)

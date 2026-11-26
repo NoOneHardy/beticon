@@ -236,7 +236,7 @@ form {
 }
 
 @media screen and (max-width: 992px) {
-  form, form.-disabled {
+  :is(form, form.-disabled) {
     &.-knockout {
       grid-template-areas:
         'title           title'
@@ -316,7 +316,9 @@ form {
       'points          points';
     width: 100%;
     min-width: 18.5em;
+  }
 
+  :is(form, form.-disabled, form.-knockout) {
     .title {
       margin-bottom: var(--beticon-spacer-2);
     }

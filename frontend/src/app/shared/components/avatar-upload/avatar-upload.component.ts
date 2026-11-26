@@ -9,7 +9,7 @@ import {EMPTY_METHOD, OnChangeFn, OnTouchFn} from '../../helper/control-value-ac
     NgOptimizedImage
   ],
   templateUrl: './avatar-upload.component.html',
-  styleUrl: './avatar-upload.component.css',
+  styleUrl: './avatar-upload.component.scss',
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: AvatarUploadComponent, multi: true }
   ]

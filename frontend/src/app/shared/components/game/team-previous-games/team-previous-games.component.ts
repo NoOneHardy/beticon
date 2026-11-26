@@ -8,7 +8,7 @@ import {Team} from '../../../../model/team/team'
     NgOptimizedImage
   ],
   templateUrl: './team-previous-games.component.html',
-  styleUrl: './team-previous-games.component.css'
+  styleUrl: './team-previous-games.component.scss'
 })
 export class TeamPreviousGamesComponent {
   readonly teamSignal = input.required<Team>({alias: 'team'})

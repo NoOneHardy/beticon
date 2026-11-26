@@ -8,7 +8,7 @@ import { NgOptimizedImage } from '@angular/common'
     NgOptimizedImage
   ],
   templateUrl: './position.component.html',
-  styleUrl: './position.component.css'
+  styleUrl: './position.component.scss'
 })
 export class PositionComponent {
   readonly ranking = input.required<Ranking>()

@@ -21,7 +21,7 @@ import {SpinnerComponent} from '../shared/components/spinner/spinner.component'
     SpinnerComponent
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   private store = inject(Store)

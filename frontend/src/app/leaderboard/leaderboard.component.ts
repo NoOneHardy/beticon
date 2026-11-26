@@ -14,7 +14,7 @@ import {SpinnerComponent} from '../shared/components/spinner/spinner.component'
     SpinnerComponent
   ],
   templateUrl: './leaderboard.component.html',
-  styleUrl: './leaderboard.component.css'
+  styleUrl: './leaderboard.component.scss'
 })
 export class LeaderboardComponent implements OnInit {
   private store = inject(Store)

@@ -12,7 +12,7 @@ import {BannerDisplayComponent} from './shared/components/banner-display/banner-
   selector: 'bet-root',
   imports: [RouterOutlet, HeaderComponent, SnackbarDisplayComponent, BannerDisplayComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   private store = inject(Store)

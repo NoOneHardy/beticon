@@ -11,7 +11,7 @@ import {MatRipple} from '@angular/material/core'
     MatRipple
   ],
   templateUrl: './nav-item.component.html',
-  styleUrl: './nav-item.component.css'
+  styleUrl: './nav-item.component.scss'
 })
 export class NavItemComponent {
   readonly icon = input<string | null>(null)

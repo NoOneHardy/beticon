@@ -8,7 +8,7 @@ import {sendEmailVerificationLink} from '../../../user-management/store/user.act
   selector: 'bet-banner-display',
   imports: [],
   templateUrl: './banner-display.component.html',
-  styleUrl: './banner-display.component.css'
+  styleUrl: './banner-display.component.scss'
 })
 export class BannerDisplayComponent {
   private store = inject(Store)

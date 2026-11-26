@@ -13,7 +13,7 @@ import {Bet} from '../../../../model/game/bet'
     ButtonComponent
   ],
   templateUrl: './game-preview.component.html',
-  styleUrl: './game-preview.component.css'
+  styleUrl: './game-preview.component.scss'
 })
 export class GamePreviewComponent {
   private router = inject(Router)
