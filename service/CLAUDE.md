@@ -10,12 +10,12 @@ Run from the repo root:
 ./gradlew :service:build
 ./gradlew :service:lint      # Spotless with the Eclipse formatter (config/eclipse-formatter.xml); fix with :service:spotlessApply
 ./gradlew :service:test      # JUnit 5; @SpringBootTest + embedded H2 for integration tests, @WebMvcTest slice (controller/ApiTestBase) for API tests
-./gradlew :service:bootRun   # http://localhost:8080
+./gradlew :service:bootRun   # http://localhost:26001
 ```
 
 ## Configuration
 
-Requires a `.env` file (copy from `.env.example`); values override `application.properties`. Key settings: `jwt.secret`, database credentials, SMTP settings, `base.url` (frontend URL used in email links).
+`application.yml` reads its settings from environment variables: `DATABASE_HOST`/`DATABASE_USER`/`DATABASE_PW`, `SECRET_KEY` (JWT), `SMTP_*`, and the optional `BASE_URL` (frontend URL used in email links), `JOKER_DOUBLE`, `JOKER_TRIPLE`. Nothing loads `service/.env` automatically (copy it from `.env.example`): export it into the shell first (`set -a; . service/.env; set +a`). The `local` profile (`--args='--spring.profiles.active=local'`) points email links at http://localhost:26000 and fixes the Joker limits.
 
 ## Where things live
 
