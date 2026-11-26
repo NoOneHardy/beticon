@@ -66,6 +66,7 @@ module.exports = tseslint.config(
       '@angular-eslint/prefer-signal-model': 'error',
       '@angular-eslint/no-implicit-take-until-destroyed': 'error',
       '@angular-eslint/computed-must-return': 'error',
+      '@angular-eslint/reactive-context-must-read-signal': 'error',
       '@typescript-eslint/no-extraneous-class': [
         'error',
         {allowWithDecorator: true}
