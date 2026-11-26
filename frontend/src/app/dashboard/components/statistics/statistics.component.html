@@ -1,10 +1,10 @@
 <div class="header">
   <h3>Statistik</h3>
   <div class="toggle">
-    <button (click)="showGlobalStats.set(false)">
+    <button type="button" (click)="showGlobalStats.set(false)">
       <span [class.gradient-text]="!showGlobalStats()" class="material-symbols-rounded">person</span>
     </button>
-    <button (click)="showGlobalStats.set(true)">
+    <button type="button" (click)="showGlobalStats.set(true)">
       <span [class.gradient-text]="showGlobalStats()" class="material-symbols-rounded">globe</span>
     </button>
   </div>

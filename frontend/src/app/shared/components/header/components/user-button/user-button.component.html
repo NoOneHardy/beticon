@@ -4,7 +4,7 @@
      (touchend)="clickButton.emit()" [routerLink]="route" class="button"
      [attr.data-content]="content()">{{ content() }}</a>
 } @else {
-  <button (click)="clickButton.emit()" [class.secondary]="secondary()" class="button"
+  <button type="button" (click)="clickButton.emit()" [class.secondary]="secondary()" class="button"
           [attr.data-content]="content()" matRipple>{{ content() }}
   </button>
 }

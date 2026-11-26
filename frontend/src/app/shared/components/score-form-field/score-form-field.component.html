@@ -1,6 +1,6 @@
 <div class="form-control" [class.-large]="isLarge()">
   @if (!isDisabled()) {
-    <button class="material-symbols-rounded"
+    <button type="button" class="material-symbols-rounded"
             [class.-disabled]="value() === 0 || !value()"
             (click)="decrement()">remove
     </button>
@@ -13,7 +13,7 @@
   </bet-form-field>
 
   @if (!isDisabled()) {
-    <button class="material-symbols-rounded"
+    <button type="button" class="material-symbols-rounded"
             [class.-disabled]="value() === 999"
             (click)="increment()">add
     </button>

@@ -47,10 +47,10 @@
             </div>
           </div>
           <div class="actions">
-            <button matRipple (click)="accept(user.id)" class="accept" [disabled]="isAccepted(user)">
+            <button type="button" matRipple (click)="accept(user.id)" class="accept" [disabled]="isAccepted(user)">
               <mat-icon>check</mat-icon>
             </button>
-            <button matRipple (click)="deny(user.id)" class="deny" [disabled]="isDenied(user)">
+            <button type="button" matRipple (click)="deny(user.id)" class="deny" [disabled]="isDenied(user)">
               <mat-icon>close</mat-icon>
             </button>
           </div>

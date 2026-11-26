@@ -2,7 +2,7 @@
   <form [formGroup]="formGroup" [class.-highlight]="highlight()" [class.-disabled]="isDisabled"
         [class.-knockout]="knockout()">
     @if (!isDisabled) {
-      <button class="reset-btn" (pointerup)="reset()">
+      <button type="button" class="reset-btn" (pointerup)="reset()">
         <span class="material-symbols-rounded">delete</span>
       </button>
     }

@@ -1,4 +1,4 @@
-<button [matMenuTriggerFor]="notificationMenu" [disabled]="!hasNotifications()"
+<button type="button" [matMenuTriggerFor]="notificationMenu" [disabled]="!hasNotifications()"
         class="notification-trigger" [class.-mobile]="mobile()" [class.-nudge]="hasNotifications()">
   <span class="material-symbols-rounded">notifications</span>
 </button>
