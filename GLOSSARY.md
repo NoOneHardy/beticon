@@ -4,6 +4,20 @@ A betting game for football tournaments. Users predict the score of each Game an
 
 ## Language
 
+### Tournament
+
+**Game**:
+The encounter of two Teams, one home and one guest, at a set time. It has at most one Result.
+_Avoid_: Match, fixture, encounter
+
+**Team**:
+A side that plays Games in the tournament, such as a national team.
+_Avoid_: Nation, country
+
+**Group**:
+A stage of the tournament that holds Games: a group-stage group or a knockout round. The word is overloaded and will be renamed.
+_Avoid_: Stage, round (until the rename settles the term)
+
 ### Betting
 
 **Bet**:
@@ -60,3 +74,7 @@ A Joker on a Bet that earned 0 Points. Counted per Bet, so a wasted ×3 Joker is
 **Host**:
 The person who runs a Beticon tournament for a group of players, usually as its admin. If a group plays for stakes, the Host collects and pays out the money outside the app.
 _Avoid_: Organiser, game master
+
+**Application**:
+A new user's request to take part in the tournament, which the Host approves or denies. A user can only play once their Application is approved.
+_Avoid_: Registration (that is signup), approval request
