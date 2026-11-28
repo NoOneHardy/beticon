@@ -69,11 +69,29 @@ _Avoid_: Correct game, perfect bet
 **Wasted Joker**:
 A Joker on a Bet that earned 0 Points. Counted per Bet, so a wasted ×3 Joker is one Wasted Joker.
 
+### Ranking
+
+**Leaderboard**:
+The approved players ordered by their total Points, each with their Ranking and Ranking movement.
+_Avoid_: Standings, table, ranking list
+
+**Ranking**:
+A player's place on the Leaderboard. Players with the same total Points share a Ranking.
+_Avoid_: Position, rank (as a noun for the list)
+
+**Ranking movement**:
+How many places a player's Ranking changed with the latest change to a Result.
+_Avoid_: Ranking change, delta
+
 ### Running a tournament
 
 **Host**:
 The person who runs a Beticon tournament for a group of players, usually as its admin. If a group plays for stakes, the Host collects and pays out the money outside the app.
 _Avoid_: Organiser, game master
+
+**Jackpot**:
+The money a tournament's approved players pay in: the participation fee times their number. The Host pays it out outside the app.
+_Avoid_: Pot, prize money
 
 **Application**:
 A new user's request to take part in the tournament, which the Host approves or denies. A user can only play once their Application is approved.
