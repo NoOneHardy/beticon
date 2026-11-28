@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Data
 @Entity
+@Table(name = "bet")
 public class Bet extends BaseEntity {
     @NotNull
     private Integer joker;

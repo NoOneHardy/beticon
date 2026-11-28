@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -15,6 +16,7 @@ import lombok.ToString;
 
 @Data
 @Entity
+@Table(name = "score")
 @EqualsAndHashCode(callSuper = false)
 public class Score extends BaseEntity {
     @NotNull

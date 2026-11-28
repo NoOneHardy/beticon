@@ -14,6 +14,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "game")
 @EqualsAndHashCode(callSuper = true)
 public class Game extends BaseEntity {
     @NotNull
