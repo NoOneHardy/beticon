@@ -4,6 +4,7 @@ import ch.no1hardy.service.model.BaseEntity;
 import ch.no1hardy.service.model.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "verification_code")
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class VerificationCode extends BaseEntity {

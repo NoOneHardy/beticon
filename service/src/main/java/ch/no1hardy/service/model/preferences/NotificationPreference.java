@@ -7,11 +7,13 @@ import ch.no1hardy.service.model.notification.NotificationType;
 import ch.no1hardy.service.model.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
+@Table(name = "notification_preference")
 @EqualsAndHashCode(callSuper = false)
 public class NotificationPreference extends BaseEntity {
     @ManyToOne

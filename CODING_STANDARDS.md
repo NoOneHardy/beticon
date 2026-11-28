@@ -49,6 +49,12 @@ Rules reviewers (human or agent) check changes against.
 - Values that always travel together become one type (the home and guest goals are a `Scoreline`), and the rule that belongs to them lives on that type, not repeated at each call site.
 - Scoring rules (point values, Joker multiplication, winner/tie/total checks) live in the Scoring module (`model/game/Scoring`, `Scoreline`, `PointsBreakdown`) and nowhere else.
 
+### Table names
+
+- Every entity names its table with `@Table(name = …)`, so moving or renaming the class never changes the schema.
+- Table names are snake_case. A name that is a reserved word in MySQL takes the `beticon_` prefix (`beticon_user`, not `user`).
+- `beticon-user` and `beticon-group` predate this rule; they are renamed by a schema migration of their own, not inside another change.
+
 ### Refactors stay refactors
 
 - A refactor does not change behaviour beyond what the refactor itself forces. If it has to, the change is named in the PR and covered by a test.
