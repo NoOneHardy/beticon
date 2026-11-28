@@ -13,4 +13,4 @@ The Points move out of other modules' tables into tables owned by `scoring`: Poi
 ## Consequences
 
 - The only schema change is the Points migration. Replacing an association with an ID keeps its column and foreign key.
-- `bet` and `game` can no longer build responses that include Points or Bets themselves. Composing those responses is a read-model concern.
+- `bet` and `game` can no longer build responses that include Points or Bets themselves. The endpoint's module composes those responses through interfaces it owns (ADR 0006).
